@@ -1,0 +1,10 @@
+{
+  "name": "boss-up-bootcamp-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Boss Up Bootcamp landing page skeleton for The H.I.P.H.O.P. Academy.",
+  "scripts": {
+    "serve": "python3 -m http.server 4175 --directory app",
+    "audit": "node scripts/audit_site.js"
+  }
+}
