@@ -4,85 +4,108 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Boss Up Bootcamp | The H.I.P.H.O.P. Academy</title>
-  <meta name="description" content="Boss Up Bootcamp teaches people how to use AI to build businesses, brands, music, websites, apps, videos, and marketing campaigns." />
+  <meta name="description" content="Boss Up Bootcamp teaches practical AI workflows for business, branding, music, websites, apps, video, and launch strategy." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;500;700;800;900&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <div class="poster-noise" aria-hidden="true"></div>
-  <header class="nav-wrap" aria-label="Primary navigation">
-    <a class="brand-mark" href="#top"><span class="brand-icon">BU</span><span><strong>Boss Up</strong><small>Bootcamp</small></span></a>
-    <nav class="nav-links"><a href="#learn">Learn</a><a href="#showcase">Work</a><a href="#process">Process</a><a href="#register">Register</a></nav>
-    <a class="nav-cta" href="#register">Join Waitlist</a>
+  <header class="site-header" aria-label="Primary navigation">
+    <a class="brand" href="#top" aria-label="Boss Up Bootcamp home">
+      <span class="brand-mark">BU</span>
+      <span><strong>Boss Up Bootcamp</strong><small>The H.I.P.H.O.P. Academy</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#program">Program</a>
+      <a href="#work">Work</a>
+      <a href="#register">Waitlist</a>
+    </nav>
+    <a class="button button-dark header-cta" href="#register">Join Waitlist</a>
   </header>
 
   <main id="top">
     <section class="hero section">
-      <div class="hero-art"><img src="./assets/hero-abstract.svg" alt="Abstract hip-hop AI creator studio collage" /></div>
       <div class="hero-copy">
-        <p class="eyebrow tape">The H.I.P.H.O.P. Academy presents</p>
-        <h1><span>Boss Up</span><strong>Bootcamp</strong></h1>
-        <p class="hero-subtitle">Learn how to build businesses, brands, music, websites, apps, videos, and marketing campaigns using AI.</p>
-        <div class="hero-strip"><b>No coding.</b><b>No design degree.</b><b>No business background.</b><span>Just bring an idea.</span></div>
-        <div class="hero-actions"><a class="button primary" href="#register">Join The Waitlist</a><a class="button ghost" href="#showcase">View Current Works</a></div>
+        <p class="kicker">AI entrepreneurship bootcamp • 20 seats</p>
+        <h1>Build your brand. Launch your idea.</h1>
+        <p class="hero-subtitle">A practical creator-business workshop for music, graphics, websites, apps, videos, marketing, and business planning — built with AI tools and guided workflows.</p>
+        <div class="hero-actions">
+          <a class="button button-dark" href="#register">Reserve a Spot</a>
+          <a class="button button-light" href="#program">See the Program</a>
+        </div>
       </div>
-      <img class="seat-sticker" src="./assets/twenty-seats-sticker.svg" alt="20 seats first session coming soon" />
+      <aside class="hero-panel" aria-label="Program summary">
+        <img src="./assets/hero-abstract.svg" alt="Abstract creative studio artwork" />
+        <div class="panel-overlay">
+          <span>First Cohort</span>
+          <strong>20 seats</strong>
+          <p>Hands-on. Project-based. Built for real-world output.</p>
+        </div>
+      </aside>
     </section>
 
-    <section id="learn" class="section learn-section">
-      <div class="section-heading torn"><p class="eyebrow">What you'll learn</p><h2>Build it. Brand it. Launch it.</h2><p>Hands-on AI workflows for people who are ready to stop waiting and start creating.</p></div>
+    <section class="section snapshot" aria-label="Program snapshot">
+      <article><span>Focus</span><strong>AI + entrepreneurship</strong></article>
+      <article><span>Format</span><strong>Guided build sessions</strong></article>
+      <article><span>Outcome</span><strong>A launch-ready direction</strong></article>
+    </section>
+
+    <section id="program" class="section program-section">
+      <div class="section-intro">
+        <p class="kicker">What you’ll learn</p>
+        <h2>One clear program. Six practical lanes.</h2>
+        <p>Keep the energy artistic, but the experience professional: focused lessons, simple steps, and tangible project assets.</p>
+      </div>
       <div class="learn-grid" id="learn-grid"></div>
     </section>
 
-    <section id="showcase" class="section showcase-section">
-      <div class="section-heading"><p class="eyebrow">Current works</p><h2>Proof that the workflow works.</h2><p>Music, graphics, videos, websites, apps, and future student projects. These slots are ready for your real assets next.</p></div>
+    <section id="work" class="section showcase-section">
+      <div class="section-intro split">
+        <div>
+          <p class="kicker">Current works</p>
+          <h2>Portfolio slots ready for real assets.</h2>
+        </div>
+        <p>Music, graphics, video, websites, apps, and student projects will be added as the program and portfolio grow.</p>
+      </div>
       <div class="showcase-tabs" role="list" aria-label="Portfolio categories" id="showcase-tabs"></div>
       <div class="showcase-grid" id="showcase-grid"></div>
     </section>
 
     <section id="process" class="section process-section">
-      <div class="section-heading compact"><p class="eyebrow">The process</p><h2>Seven steps from idea to launch.</h2></div>
+      <div class="section-intro split">
+        <div>
+          <p class="kicker">How it works</p>
+          <h2>A focused path from idea to launch.</h2>
+        </div>
+        <p>Instead of scrolling through everything at once, the program is organized around a simple build flow.</p>
+      </div>
       <div class="timeline" id="timeline"></div>
     </section>
 
-    <section class="section two-panel">
-      <article class="paper-card"><p class="eyebrow">Workshop energy</p><h2>Not a lecture. A build session.</h2><p>Participants follow clear workflows, use practical AI tools, and leave with real project assets — not just notes.</p></article>
-      <article class="black-card"><p class="eyebrow">Student outcomes</p><h2>Leave with your own.</h2><ul><li>Brand direction</li><li>Graphics or cover art</li><li>Website/app concept</li><li>Music/video/content plan</li><li>Launch checklist</li></ul></article>
-    </section>
-
-    <section class="section audience-section">
-      <div class="section-heading compact"><p class="eyebrow">Who this is for</p><h2>Creators. Hustlers. Builders. Beginners.</h2></div>
-      <div class="audience-grid">
-        <article><span>01</span><strong>Artists + Musicians</strong><p>Turn lyrics, concepts, covers, videos, and release ideas into complete creative campaigns.</p></article>
-        <article><span>02</span><strong>Small Business Owners</strong><p>Build a brand, landing page, promo graphics, content plan, and launch strategy.</p></article>
-        <article><span>03</span><strong>Side Hustlers</strong><p>Shape an idea into something people can see, share, join, buy, or support.</p></article>
-        <article><span>04</span><strong>First-Time AI Users</strong><p>Learn practical workflows without needing coding, design, or business experience.</p></article>
-      </div>
-    </section>
-
-    <section class="section workflow-section">
-      <div class="workflow-panel"><div><p class="eyebrow">Workflow-based curriculum</p><h2>Every lesson follows a clear build path.</h2></div><ol class="workflow-list"><li>Objective</li><li>Tools Needed</li><li>Step-by-Step Instructions</li><li>Tips + Common Mistakes</li><li>Advanced Features</li><li>Final Outcome</li></ol></div>
-    </section>
-
-    <section class="section founder-section">
-      <div class="founder-card"><div class="founder-avatar">JD</div><div><p class="eyebrow">About the founder</p><h2>Jonti DeQuan</h2><p>Founder of The H.I.P.H.O.P. Academy, entrepreneur, creator, AI builder, music producer, and business developer.</p><p>Boss Up Bootcamp is built around empowerment: helping people transform ideas, creativity, and life experience into opportunity.</p></div></div>
-    </section>
-
-    <section id="academy" class="section academy-section"><p class="eyebrow">Powered by The H.I.P.H.O.P. Academy</p><h2>How I Put Harmony On Pain.</h2><p>The Academy helps individuals transform ideas, creativity, and life experiences into growth, entrepreneurship, and personal development.</p><a class="button ghost" href="#register">Learn More / Get Updates</a></section>
-
-    <section id="register" class="section registration-section">
-      <div class="register-copy"><p class="eyebrow">Reserve your spot</p><h2>Join the Boss Up Bootcamp waitlist.</h2><p>Only 20 seats will be available for each session. Register today to receive updates, early access announcements, and upcoming event information.</p></div>
-      <form class="waitlist-form" name="boss-up-waitlist" data-form-placeholder="true">
-        <label>Name <input name="name" placeholder="Your name" required /></label>
-        <label>Email <input type="email" name="email" placeholder="you@example.com" required /></label>
-        <label>Phone <input name="phone" placeholder="Optional" /></label>
-        <label>Areas of Interest<select name="interest" required><option value="">Choose one</option><option>Music Creation</option><option>Website Building</option><option>Graphic Design</option><option>Business Development</option><option>App Development</option><option>Video Creation</option></select></label>
-        <button class="button primary" type="submit">Join The Waitlist</button><p class="form-note">Skeleton mode: connect this form to Google Forms, Airtable, Supabase, Mailchimp, or another CRM next.</p>
-      </form>
+    <section class="section founder-register" id="register">
+      <article class="founder-card">
+        <p class="kicker">Founder</p>
+        <h2>Jonti DeQuan</h2>
+        <p>Founder of The H.I.P.H.O.P. Academy, entrepreneur, creator, AI builder, music producer, and business developer.</p>
+        <p>Boss Up Bootcamp is built to help people turn ideas and creativity into practical brands, projects, and opportunities.</p>
+      </article>
+      <article class="registration-card">
+        <p class="kicker">Reserve your spot</p>
+        <h2>Join the waitlist.</h2>
+        <p>Only 20 seats will be available for the first session. Add your info to receive updates and launch announcements.</p>
+        <form class="waitlist-form" name="boss-up-waitlist" data-form-placeholder="true">
+          <label>Name <input name="name" placeholder="Your name" required /></label>
+          <label>Email <input type="email" name="email" placeholder="you@example.com" required /></label>
+          <label>Interest<select name="interest" required><option value="">Choose one</option><option>Music Creation</option><option>Website Building</option><option>Graphic Design</option><option>Business Development</option><option>App Development</option><option>Video Creation</option></select></label>
+          <button class="button button-dark" type="submit">Join The Waitlist</button>
+          <p class="form-note">Placeholder form: connect to Google Forms, Airtable, Supabase, or CRM next.</p>
+        </form>
+      </article>
     </section>
   </main>
-  <script src="./data.js"></script><script src="./app.js"></script>
+
+  <script src="./data.js"></script>
+  <script src="./app.js"></script>
 </body>
 </html>
