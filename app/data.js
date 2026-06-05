@@ -2,8 +2,8 @@ window.BOSS_UP_DATA = {
   slides: [
     {
       label: "Program",
-      title: "A creator-business academy built for practical output.",
-      body: "Learn the modern AI workflows behind brand strategy, content, music, websites, apps, and launch planning.",
+      title: "The H.I.P.H.O.P. Academy path from creativity to opportunity.",
+      body: "Boss Up Bootcamp extends the Academy brand into hands-on AI entrepreneurship, digital creation, and launch planning.",
       meta: "20 seats • Guided sessions"
     },
     {
