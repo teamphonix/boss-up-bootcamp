@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900">
+  <defs>
+    <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="4" seed="7"/><feDisplacementMap in="SourceGraphic" scale="7"/></filter>
+    <pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="2" fill="#fff" opacity=".2"/></pattern>
+    <linearGradient id="neon" x1="0" x2="1"><stop stop-color="#00a3ff"/><stop offset=".45" stop-color="#7c2cff"/><stop offset="1" stop-color="#ff2bd6"/></linearGradient>
+  </defs>
+  <rect width="1400" height="900" fill="#050505"/>
+  <rect width="1400" height="900" fill="url(#dots)" opacity=".32"/>
+  <g opacity=".72" filter="url(#rough)">
+    <path d="M-60 164 C160 80 342 240 530 132 C705 32 910 90 1110 20 C1250 -30 1390 28 1480 88 L1490 210 C1240 290 1040 180 812 270 C605 352 420 252 230 328 C92 386 -34 372 -80 348Z" fill="#fff"/>
+    <path d="M-80 705 C130 595 352 708 515 610 C715 492 938 590 1126 500 C1256 438 1390 462 1490 520 L1490 900 L-80 900Z" fill="#f4f1e8" opacity=".92"/>
+  </g>
+  <path d="M30 480 C260 364 480 408 680 314 C890 214 1115 260 1370 140" stroke="#ffc400" stroke-width="74" stroke-linecap="round" opacity=".98" filter="url(#rough)"/>
+  <path d="M110 560 C350 455 570 500 810 412 C1058 322 1190 368 1360 315" stroke="#7c2cff" stroke-width="34" stroke-linecap="round" opacity=".76"/>
+  <path d="M70 650 C270 560 520 640 790 540 C1030 452 1210 472 1400 410" stroke="#00a3ff" stroke-width="24" stroke-linecap="round" opacity=".72"/>
+  <path d="M210 220 l110 40 -105 34 70 88 -126 -42 -76 84 12 -112 -108 -48 118 -22 28 -118z" fill="#7CFF00" opacity=".92"/>
+  <path d="M1120 580 l78 24 -70 34 58 58 -88 -20 -38 78 -16 -86 -88 -12 78 -46 -14 -90z" fill="#ff2bd6" opacity=".9"/>
+  <g transform="translate(420 210) rotate(-7)">
+    <rect x="0" y="190" width="520" height="285" rx="28" fill="#0b0b0b" stroke="#fff" stroke-width="8"/>
+    <rect x="42" y="230" width="436" height="205" rx="16" fill="#151515" stroke="#ffc400" stroke-width="5"/>
+    <circle cx="260" cy="333" r="78" fill="url(#neon)" opacity=".82"/>
+    <path d="M210 340 h100 M260 290 v100" stroke="#fff" stroke-width="15" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(920 150) rotate(12)" opacity=".9">
+    <circle cx="80" cy="80" r="72" fill="#050505" stroke="#ffc400" stroke-width="12"/>
+    <path d="M80 35 v110 M40 78 h80" stroke="#fff" stroke-width="13" stroke-linecap="round"/>
+  </g>
+  <g font-family="Impact, Anton, sans-serif" font-weight="900" fill="#050505" opacity=".08">
+    <text x="70" y="780" font-size="180" letter-spacing="-8">BOSS UP</text>
+  </g>
+</svg>
