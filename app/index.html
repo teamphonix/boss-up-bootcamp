@@ -16,11 +16,27 @@
       <span class="brand-mark">BU</span>
       <span><strong>Boss Up Bootcamp</strong><small>The H.I.P.H.O.P. Academy</small></span>
     </a>
-    <nav class="nav-links">
-      <a href="#program">Program</a>
-      <a href="#work">Work</a>
+
+    <nav class="nav-links" aria-label="Main menu">
+      <div class="nav-item has-menu">
+        <button type="button" aria-expanded="false">Program</button>
+        <div class="dropdown-menu">
+          <a href="#program"><strong>Program Overview</strong><span>Six lanes: brand, business, creative, web, AI, launch.</span></a>
+          <a href="#process"><strong>Build Process</strong><span>Four phases from idea to launch direction.</span></a>
+          <a href="#outcomes"><strong>Outcomes</strong><span>What participants should leave with.</span></a>
+        </div>
+      </div>
+      <div class="nav-item has-menu">
+        <button type="button" aria-expanded="false">Showcase</button>
+        <div class="dropdown-menu">
+          <a href="#work"><strong>Portfolio Slots</strong><span>Music, graphics, video, websites, apps.</span></a>
+          <a href="#work"><strong>Current Works</strong><span>Early examples and placeholders for real assets.</span></a>
+        </div>
+      </div>
+      <a href="#founder">Founder</a>
       <a href="#register">Waitlist</a>
     </nav>
+
     <a class="button button-dark header-cta" href="#register">Join Waitlist</a>
   </header>
 
@@ -29,18 +45,19 @@
       <div class="hero-copy">
         <p class="kicker">AI entrepreneurship bootcamp • 20 seats</p>
         <h1>Build your brand. Launch your idea.</h1>
-        <p class="hero-subtitle">A practical creator-business workshop for music, graphics, websites, apps, videos, marketing, and business planning — built with AI tools and guided workflows.</p>
+        <p class="hero-subtitle">A polished, hands-on creator-business program for music, graphics, websites, apps, video, marketing, and business planning — powered by practical AI workflows.</p>
         <div class="hero-actions">
           <a class="button button-dark" href="#register">Reserve a Spot</a>
-          <a class="button button-light" href="#program">See the Program</a>
+          <a class="button button-light" href="#program">Explore Program</a>
         </div>
       </div>
-      <aside class="hero-panel" aria-label="Program summary">
-        <img src="./assets/hero-abstract.svg" alt="Abstract creative studio artwork" />
-        <div class="panel-overlay">
-          <span>First Cohort</span>
-          <strong>20 seats</strong>
-          <p>Hands-on. Project-based. Built for real-world output.</p>
+
+      <aside class="carousel" aria-label="Boss Up Bootcamp presentation slideshow">
+        <div class="slides" id="slides"></div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" id="prev-slide" type="button" aria-label="Previous slide">‹</button>
+          <div class="carousel-dots" id="carousel-dots" aria-label="Slide navigation"></div>
+          <button class="carousel-btn" id="next-slide" type="button" aria-label="Next slide">›</button>
         </div>
       </aside>
     </section>
@@ -48,25 +65,42 @@
     <section class="section snapshot" aria-label="Program snapshot">
       <article><span>Focus</span><strong>AI + entrepreneurship</strong></article>
       <article><span>Format</span><strong>Guided build sessions</strong></article>
-      <article><span>Outcome</span><strong>A launch-ready direction</strong></article>
+      <article><span>Outcome</span><strong>Launch-ready direction</strong></article>
     </section>
 
     <section id="program" class="section program-section">
-      <div class="section-intro">
-        <p class="kicker">What you’ll learn</p>
-        <h2>One clear program. Six practical lanes.</h2>
-        <p>Keep the energy artistic, but the experience professional: focused lessons, simple steps, and tangible project assets.</p>
+      <div class="section-intro split">
+        <div>
+          <p class="kicker">Program overview</p>
+          <h2>Professional structure. Artistic execution.</h2>
+        </div>
+        <p>Inspired by polished academy and creative education sites: clear navigation, focused modules, strong presentation, and less visual clutter.</p>
       </div>
       <div class="learn-grid" id="learn-grid"></div>
+    </section>
+
+    <section id="outcomes" class="section outcomes-section">
+      <div class="outcomes-panel">
+        <div>
+          <p class="kicker">What participants leave with</p>
+          <h2>Not just inspiration — a working direction.</h2>
+        </div>
+        <ul class="outcomes-list">
+          <li>Brand positioning and audience clarity</li>
+          <li>Creative assets or portfolio direction</li>
+          <li>Website/app concept or landing-page plan</li>
+          <li>Marketing content and launch checklist</li>
+        </ul>
+      </div>
     </section>
 
     <section id="work" class="section showcase-section">
       <div class="section-intro split">
         <div>
-          <p class="kicker">Current works</p>
-          <h2>Portfolio slots ready for real assets.</h2>
+          <p class="kicker">Showcase</p>
+          <h2>Portfolio areas ready for real assets.</h2>
         </div>
-        <p>Music, graphics, video, websites, apps, and student projects will be added as the program and portfolio grow.</p>
+        <p>Clean cards now. Richer custom imagery later when FAL/OpenAI image generation is connected.</p>
       </div>
       <div class="showcase-tabs" role="list" aria-label="Portfolio categories" id="showcase-tabs"></div>
       <div class="showcase-grid" id="showcase-grid"></div>
@@ -78,19 +112,19 @@
           <p class="kicker">How it works</p>
           <h2>A focused path from idea to launch.</h2>
         </div>
-        <p>Instead of scrolling through everything at once, the program is organized around a simple build flow.</p>
+        <p>The program is organized like a clean curriculum, not a long messy flyer. Each phase has a purpose.</p>
       </div>
       <div class="timeline" id="timeline"></div>
     </section>
 
-    <section class="section founder-register" id="register">
-      <article class="founder-card">
+    <section class="section founder-register">
+      <article class="founder-card" id="founder">
         <p class="kicker">Founder</p>
         <h2>Jonti DeQuan</h2>
         <p>Founder of The H.I.P.H.O.P. Academy, entrepreneur, creator, AI builder, music producer, and business developer.</p>
         <p>Boss Up Bootcamp is built to help people turn ideas and creativity into practical brands, projects, and opportunities.</p>
       </article>
-      <article class="registration-card">
+      <article class="registration-card" id="register">
         <p class="kicker">Reserve your spot</p>
         <h2>Join the waitlist.</h2>
         <p>Only 20 seats will be available for the first session. Add your info to receive updates and launch announcements.</p>

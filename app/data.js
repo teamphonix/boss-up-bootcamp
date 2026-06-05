@@ -1,4 +1,24 @@
 window.BOSS_UP_DATA = {
+  slides: [
+    {
+      label: "Program",
+      title: "A creator-business academy built for practical output.",
+      body: "Learn the modern AI workflows behind brand strategy, content, music, websites, apps, and launch planning.",
+      meta: "20 seats • Guided sessions"
+    },
+    {
+      label: "Creative Workflows",
+      title: "From idea to assets with professional direction.",
+      body: "Participants follow clear steps to build visual assets, campaign ideas, video concepts, and portfolio pieces.",
+      meta: "Graphics • Video • Music"
+    },
+    {
+      label: "Launch Plan",
+      title: "Leave with next steps, not just notes.",
+      body: "Every participant works toward a brand direction, digital home, content plan, and practical rollout checklist.",
+      meta: "Brand • Web • Marketing"
+    }
+  ],
   learn: [
     { icon: "01", title: "Business Foundation", body: "Clarify the idea, audience, offer, pricing, and simple launch strategy." },
     { icon: "02", title: "Brand Direction", body: "Shape the name, voice, visual direction, and message behind the project." },
