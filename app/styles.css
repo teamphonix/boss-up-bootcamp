@@ -293,6 +293,7 @@ h3 { font-size: 1.35rem; font-weight: 900; letter-spacing: -0.025em; line-height
 .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 .timeline-step { padding: 22px; }
 .timeline-step .number { display: inline-flex; margin-bottom: 22px; color: var(--academy-cyan); font-size: .78rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+.timeline-step h3 { color: var(--academy-gold); }
 .founder-register { display: grid; grid-template-columns: .9fr 1.1fr; gap: 18px; padding-bottom: 90px; }
 .founder-card, .registration-card { padding: 32px; scroll-margin-top: 110px; }
 .founder-card { background: linear-gradient(135deg, rgba(0,255,255,.08), rgba(255,215,0,.05)), #05070a; color: var(--ink); }
