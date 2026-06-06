@@ -39,9 +39,17 @@ window.BOSS_UP_DATA = {
     { category: "Apps", title: "Student Project Pipeline", status: "Coming Soon", initials: "20", accent: "rgba(95,127,104,.34)", description: "A section reserved for work created by the first Boss Up Bootcamp cohort." }
   ],
   musicTracks: [
-    { title: "Song Title Coming Soon", src: "", status: "MP3 Slot 01" },
-    { title: "Song Title Coming Soon", src: "", status: "MP3 Slot 02" },
-    { title: "Song Title Coming Soon", src: "", status: "MP3 Slot 03" }
+    { title: "Raegeton Jersey Club Crossover", src: "./assets/audio/audio-3187066578eb.mp3", status: "Featured Track 01" },
+    { title: "Heart Break Blues", src: "./assets/audio/heart-break-blues.mp3", status: "Featured Track 02" },
+    { title: "R&B Female Vocals", src: "./assets/audio/audio-ca5e357887ff.mp3", status: "Featured Track 03" },
+    { title: "R&B Male Vocals", src: "./assets/audio/audio-2da6e6edc815.mp3", status: "Featured Track 04" },
+    { title: "Hip Hop Instrumental", src: "./assets/audio/audio-6d329356627b.mp3", status: "Featured Track 05" },
+    { title: "Rastafarian Rap", src: "./assets/audio/audio-c44e0a6f3d2d.mp3", status: "Featured Track 06" },
+    { title: "Latin Trap", src: "./assets/audio/audio-5e073b157588.mp3", status: "Featured Track 07" },
+    { title: "Ghetto Gospel Anthem", src: "./assets/audio/audio-5500afc83a4a.mp3", status: "Featured Track 08" },
+    { title: "Rock Hip Hop Crossover", src: "./assets/audio/audio-230511c78219.mp3", status: "Featured Track 09" },
+    { title: "Fine Dining Jingle - Lorena's", src: "./assets/audio/audio-a2ce3134fef4.mp3", status: "Featured Track 10" },
+    { title: "Restaurant Techno Jingle", src: "./assets/audio/audio-84cc64c8b060.mp3", status: "Featured Track 11" }
   ],
   process: [
     {
