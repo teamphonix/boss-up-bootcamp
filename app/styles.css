@@ -156,23 +156,35 @@ h3 { font-size: 1.35rem; font-weight: 900; letter-spacing: -0.025em; line-height
   inset: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 30px;
+  align-items: center;
+  justify-content: center;
+  padding: 44px 34px 64px;
   opacity: 0;
+  text-align: center;
   transform: translateX(18px);
   transition: opacity .45s ease, transform .45s ease;
   background:
-    linear-gradient(180deg, rgba(0,0,0,.24), rgba(0,0,0,.9)),
-    radial-gradient(circle at 16% 16%, rgba(0,255,255,.34), transparent 34%),
-    radial-gradient(circle at 82% 12%, rgba(255,215,0,.18), transparent 34%),
+    linear-gradient(180deg, rgba(0,0,0,.78), rgba(0,0,0,.9)),
+    radial-gradient(circle at 50% 18%, rgba(0,255,255,.16), transparent 38%),
+    radial-gradient(circle at 50% 82%, rgba(255,215,0,.14), transparent 36%),
     url('./assets/hero-abstract.svg') center/cover;
-  filter: saturate(.78) contrast(1.04);
+  filter: saturate(.6) contrast(1.04);
 }
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: 34px;
+  border-radius: 28px;
+  background: rgba(0,0,0,.42);
+  border: 1px solid rgba(255,215,0,.2);
+  backdrop-filter: blur(2px);
+}
+.slide > * { position: relative; z-index: 1; }
 .slide.active { opacity: 1; transform: translateX(0); }
-.slide-label { color: var(--academy-cyan); font-size: .78rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
-.slide h3 { max-width: 430px; margin-top: 12px; color: var(--ink); font-size: clamp(2rem, 4vw, 3.25rem); line-height: .96; }
-.slide p { max-width: 420px; margin-top: 14px; color: rgba(255,255,255,.78); }
-.slide-meta { margin-top: 24px; color: var(--academy-gold); font-size: .9rem; font-weight: 900; }
+.slide-label { color: var(--academy-gold); font-size: .82rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; text-shadow: 0 2px 18px rgba(0,0,0,.9); }
+.slide h3 { max-width: 470px; margin-top: 14px; color: var(--ink); font-size: clamp(2rem, 4vw, 3.25rem); line-height: .96; text-shadow: 0 2px 22px rgba(0,0,0,.92); }
+.slide p { max-width: 430px; margin-top: 16px; color: rgba(255,255,255,.86); text-shadow: 0 2px 16px rgba(0,0,0,.9); }
+.slide-meta { margin-top: 24px; color: var(--academy-gold); font-size: .94rem; font-weight: 900; text-shadow: 0 2px 18px rgba(0,0,0,.95); }
 .carousel-controls { position: absolute; left: 24px; right: 24px; bottom: 22px; z-index: 2; display: flex; align-items: center; justify-content: space-between; pointer-events: none; }
 .carousel-btn, .dot { pointer-events: auto; border: 1px solid rgba(0,255,255,.28); background: rgba(0,0,0,.34); color: var(--ink); backdrop-filter: blur(12px); cursor: pointer; }
 .carousel-btn { width: 42px; height: 42px; border-radius: 50%; font-size: 1.5rem; }
@@ -248,7 +260,8 @@ input:focus, select:focus { outline: 3px solid rgba(0,255,255,.18); border-color
   .hero { gap: 28px; padding-block: 42px 32px; }
   .hero-actions .button, .primary-action { width: 100%; }
   .carousel, .slides { min-height: 350px; }
-  .slide { padding: 22px; }
+  .slide { padding: 36px 24px 62px; }
+  .slide::before { inset: 18px; border-radius: 22px; }
   .slide h3 { font-size: 2.1rem; }
   .carousel-controls { left: 16px; right: 16px; bottom: 16px; }
   .snapshot, .learn-grid, .showcase-grid, .timeline { grid-template-columns: 1fr; }
