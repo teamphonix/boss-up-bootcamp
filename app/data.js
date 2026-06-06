@@ -39,8 +39,8 @@ window.BOSS_UP_DATA = {
     { category: "Apps", title: "Student Project Pipeline", status: "Coming Soon", initials: "20", accent: "rgba(95,127,104,.34)", description: "A section reserved for work created by the first Boss Up Bootcamp cohort." }
   ],
   musicTracks: [
-    { title: "Raegeton Jersey Club Crossover", src: "./assets/audio/audio-3187066578eb.mp3", status: "Featured Track 01" },
-    { title: "Heart Break Blues", src: "./assets/audio/heart-break-blues.mp3", status: "Featured Track 02" },
+    { title: "Heart Break Blues", src: "./assets/audio/heart-break-blues.mp3", status: "Featured Track 01" },
+    { title: "Raegeton Jersey Club Crossover", src: "./assets/audio/audio-3187066578eb.mp3", status: "Featured Track 02" },
     { title: "R&B Female Vocals", src: "./assets/audio/audio-ca5e357887ff.mp3", status: "Featured Track 03" },
     { title: "R&B Male Vocals", src: "./assets/audio/audio-2da6e6edc815.mp3", status: "Featured Track 04" },
     { title: "Hip Hop Instrumental", src: "./assets/audio/audio-6d329356627b.mp3", status: "Featured Track 05" },
