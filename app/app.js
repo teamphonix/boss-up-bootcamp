@@ -106,8 +106,8 @@ function renderTimeline() {
   timeline.innerHTML = data.process.map((step, index) => `
     <article class="timeline-step">
       <span class="number">Phase ${index + 1}</span>
-      <h3>${escapeHtml(step)}</h3>
-      <p>${index === 0 ? 'Start with what you want to create and who it is for.' : 'Use guided AI workflows to move the project toward a clear outcome.'}</p>
+      <h3>${escapeHtml(step.title || step)}</h3>
+      <p>${escapeHtml(step.body || '')}</p>
     </article>
   `).join('');
 }

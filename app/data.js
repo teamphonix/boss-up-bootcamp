@@ -36,9 +36,21 @@ window.BOSS_UP_DATA = {
     { category: "Apps", title: "Student Project Pipeline", status: "Coming Soon", initials: "20", accent: "rgba(95,127,104,.34)", description: "A section reserved for work created by the first Boss Up Bootcamp cohort." }
   ],
   process: [
-    "Clarify the idea",
-    "Build the brand",
-    "Create the assets",
-    "Launch the plan"
+    {
+      title: "Clarify the idea",
+      body: "Define what you are building, who it serves, why it matters, and what problem or opportunity the project is focused on."
+    },
+    {
+      title: "Build the brand",
+      body: "Shape the name, message, audience, offer, and visual direction so the project has a clear identity before assets are created."
+    },
+    {
+      title: "Create the assets",
+      body: "Use guided AI workflows to draft practical materials such as graphics, content, music concepts, video ideas, and a simple web presence."
+    },
+    {
+      title: "Launch the plan",
+      body: "Organize the finished direction into next steps: what to publish, where to promote it, how to follow up, and what to improve after feedback."
+    }
   ]
 };
