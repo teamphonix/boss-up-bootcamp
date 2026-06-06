@@ -5,8 +5,10 @@ const tabs = document.querySelector('#showcase-tabs');
 const timeline = document.querySelector('#timeline');
 const slidesEl = document.querySelector('#slides');
 const dotsEl = document.querySelector('#carousel-dots');
+const musicPlaylist = document.querySelector('#music-playlist');
 let activeSlide = 0;
 let slideTimer;
+let activeAudio;
 
 function escapeHtml(value) {
   return String(value || '').replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
@@ -119,6 +121,59 @@ function renderTimeline() {
   `).join('');
 }
 
+function formatTrackStatus(track, index) {
+  return track.status || `Track ${String(index + 1).padStart(2, '0')}`;
+}
+
+function renderMusicPlaylist() {
+  if (!musicPlaylist) return;
+  const tracks = data.musicTracks || [];
+  musicPlaylist.innerHTML = tracks.map((track, index) => {
+    const hasAudio = Boolean(track.src);
+    return `
+      <article class="track-card ${hasAudio ? '' : 'is-placeholder'}">
+        <div class="track-info">
+          <span class="track-status">${escapeHtml(formatTrackStatus(track, index))}</span>
+          <h3>${escapeHtml(track.title)}</h3>
+        </div>
+        ${hasAudio ? `<audio preload="metadata" src="${escapeHtml(track.src)}"></audio>` : ''}
+        <div class="track-actions">
+          <button class="track-button play-toggle" type="button" ${hasAudio ? '' : 'disabled'}>${hasAudio ? 'Play' : 'Add MP3'}</button>
+          <button class="track-button restart-track" type="button" ${hasAudio ? '' : 'disabled'}>From Beginning</button>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  musicPlaylist.querySelectorAll('.track-card').forEach((card) => {
+    const audio = card.querySelector('audio');
+    const toggle = card.querySelector('.play-toggle');
+    const restart = card.querySelector('.restart-track');
+    if (!audio || !toggle || !restart) return;
+
+    toggle.addEventListener('click', () => {
+      if (!audio.paused) {
+        audio.pause();
+        return;
+      }
+      if (activeAudio && activeAudio !== audio) activeAudio.pause();
+      activeAudio = audio;
+      audio.play();
+    });
+
+    restart.addEventListener('click', () => {
+      if (activeAudio && activeAudio !== audio) activeAudio.pause();
+      audio.currentTime = 0;
+      activeAudio = audio;
+      audio.play();
+    });
+
+    audio.addEventListener('play', () => { toggle.textContent = 'Pause'; });
+    audio.addEventListener('pause', () => { toggle.textContent = 'Play'; });
+    audio.addEventListener('ended', () => { toggle.textContent = 'Play'; });
+  });
+}
+
 function bindForm() {
   const form = document.querySelector('.waitlist-form');
   form.addEventListener('submit', (event) => {
@@ -157,5 +212,6 @@ renderLearn();
 renderTabs();
 renderProjects();
 renderTimeline();
+renderMusicPlaylist();
 bindForm();
 bindRevealCards();

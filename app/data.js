@@ -38,6 +38,11 @@ window.BOSS_UP_DATA = {
     { category: "Websites", title: "The H.I.P.H.O.P. Academy", status: "In Development", initials: "HA", accent: "rgba(255,255,255,.2)", description: "The parent academy site and mission hub for How I Put Harmony On Pain." },
     { category: "Apps", title: "Student Project Pipeline", status: "Coming Soon", initials: "20", accent: "rgba(95,127,104,.34)", description: "A section reserved for work created by the first Boss Up Bootcamp cohort." }
   ],
+  musicTracks: [
+    { title: "Song Title Coming Soon", src: "", status: "MP3 Slot 01" },
+    { title: "Song Title Coming Soon", src: "", status: "MP3 Slot 02" },
+    { title: "Song Title Coming Soon", src: "", status: "MP3 Slot 03" }
+  ],
   process: [
     {
       title: "Clarify the idea",
