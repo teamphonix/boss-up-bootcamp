@@ -280,6 +280,13 @@ h3 { font-size: 1.35rem; font-weight: 900; letter-spacing: -0.025em; line-height
   width: 100%;
   height: auto;
 }
+.outcomes-image-card.reveal-card {
+  transform: translateY(52px) scale(.965);
+  transition-duration: .85s;
+}
+.outcomes-image-card.reveal-card.is-visible {
+  transform: translateY(0) scale(1);
+}
 .showcase-section { padding-top: 54px; }
 .showcase-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
 .tab-button { min-height: 40px; padding: 0 14px; border: 1px solid rgba(0,255,255,.2); border-radius: 999px; background: rgba(16,20,27,.72); color: #e8edf5; font: inherit; font-size: .9rem; font-weight: 900; cursor: pointer; }
