@@ -62,6 +62,7 @@ function bindDropdowns() {
 }
 
 function renderLearn() {
+  if (!learnGrid) return;
   learnGrid.innerHTML = data.learn.map((item) => `
     <article class="learn-card">
       <div class="icon" aria-hidden="true">${escapeHtml(item.icon)}</div>
