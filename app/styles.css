@@ -144,13 +144,14 @@ h3 { font-size: 1.35rem; font-weight: 900; letter-spacing: -0.025em; line-height
 .carousel {
   position: relative;
   min-height: 530px;
-  overflow: hidden;
+  overflow: visible;
   border-radius: 34px;
   background: var(--panel);
   border: 1px solid rgba(0,255,255,.18);
   box-shadow: var(--shadow);
+  margin-bottom: 34px;
 }
-.slides { position: relative; min-height: 530px; }
+.slides { position: relative; min-height: 530px; overflow: hidden; border-radius: inherit; }
 .slide {
   position: absolute;
   inset: 0;
@@ -200,11 +201,30 @@ h3 { font-size: 1.35rem; font-weight: 900; letter-spacing: -0.025em; line-height
 .slide h3 { max-width: 470px; margin-top: 14px; color: var(--ink); font-size: clamp(2rem, 4vw, 3.25rem); line-height: .96; text-shadow: 0 2px 22px rgba(0,0,0,.92); }
 .slide p { max-width: 430px; margin-top: 16px; color: rgba(255,255,255,.86); text-shadow: 0 2px 16px rgba(0,0,0,.9); }
 .slide-meta { margin-top: 24px; color: var(--academy-gold); font-size: .94rem; font-weight: 900; text-shadow: 0 2px 18px rgba(0,0,0,.95); }
-.carousel-controls { position: absolute; left: 24px; right: 24px; bottom: 22px; z-index: 2; display: flex; align-items: center; justify-content: space-between; pointer-events: none; }
-.carousel-btn, .dot { pointer-events: auto; border: 1px solid rgba(0,255,255,.28); background: rgba(0,0,0,.34); color: var(--ink); backdrop-filter: blur(12px); cursor: pointer; }
-.carousel-btn { width: 42px; height: 42px; border-radius: 50%; font-size: 1.5rem; }
-.carousel-dots { display: flex; gap: 8px; }
-.dot { width: 9px; height: 9px; padding: 0; border-radius: 999px; }
+.carousel-controls {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  top: 50%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.carousel-btn, .dot { pointer-events: auto; border: 1px solid rgba(0,255,255,.28); background: rgba(0,0,0,.5); color: var(--ink); backdrop-filter: blur(12px); cursor: pointer; }
+.carousel-btn { width: 46px; height: 46px; border-radius: 50%; font-size: 1.5rem; box-shadow: 0 10px 28px rgba(0,0,0,.45); }
+.carousel-dots {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 14px);
+  display: flex;
+  gap: 8px;
+  transform: translateX(-50%);
+  pointer-events: auto;
+}
+.dot { width: 9px; height: 9px; padding: 0; border-radius: 999px; background: rgba(255,255,255,.32); }
 .dot.active { width: 24px; background: var(--academy-cyan); border-color: var(--academy-cyan); }
 
 .snapshot { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; padding-block: 0 54px; }
@@ -308,7 +328,7 @@ input:focus, select:focus { outline: 3px solid rgba(0,255,255,.18); border-color
   .slide { padding: 36px 24px 62px; }
   .slide::before { inset: 18px; border-radius: 22px; }
   .slide h3 { font-size: 2.1rem; }
-  .carousel-controls { left: 16px; right: 16px; bottom: 16px; }
+  .carousel-controls { left: 12px; right: 12px; top: 50%; bottom: auto; }
   .snapshot, .learn-grid, .showcase-grid, .timeline { grid-template-columns: 1fr; }
   .learn-card, .project-card, .timeline-step, .founder-card, .registration-card { border-radius: 22px; }
   .outcomes-card { border-radius: 28px; padding: 24px 18px; }
