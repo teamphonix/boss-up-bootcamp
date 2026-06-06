@@ -19,7 +19,7 @@ function renderSlides() {
       <span class="slide-label">${escapeHtml(slide.label)}</span>
       <h3>${escapeHtml(slide.title)}</h3>
       <p>${escapeHtml(slide.body)}</p>
-      <span class="slide-meta">${escapeHtml(slide.meta)}</span>
+      ${slide.meta ? `<span class="slide-meta">${escapeHtml(slide.meta)}</span>` : ''}
     </article>
   `).join('');
   dotsEl.innerHTML = data.slides.map((_, index) => `

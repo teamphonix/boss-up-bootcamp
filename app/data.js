@@ -1,22 +1,22 @@
 window.BOSS_UP_DATA = {
   slides: [
     {
-      label: "Program",
-      title: "The H.I.P.H.O.P. Academy path from creativity to opportunity.",
-      body: "Boss Up Bootcamp extends the Academy brand into hands-on AI entrepreneurship, digital creation, and launch planning.",
-      meta: "20 seats • Guided sessions"
+      label: "CARD 1",
+      title: "Start Your Brand",
+      body: "Learn how to turn your ideas into a business, project, or personal brand.",
+      meta: ""
     },
     {
-      label: "Creative Workflows",
-      title: "From idea to assets with professional direction.",
-      body: "Participants follow clear steps to build visual assets, campaign ideas, video concepts, and portfolio pieces.",
-      meta: "Graphics • Video • Music"
+      label: "CARD 2",
+      title: "Create With AI",
+      body: "Build graphics, music, videos, websites, and marketing content faster than ever.",
+      meta: ""
     },
     {
-      label: "Launch Plan",
-      title: "Leave with next steps, not just notes.",
-      body: "Every participant works toward a brand direction, digital home, content plan, and practical rollout checklist.",
-      meta: "Brand • Web • Marketing"
+      label: "CARD 3",
+      title: "Launch With Confidence",
+      body: "Leave with a plan, tools, and assets you can use immediately.",
+      meta: ""
     }
   ],
   learn: [
