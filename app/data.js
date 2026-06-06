@@ -4,19 +4,22 @@ window.BOSS_UP_DATA = {
       label: "CARD 1",
       title: "Start Your Brand",
       body: "Learn how to turn your ideas into a business, project, or personal brand.",
-      meta: ""
+      image: "./assets/generated/carousel-start-brand.jpg",
+      alt: "Start Your Brand Boss Up Bootcamp carousel card"
     },
     {
       label: "CARD 2",
       title: "Create With AI",
       body: "Build graphics, music, videos, websites, and marketing content faster than ever.",
-      meta: ""
+      image: "./assets/generated/carousel-create-ai.jpg",
+      alt: "Create With AI Boss Up Bootcamp carousel card"
     },
     {
       label: "CARD 3",
       title: "Launch With Confidence",
       body: "Leave with a plan, tools, and assets you can use immediately.",
-      meta: ""
+      image: "./assets/generated/carousel-launch-confidence.jpg",
+      alt: "Launch With Confidence Boss Up Bootcamp carousel card"
     }
   ],
   learn: [

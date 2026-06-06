@@ -14,14 +14,21 @@ function escapeHtml(value) {
 
 function renderSlides() {
   if (!slidesEl || !dotsEl || !data.slides?.length) return;
-  slidesEl.innerHTML = data.slides.map((slide, index) => `
-    <article class="slide ${index === activeSlide ? 'active' : ''}" aria-hidden="${index === activeSlide ? 'false' : 'true'}">
+  slidesEl.innerHTML = data.slides.map((slide, index) => {
+    const imageMarkup = slide.image
+      ? `<img class="slide-image" src="${escapeHtml(slide.image)}" alt="${escapeHtml(slide.alt || slide.title)}" loading="${index === 0 ? 'eager' : 'lazy'}" />`
+      : `
       <span class="slide-label">${escapeHtml(slide.label)}</span>
       <h3>${escapeHtml(slide.title)}</h3>
       <p>${escapeHtml(slide.body)}</p>
       ${slide.meta ? `<span class="slide-meta">${escapeHtml(slide.meta)}</span>` : ''}
+    `;
+    return `
+    <article class="slide ${slide.image ? 'has-image' : ''} ${index === activeSlide ? 'active' : ''}" aria-hidden="${index === activeSlide ? 'false' : 'true'}">
+      ${imageMarkup}
     </article>
-  `).join('');
+  `;
+  }).join('');
   dotsEl.innerHTML = data.slides.map((_, index) => `
     <button class="dot ${index === activeSlide ? 'active' : ''}" type="button" aria-label="Show slide ${index + 1}" data-slide="${index}"></button>
   `).join('');
