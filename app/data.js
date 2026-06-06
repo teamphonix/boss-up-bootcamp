@@ -49,7 +49,7 @@ window.BOSS_UP_DATA = {
     { title: "Ghetto Gospel Anthem", src: "./assets/audio/audio-5500afc83a4a.mp3", status: "Featured Track 08" },
     { title: "Rock Hip Hop Crossover", src: "./assets/audio/audio-230511c78219.mp3", status: "Featured Track 09" },
     { title: "Fine Dining Jingle - Lorena's", src: "./assets/audio/audio-a2ce3134fef4.mp3", status: "Featured Track 10" },
-    { title: "Restaurant Techno Jingle", src: "./assets/audio/audio-84cc64c8b060.mp3", status: "Featured Track 11" }
+    { title: "Restaurant Techno Jingle - BLU Livingston", src: "./assets/audio/audio-84cc64c8b060.mp3", status: "Featured Track 11" }
   ],
   process: [
     {
