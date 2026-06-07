@@ -65,7 +65,8 @@ window.BOSS_UP_DATA = {
       category: "AI Generated Visuals",
       mediaType: "beforeAfterImage",
       beforeLink: "https://drive.google.com/file/d/1zCT69fk381qi093AGJyvWm6YVsrUh9ik/view?usp=drivesdk",
-      afterLink: "https://drive.google.com/file/d/1TYc_YM2ObJ4wSYfWI06MTkqfWfF1PXjJ/view?usp=drivesdk",
+      afterLink: "./assets/videos/ai-generated-image-1-after.mp4",
+      afterMediaType: "video",
       caption: "Before and after AI-generated image transformation."
     },
     {

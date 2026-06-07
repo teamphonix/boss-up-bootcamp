@@ -728,45 +728,6 @@ body.gallery-open { overflow: hidden; }
   height: auto;
   background: #000;
 }
-.gallery-video-play {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 3;
-  display: grid;
-  place-items: center;
-  gap: 8px;
-  width: 132px;
-  height: 132px;
-  border: 2px solid rgba(255,215,0,.78);
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(0,0,0,.88), rgba(0,0,0,.58));
-  color: #fff;
-  font: inherit;
-  font-weight: 900;
-  transform: translate(-50%, -50%);
-  cursor: pointer;
-  box-shadow: 0 18px 60px rgba(0,0,0,.55), 0 0 28px rgba(255,215,0,.16);
-  backdrop-filter: blur(12px);
-}
-.gallery-video-play span {
-  display: grid;
-  place-items: center;
-  width: 54px;
-  height: 54px;
-  padding-left: 5px;
-  border-radius: 50%;
-  background: var(--academy-gold);
-  color: #000;
-  font-size: 1.55rem;
-}
-.gallery-video-play strong {
-  color: var(--academy-cyan);
-  font-size: .78rem;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-.gallery-video-play.is-hidden { display: none; }
 @media (max-width: 700px) {
   .portfolio-launch-card { grid-template-columns: 1fr; }
   .portfolio-launch-art { min-height: 150px; border-right: 0; border-bottom: 1px solid var(--line); }
