@@ -40,11 +40,11 @@ window.BOSS_UP_DATA = {
   ],
   portfolioGallery: [
     {
-      title: "Business Logo 1",
+      title: "Hip Hop Academy Logo",
       category: "Business Logos",
       mediaType: "image",
       link: "https://drive.google.com/file/d/1-bA1AdlGVxapFQy-TVotJxefDlUu1o0h/view?usp=drivesdk",
-      caption: "Business logo design."
+      caption: "The H.I.P.H.O.P. Academy logo — used as the cover image for the full portfolio gallery."
     },
     {
       title: "Business Logo 2",

@@ -13,7 +13,6 @@ let activeGalleryIndex = 0;
 let activeGalleryCategory = 'All';
 let activeCompareSide = 'after';
 let touchStartX = 0;
-let activePortfolioPreview = 0;
 
 function escapeHtml(value) {
   return String(value || '').replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
@@ -163,27 +162,21 @@ function renderPortfolioCards(active = 'All') {
     showcaseGrid.innerHTML = '';
     return;
   }
-  activePortfolioPreview = (activePortfolioPreview + items.length) % items.length;
-  const previewItem = items[activePortfolioPreview];
+  const holdingItem = galleryItems()[0] || items[0];
   const countText = `${items.length} portfolio ${items.length === 1 ? 'piece' : 'pieces'}`;
   showcaseGrid.innerHTML = `
-    <article class="project-card portfolio-launch-card portfolio-carousel-cell reveal-card">
+    <article class="project-card portfolio-launch-card portfolio-carousel-cell portfolio-holding-cell reveal-card">
       <button class="portfolio-carousel-preview" type="button" data-open-gallery-category="${escapeHtml(active)}" aria-label="Open portfolio gallery">
-        <img src="${escapeHtml(itemThumb(previewItem))}" alt="${escapeHtml(previewItem.title)} preview" loading="lazy" />
+        <img src="${escapeHtml(itemThumb(holdingItem))}" alt="${escapeHtml(holdingItem.title)} gallery cover" loading="lazy" />
         <span class="portfolio-preview-overlay">
-          <span>${escapeHtml(previewItem.category)}</span>
-          <strong>${escapeHtml(previewItem.title)}</strong>
+          <span>Tap to open</span>
+          <strong>${escapeHtml(holdingItem.title)}</strong>
         </span>
       </button>
       <div class="project-body portfolio-body">
         <span class="badge">${escapeHtml(active === 'All' ? 'Creative Portfolio' : active)}</span>
         <h3>${escapeHtml(active === 'All' ? 'Portfolio Gallery' : `${active} Gallery`)}</h3>
-        <p>One compact carousel cell for ${escapeHtml(countText)}. Use the arrows to preview, or open full-screen to swipe, sort by category, and view before/after or video pieces.</p>
-        <div class="portfolio-inline-controls" aria-label="Portfolio preview controls">
-          <button class="track-button" type="button" data-preview-move="-1">‹ Preview</button>
-          <span>${activePortfolioPreview + 1} / ${items.length}</span>
-          <button class="track-button" type="button" data-preview-move="1">Next ›</button>
-        </div>
+        <p>The Hip Hop Academy logo now holds the space for the gallery. Tap the image or button to open the full-screen swipe gallery for ${escapeHtml(countText)}, including full-size vertical, landscape, video, and before/after pieces.</p>
         <button class="button button-dark portfolio-gallery-cta" type="button" data-open-gallery-category="${escapeHtml(active)}">Open Gallery</button>
       </div>
     </article>
@@ -191,19 +184,12 @@ function renderPortfolioCards(active = 'All') {
   showcaseGrid.querySelectorAll('[data-open-gallery-category]').forEach((button) => {
     button.addEventListener('click', () => openGalleryCategory(active));
   });
-  showcaseGrid.querySelectorAll('[data-preview-move]').forEach((button) => {
-    button.addEventListener('click', () => {
-      activePortfolioPreview += Number(button.dataset.previewMove);
-      renderPortfolioCards(active);
-    });
-  });
   bindRevealCards();
 }
 
 function renderProjects(active = 'All') {
   if (!showcaseGrid) return;
   activeGalleryCategory = active;
-  activePortfolioPreview = 0;
   if (galleryItems().length) renderPortfolioCards(active);
   else renderProjectPlaceholders(active);
 }
