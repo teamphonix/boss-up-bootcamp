@@ -28,6 +28,18 @@ function drivePreview(url, size = 1600) {
   return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w${size}` : url;
 }
 
+function driveDirect(url) {
+  const id = driveId(url);
+  return id ? `https://drive.google.com/uc?export=download&id=${id}` : url;
+}
+
+function itemCurrentMediaType(item) {
+  if (item.mediaType === 'video') return 'video';
+  if (item.mediaType === 'beforeAfterImage' && activeCompareSide === 'after' && item.afterMediaType === 'video') return 'video';
+  if (item.mediaType === 'beforeAfterImage' && activeCompareSide === 'before' && item.beforeMediaType === 'video') return 'video';
+  return 'image';
+}
+
 function galleryItems() {
   return data.portfolioGallery || [];
 }
@@ -146,24 +158,22 @@ function itemThumb(item) {
 
 function renderPortfolioCards(active = 'All') {
   const items = active === 'All' ? galleryItems() : galleryItems().filter((item) => item.category === active);
-  showcaseGrid.innerHTML = items.map((item) => `
-    <article class="project-card portfolio-card reveal-card" data-gallery-title="${escapeHtml(item.title)}">
-      <button class="portfolio-open" type="button" data-gallery-index="${galleryItems().indexOf(item)}" aria-label="Open ${escapeHtml(item.title)} in full screen gallery">
-        <span class="portfolio-thumb-wrap">
-          <img class="portfolio-thumb" src="${escapeHtml(itemThumb(item))}" alt="${escapeHtml(item.title)}" loading="lazy" />
-          ${item.mediaType === 'beforeAfterImage' ? '<span class="compare-pill">Before / After</span>' : ''}
-        </span>
-        <span class="project-body portfolio-body">
-          <span class="badge">${escapeHtml(item.category)}</span>
-          <h3>${escapeHtml(item.title)}</h3>
-          <p>${escapeHtml(item.caption)}</p>
-        </span>
-      </button>
+  const countText = `${items.length} portfolio ${items.length === 1 ? 'piece' : 'pieces'}`;
+  showcaseGrid.innerHTML = `
+    <article class="project-card portfolio-launch-card reveal-card">
+      <div class="portfolio-launch-art" aria-hidden="true">
+        <span>Gallery</span>
+        <strong>${escapeHtml(String(items.length).padStart(2, '0'))}</strong>
+      </div>
+      <div class="project-body portfolio-body">
+        <span class="badge">${escapeHtml(active === 'All' ? 'Creative Portfolio' : active)}</span>
+        <h3>${escapeHtml(active === 'All' ? 'Open Full Gallery' : `Open ${active}`)}</h3>
+        <p>View ${escapeHtml(countText)} in one full-screen swipe gallery. Images stay full-size, before/after edits have a toggle, and videos play in the viewer.</p>
+        <button class="button button-dark portfolio-gallery-cta" type="button" data-open-gallery-category="${escapeHtml(active)}">Open Gallery</button>
+      </div>
     </article>
-  `).join('');
-  showcaseGrid.querySelectorAll('[data-gallery-index]').forEach((button) => {
-    button.addEventListener('click', () => openGallery(Number(button.dataset.galleryIndex)));
-  });
+  `;
+  showcaseGrid.querySelector('[data-open-gallery-category]')?.addEventListener('click', () => openGalleryCategory(active));
   bindRevealCards();
 }
 
@@ -242,10 +252,14 @@ function renderGalleryMedia(item) {
   const isBeforeAfter = item.mediaType === 'beforeAfterImage';
   const currentLink = isBeforeAfter && activeCompareSide === 'before' ? item.beforeLink : (item.afterLink || item.link);
   const label = isBeforeAfter ? activeCompareSide.toUpperCase() : item.category;
+  const currentMediaType = itemCurrentMediaType(item);
+  const mediaMarkup = currentMediaType === 'video'
+    ? `<video class="gallery-full-media gallery-video" src="${escapeHtml(driveDirect(currentLink))}" poster="${escapeHtml(drivePreview(currentLink, 1600))}" autoplay playsinline controls preload="auto"></video>`
+    : `<img class="gallery-full-media" src="${escapeHtml(drivePreview(currentLink, 2200))}" alt="${escapeHtml(item.title)} ${escapeHtml(label)}" />`;
   return `
     <div class="gallery-media-frame">
-      <span class="gallery-side-label">${escapeHtml(label)}</span>
-      <img class="gallery-full-media" src="${escapeHtml(drivePreview(currentLink, 2200))}" alt="${escapeHtml(item.title)} ${escapeHtml(label)}" />
+      <span class="gallery-side-label">${escapeHtml(label)}${currentMediaType === 'video' ? ' · VIDEO' : ''}</span>
+      ${mediaMarkup}
     </div>
   `;
 }
@@ -266,12 +280,12 @@ function renderGallery() {
           <span>${escapeHtml(item.category)}</span>
           <strong>${escapeHtml(item.title)}</strong>
         </div>
-        <div class="gallery-category-menu">
-          <button class="gallery-category-toggle" type="button" aria-expanded="false">Categories ▾</button>
-          <div class="gallery-category-list" hidden>
-            ${galleryCategories().map((category) => `<button type="button" data-gallery-category="${escapeHtml(category)}">${escapeHtml(category)}</button>`).join('')}
-          </div>
-        </div>
+        <label class="gallery-category-menu">
+          <span class="sr-only">Gallery category</span>
+          <select class="gallery-category-select" aria-label="Choose gallery category">
+            ${galleryCategories().map((category) => `<option value="${escapeHtml(category)}" ${category === activeGalleryCategory ? 'selected' : ''}>${escapeHtml(category)}</option>`).join('')}
+          </select>
+        </label>
       </div>
       <div class="gallery-stage">
         <button class="gallery-nav gallery-prev" type="button" aria-label="Previous item">‹</button>
@@ -291,6 +305,7 @@ function renderGallery() {
     </div>
   `;
   bindGalleryControls();
+  startGalleryVideo();
 }
 
 function openGallery(globalIndex) {
@@ -304,12 +319,43 @@ function openGallery(globalIndex) {
   renderGallery();
 }
 
+function openGalleryCategory(category = 'All') {
+  activeGalleryCategory = category;
+  activeGalleryIndex = 0;
+  activeCompareSide = 'after';
+  document.body.classList.add('gallery-open');
+  document.querySelector('#portfolio-lightbox')?.removeAttribute('hidden');
+  renderGallery();
+}
+
 function closeGallery() {
+  stopGalleryMedia();
   document.body.classList.remove('gallery-open');
   document.querySelector('#portfolio-lightbox')?.setAttribute('hidden', '');
 }
 
+function stopGalleryMedia() {
+  document.querySelectorAll('#portfolio-lightbox video').forEach((video) => {
+    video.pause();
+    video.removeAttribute('src');
+    video.load();
+  });
+}
+
+function startGalleryVideo() {
+  const video = document.querySelector('#portfolio-lightbox video');
+  if (!video) return;
+  const attempt = video.play();
+  if (attempt?.catch) {
+    attempt.catch(() => {
+      video.muted = true;
+      video.play().catch(() => {});
+    });
+  }
+}
+
 function moveGallery(direction) {
+  stopGalleryMedia();
   activeCompareSide = 'after';
   activeGalleryIndex += direction;
   renderGallery();
@@ -326,20 +372,12 @@ function bindGalleryControls() {
       renderGallery();
     });
   });
-  const categoryToggle = lightbox.querySelector('.gallery-category-toggle');
-  const categoryList = lightbox.querySelector('.gallery-category-list');
-  categoryToggle?.addEventListener('click', () => {
-    const isHidden = categoryList.hasAttribute('hidden');
-    categoryList.toggleAttribute('hidden', !isHidden);
-    categoryToggle.setAttribute('aria-expanded', String(isHidden));
-  });
-  lightbox.querySelectorAll('[data-gallery-category]').forEach((button) => {
-    button.addEventListener('click', () => {
-      activeGalleryCategory = button.dataset.galleryCategory;
-      activeGalleryIndex = 0;
-      activeCompareSide = 'after';
-      renderGallery();
-    });
+  lightbox.querySelector('.gallery-category-select')?.addEventListener('change', (event) => {
+    stopGalleryMedia();
+    activeGalleryCategory = event.target.value;
+    activeGalleryIndex = 0;
+    activeCompareSide = 'after';
+    renderGallery();
   });
   lightbox.querySelector('.gallery-stage')?.addEventListener('touchstart', (event) => {
     touchStartX = event.changedTouches[0].screenX;

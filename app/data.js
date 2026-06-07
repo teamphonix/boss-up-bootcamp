@@ -62,7 +62,7 @@ window.BOSS_UP_DATA = {
     },
     {
       title: "Generated Image 1",
-      category: "Before / After Edits",
+      category: "AI Generated Visuals",
       mediaType: "beforeAfterImage",
       beforeLink: "https://drive.google.com/file/d/1zCT69fk381qi093AGJyvWm6YVsrUh9ik/view?usp=drivesdk",
       afterLink: "https://drive.google.com/file/d/1TYc_YM2ObJ4wSYfWI06MTkqfWfF1PXjJ/view?usp=drivesdk",
@@ -70,7 +70,7 @@ window.BOSS_UP_DATA = {
     },
     {
       title: "Photo Edit 1",
-      category: "Before / After Edits",
+      category: "Photo Edits",
       mediaType: "beforeAfterImage",
       beforeLink: "https://drive.google.com/file/d/1KN0lNSLuVIldwuQ6jCs5dN8jNlUUVsOC/view?usp=drivesdk",
       afterLink: "https://drive.google.com/file/d/1D_W3Xfl8Cb8kzMQk5f3wLKo5_GNRtH47/view?usp=drivesdk",
@@ -78,7 +78,7 @@ window.BOSS_UP_DATA = {
     },
     {
       title: "Photo Edit 2",
-      category: "Before / After Edits",
+      category: "Photo Edits",
       mediaType: "beforeAfterImage",
       beforeLink: "https://drive.google.com/file/d/11OKRRZXh2on-A0YhbBh6HCNUVpLcgNaZ/view?usp=drivesdk",
       afterLink: "https://drive.google.com/file/d/1QX-TtXBx-JepTgX239yFH2ggYTaa8wB2/view?usp=drivesdk",
@@ -86,7 +86,7 @@ window.BOSS_UP_DATA = {
     },
     {
       title: "Photo Edit 3",
-      category: "Before / After Edits",
+      category: "Photo Edits",
       mediaType: "beforeAfterImage",
       beforeLink: "https://drive.google.com/file/d/18YklMVu6bQpCTWtV6ssaTjnHzWAPPCLq/view?usp=drivesdk",
       afterLink: "https://drive.google.com/file/d/1V-kePydL3fP0_e517s2l_WHe6GdwLUFq/view?usp=drivesdk",
@@ -94,10 +94,11 @@ window.BOSS_UP_DATA = {
     },
     {
       title: "AI Generated Image 2",
-      category: "Before / After Edits",
+      category: "AI Generated Visuals",
       mediaType: "beforeAfterImage",
       beforeLink: "https://drive.google.com/file/d/1A6B0nXIRX2IpTKiiKDa6ttTknMiPNyiA/view?usp=drivesdk",
       afterLink: "https://drive.google.com/file/d/1_OG8Vymr5wohvUfc5K3l5lRVmt5YpaJS/view?usp=drivesdk",
+      afterMediaType: "video",
       caption: "Before and after AI-generated image transformation."
     },
     {
@@ -109,7 +110,7 @@ window.BOSS_UP_DATA = {
     },
     {
       title: "Photo Edit 4",
-      category: "Before / After Edits",
+      category: "Photo Edits",
       mediaType: "beforeAfterImage",
       beforeLink: "https://drive.google.com/file/d/1tGOKSQgzbDTSIuVuXf-UKOM737QM4mEP/view?usp=drivesdk",
       afterLink: "https://drive.google.com/file/d/1A-65JbKW7CutV6QjHSTT3XmWBCWaB422/view?usp=drivesdk",
@@ -124,10 +125,11 @@ window.BOSS_UP_DATA = {
     },
     {
       title: "AI Generated Image 4",
-      category: "Before / After Edits",
+      category: "AI Generated Visuals",
       mediaType: "beforeAfterImage",
       beforeLink: "https://drive.google.com/file/d/1zu8ztRuiKxBUuUrqZWQAWCG7_KXDthMO/view?usp=drivesdk",
       afterLink: "https://drive.google.com/file/d/1SUgPLG5EnGuc-VnwZd5Wf5V45GjFT62E/view?usp=drivesdk",
+      afterMediaType: "video",
       caption: "Before and after AI-generated image transformation."
     }
   ],
