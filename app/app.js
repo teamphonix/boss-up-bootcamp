@@ -263,8 +263,9 @@ function renderGalleryMedia(item) {
   const currentLink = isBeforeAfter && activeCompareSide === 'before' ? item.beforeLink : (item.afterLink || item.link);
   const label = isBeforeAfter ? activeCompareSide.toUpperCase() : item.category;
   const currentMediaType = itemCurrentMediaType(item);
+  const posterLink = currentMediaType === 'video' && isBeforeAfter ? item.beforeLink : currentLink;
   const mediaMarkup = currentMediaType === 'video'
-    ? `<video class="gallery-full-media gallery-video" poster="${escapeHtml(drivePreview(currentLink, 1600))}" autoplay muted playsinline webkit-playsinline controls loop preload="auto"><source src="${escapeHtml(driveDirect(currentLink))}" type="video/mp4" /></video>`
+    ? `<video class="gallery-full-media gallery-video" poster="${escapeHtml(drivePreview(posterLink, 1600))}" autoplay muted playsinline webkit-playsinline controls loop preload="auto"><source src="${escapeHtml(driveDirect(currentLink))}" type="video/mp4" /></video>`
     : `<img class="gallery-full-media" src="${escapeHtml(drivePreview(currentLink, 2200))}" alt="${escapeHtml(item.title)} ${escapeHtml(label)}" />`;
   return `
     <div class="gallery-media-frame">

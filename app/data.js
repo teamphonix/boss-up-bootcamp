@@ -97,7 +97,7 @@ window.BOSS_UP_DATA = {
       category: "AI Generated Visuals",
       mediaType: "beforeAfterImage",
       beforeLink: "https://drive.google.com/file/d/1A6B0nXIRX2IpTKiiKDa6ttTknMiPNyiA/view?usp=drivesdk",
-      afterLink: "https://drive.google.com/file/d/1_OG8Vymr5wohvUfc5K3l5lRVmt5YpaJS/view?usp=drivesdk",
+      afterLink: "./assets/videos/ai-generated-image-2-after.mp4",
       afterMediaType: "video",
       caption: "Before and after AI-generated image transformation."
     },
@@ -128,7 +128,7 @@ window.BOSS_UP_DATA = {
       category: "AI Generated Visuals",
       mediaType: "beforeAfterImage",
       beforeLink: "https://drive.google.com/file/d/1zu8ztRuiKxBUuUrqZWQAWCG7_KXDthMO/view?usp=drivesdk",
-      afterLink: "https://drive.google.com/file/d/1SUgPLG5EnGuc-VnwZd5Wf5V45GjFT62E/view?usp=drivesdk",
+      afterLink: "./assets/videos/ai-generated-image-4-after.mp4",
       afterMediaType: "video",
       caption: "Before and after AI-generated image transformation."
     }
