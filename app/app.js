@@ -1,4 +1,4 @@
-const data = window.BOSS_UP_DATA || { slides: [], learn: [], projects: [], process: [] };
+const data = window.BOSS_UP_DATA || { slides: [], learn: [], projects: [], process: [], portfolioGallery: [] };
 const learnGrid = document.querySelector('#learn-grid');
 const showcaseGrid = document.querySelector('#showcase-grid');
 const tabs = document.querySelector('#showcase-tabs');
@@ -9,9 +9,36 @@ const musicPlaylist = document.querySelector('#music-playlist');
 let activeSlide = 0;
 let slideTimer;
 let activeAudio;
+let activeGalleryIndex = 0;
+let activeGalleryCategory = 'All';
+let activeCompareSide = 'after';
+let touchStartX = 0;
 
 function escapeHtml(value) {
   return String(value || '').replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
+}
+
+function driveId(url) {
+  const match = String(url || '').match(/\/d\/([^/]+)|[?&]id=([^&]+)/);
+  return match ? (match[1] || match[2]) : '';
+}
+
+function drivePreview(url, size = 1600) {
+  const id = driveId(url);
+  return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w${size}` : url;
+}
+
+function galleryItems() {
+  return data.portfolioGallery || [];
+}
+
+function galleryCategories() {
+  return ['All', ...Array.from(new Set(galleryItems().map((item) => item.category)))];
+}
+
+function filteredGalleryItems() {
+  const items = galleryItems();
+  return activeGalleryCategory === 'All' ? items : items.filter((item) => item.category === activeGalleryCategory);
 }
 
 function renderSlides() {
@@ -82,10 +109,12 @@ function renderLearn() {
 }
 
 function categories() {
-  return ['All', ...Array.from(new Set(data.projects.map((project) => project.category)))];
+  const portfolio = galleryItems();
+  return portfolio.length ? galleryCategories() : ['All', ...Array.from(new Set(data.projects.map((project) => project.category)))];
 }
 
 function renderTabs(active = 'All') {
+  if (!tabs) return;
   tabs.innerHTML = categories().map((category) => `
     <button class="tab-button ${category === active ? 'active' : ''}" data-category="${escapeHtml(category)}" type="button">${escapeHtml(category)}</button>
   `).join('');
@@ -97,7 +126,7 @@ function renderTabs(active = 'All') {
   });
 }
 
-function renderProjects(active = 'All') {
+function renderProjectPlaceholders(active = 'All') {
   const projects = active === 'All' ? data.projects : data.projects.filter((project) => project.category === active);
   showcaseGrid.innerHTML = projects.map((project) => `
     <article class="project-card">
@@ -111,7 +140,42 @@ function renderProjects(active = 'All') {
   `).join('');
 }
 
+function itemThumb(item) {
+  return drivePreview(item.afterLink || item.link || item.beforeLink, 900);
+}
+
+function renderPortfolioCards(active = 'All') {
+  const items = active === 'All' ? galleryItems() : galleryItems().filter((item) => item.category === active);
+  showcaseGrid.innerHTML = items.map((item) => `
+    <article class="project-card portfolio-card reveal-card" data-gallery-title="${escapeHtml(item.title)}">
+      <button class="portfolio-open" type="button" data-gallery-index="${galleryItems().indexOf(item)}" aria-label="Open ${escapeHtml(item.title)} in full screen gallery">
+        <span class="portfolio-thumb-wrap">
+          <img class="portfolio-thumb" src="${escapeHtml(itemThumb(item))}" alt="${escapeHtml(item.title)}" loading="lazy" />
+          ${item.mediaType === 'beforeAfterImage' ? '<span class="compare-pill">Before / After</span>' : ''}
+        </span>
+        <span class="project-body portfolio-body">
+          <span class="badge">${escapeHtml(item.category)}</span>
+          <h3>${escapeHtml(item.title)}</h3>
+          <p>${escapeHtml(item.caption)}</p>
+        </span>
+      </button>
+    </article>
+  `).join('');
+  showcaseGrid.querySelectorAll('[data-gallery-index]').forEach((button) => {
+    button.addEventListener('click', () => openGallery(Number(button.dataset.galleryIndex)));
+  });
+  bindRevealCards();
+}
+
+function renderProjects(active = 'All') {
+  if (!showcaseGrid) return;
+  activeGalleryCategory = active;
+  if (galleryItems().length) renderPortfolioCards(active);
+  else renderProjectPlaceholders(active);
+}
+
 function renderTimeline() {
+  if (!timeline) return;
   timeline.innerHTML = data.process.map((step, index) => `
     <article class="timeline-step">
       <span class="number">Phase ${index + 1}</span>
@@ -174,8 +238,136 @@ function renderMusicPlaylist() {
   });
 }
 
+function renderGalleryMedia(item) {
+  const isBeforeAfter = item.mediaType === 'beforeAfterImage';
+  const currentLink = isBeforeAfter && activeCompareSide === 'before' ? item.beforeLink : (item.afterLink || item.link);
+  const label = isBeforeAfter ? activeCompareSide.toUpperCase() : item.category;
+  return `
+    <div class="gallery-media-frame">
+      <span class="gallery-side-label">${escapeHtml(label)}</span>
+      <img class="gallery-full-media" src="${escapeHtml(drivePreview(currentLink, 2200))}" alt="${escapeHtml(item.title)} ${escapeHtml(label)}" />
+    </div>
+  `;
+}
+
+function renderGallery() {
+  const lightbox = document.querySelector('#portfolio-lightbox');
+  if (!lightbox) return;
+  const items = filteredGalleryItems();
+  if (!items.length) return;
+  activeGalleryIndex = (activeGalleryIndex + items.length) % items.length;
+  const item = items[activeGalleryIndex];
+  const isBeforeAfter = item.mediaType === 'beforeAfterImage';
+  lightbox.innerHTML = `
+    <div class="gallery-shell" role="dialog" aria-modal="true" aria-label="Portfolio gallery">
+      <div class="gallery-topbar">
+        <button class="gallery-close" type="button" aria-label="Close gallery">×</button>
+        <div class="gallery-title-block">
+          <span>${escapeHtml(item.category)}</span>
+          <strong>${escapeHtml(item.title)}</strong>
+        </div>
+        <div class="gallery-category-menu">
+          <button class="gallery-category-toggle" type="button" aria-expanded="false">Categories ▾</button>
+          <div class="gallery-category-list" hidden>
+            ${galleryCategories().map((category) => `<button type="button" data-gallery-category="${escapeHtml(category)}">${escapeHtml(category)}</button>`).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="gallery-stage">
+        <button class="gallery-nav gallery-prev" type="button" aria-label="Previous item">‹</button>
+        ${renderGalleryMedia(item)}
+        <button class="gallery-nav gallery-next" type="button" aria-label="Next item">›</button>
+      </div>
+      <div class="gallery-caption-bar">
+        ${isBeforeAfter ? `
+          <div class="compare-toggle" role="group" aria-label="Before after toggle">
+            <button class="${activeCompareSide === 'before' ? 'active' : ''}" type="button" data-compare-side="before">Before</button>
+            <button class="${activeCompareSide === 'after' ? 'active' : ''}" type="button" data-compare-side="after">After</button>
+          </div>
+        ` : ''}
+        <p>${escapeHtml(item.caption)}</p>
+        <span>${activeGalleryIndex + 1} of ${items.length}</span>
+      </div>
+    </div>
+  `;
+  bindGalleryControls();
+}
+
+function openGallery(globalIndex) {
+  const item = galleryItems()[globalIndex];
+  activeGalleryCategory = item?.category || 'All';
+  activeCompareSide = item?.mediaType === 'beforeAfterImage' ? 'after' : 'after';
+  const items = filteredGalleryItems();
+  activeGalleryIndex = Math.max(0, items.findIndex((entry) => entry === item));
+  document.body.classList.add('gallery-open');
+  document.querySelector('#portfolio-lightbox')?.removeAttribute('hidden');
+  renderGallery();
+}
+
+function closeGallery() {
+  document.body.classList.remove('gallery-open');
+  document.querySelector('#portfolio-lightbox')?.setAttribute('hidden', '');
+}
+
+function moveGallery(direction) {
+  activeCompareSide = 'after';
+  activeGalleryIndex += direction;
+  renderGallery();
+}
+
+function bindGalleryControls() {
+  const lightbox = document.querySelector('#portfolio-lightbox');
+  lightbox.querySelector('.gallery-close')?.addEventListener('click', closeGallery);
+  lightbox.querySelector('.gallery-prev')?.addEventListener('click', () => moveGallery(-1));
+  lightbox.querySelector('.gallery-next')?.addEventListener('click', () => moveGallery(1));
+  lightbox.querySelectorAll('[data-compare-side]').forEach((button) => {
+    button.addEventListener('click', () => {
+      activeCompareSide = button.dataset.compareSide;
+      renderGallery();
+    });
+  });
+  const categoryToggle = lightbox.querySelector('.gallery-category-toggle');
+  const categoryList = lightbox.querySelector('.gallery-category-list');
+  categoryToggle?.addEventListener('click', () => {
+    const isHidden = categoryList.hasAttribute('hidden');
+    categoryList.toggleAttribute('hidden', !isHidden);
+    categoryToggle.setAttribute('aria-expanded', String(isHidden));
+  });
+  lightbox.querySelectorAll('[data-gallery-category]').forEach((button) => {
+    button.addEventListener('click', () => {
+      activeGalleryCategory = button.dataset.galleryCategory;
+      activeGalleryIndex = 0;
+      activeCompareSide = 'after';
+      renderGallery();
+    });
+  });
+  lightbox.querySelector('.gallery-stage')?.addEventListener('touchstart', (event) => {
+    touchStartX = event.changedTouches[0].screenX;
+  }, { passive: true });
+  lightbox.querySelector('.gallery-stage')?.addEventListener('touchend', (event) => {
+    const delta = event.changedTouches[0].screenX - touchStartX;
+    if (Math.abs(delta) > 50) moveGallery(delta > 0 ? -1 : 1);
+  }, { passive: true });
+}
+
+function ensureLightbox() {
+  if (!galleryItems().length || document.querySelector('#portfolio-lightbox')) return;
+  const lightbox = document.createElement('div');
+  lightbox.id = 'portfolio-lightbox';
+  lightbox.className = 'portfolio-lightbox';
+  lightbox.hidden = true;
+  document.body.appendChild(lightbox);
+  document.addEventListener('keydown', (event) => {
+    if (!document.body.classList.contains('gallery-open')) return;
+    if (event.key === 'Escape') closeGallery();
+    if (event.key === 'ArrowLeft') moveGallery(-1);
+    if (event.key === 'ArrowRight') moveGallery(1);
+  });
+}
+
 function bindForm() {
   const form = document.querySelector('.waitlist-form');
+  if (!form) return;
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     const button = form.querySelector('button');
@@ -189,7 +381,7 @@ function bindForm() {
 }
 
 function bindRevealCards() {
-  const cards = document.querySelectorAll('.reveal-card');
+  const cards = document.querySelectorAll('.reveal-card:not(.is-visible)');
   if (!cards.length) return;
   if (!('IntersectionObserver' in window)) {
     cards.forEach((card) => card.classList.add('is-visible'));
@@ -206,6 +398,7 @@ function bindRevealCards() {
   cards.forEach((card) => observer.observe(card));
 }
 
+ensureLightbox();
 bindCarousel();
 bindDropdowns();
 renderLearn();
