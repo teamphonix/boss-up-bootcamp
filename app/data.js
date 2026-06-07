@@ -61,7 +61,7 @@ window.BOSS_UP_DATA = {
       caption: "Promotional flyer design."
     },
     {
-      title: "Generated Image 1",
+      title: "AI Generated Image 1",
       category: "AI Generated Visuals",
       mediaType: "beforeAfterImage",
       beforeLink: "https://drive.google.com/file/d/1zCT69fk381qi093AGJyvWm6YVsrUh9ik/view?usp=drivesdk",

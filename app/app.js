@@ -264,7 +264,7 @@ function renderGalleryMedia(item) {
   const label = isBeforeAfter ? activeCompareSide.toUpperCase() : item.category;
   const currentMediaType = itemCurrentMediaType(item);
   const mediaMarkup = currentMediaType === 'video'
-    ? `<video class="gallery-full-media gallery-video" src="${escapeHtml(driveDirect(currentLink))}" poster="${escapeHtml(drivePreview(currentLink, 1600))}" autoplay playsinline controls preload="auto"></video>`
+    ? `<video class="gallery-full-media gallery-video" poster="${escapeHtml(drivePreview(currentLink, 1600))}" autoplay muted playsinline webkit-playsinline controls loop preload="auto"><source src="${escapeHtml(driveDirect(currentLink))}" type="video/mp4" /></video>`
     : `<img class="gallery-full-media" src="${escapeHtml(drivePreview(currentLink, 2200))}" alt="${escapeHtml(item.title)} ${escapeHtml(label)}" />`;
   return `
     <div class="gallery-media-frame">
@@ -348,6 +348,7 @@ function stopGalleryMedia() {
   document.querySelectorAll('#portfolio-lightbox video').forEach((video) => {
     video.pause();
     video.removeAttribute('src');
+    video.querySelectorAll('source').forEach((source) => source.removeAttribute('src'));
     video.load();
   });
 }
@@ -355,13 +356,14 @@ function stopGalleryMedia() {
 function startGalleryVideo() {
   const video = document.querySelector('#portfolio-lightbox video');
   if (!video) return;
+  video.muted = true;
+  video.defaultMuted = true;
+  video.setAttribute('muted', '');
+  video.setAttribute('playsinline', '');
+  video.setAttribute('webkit-playsinline', '');
+  video.load();
   const attempt = video.play();
-  if (attempt?.catch) {
-    attempt.catch(() => {
-      video.muted = true;
-      video.play().catch(() => {});
-    });
-  }
+  if (attempt?.catch) attempt.catch(() => {});
 }
 
 function moveGallery(direction) {
