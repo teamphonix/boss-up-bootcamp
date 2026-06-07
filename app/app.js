@@ -13,6 +13,7 @@ let activeGalleryIndex = 0;
 let activeGalleryCategory = 'All';
 let activeCompareSide = 'after';
 let touchStartX = 0;
+let activePortfolioPreview = 0;
 
 function escapeHtml(value) {
   return String(value || '').replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
@@ -158,28 +159,51 @@ function itemThumb(item) {
 
 function renderPortfolioCards(active = 'All') {
   const items = active === 'All' ? galleryItems() : galleryItems().filter((item) => item.category === active);
+  if (!items.length) {
+    showcaseGrid.innerHTML = '';
+    return;
+  }
+  activePortfolioPreview = (activePortfolioPreview + items.length) % items.length;
+  const previewItem = items[activePortfolioPreview];
   const countText = `${items.length} portfolio ${items.length === 1 ? 'piece' : 'pieces'}`;
   showcaseGrid.innerHTML = `
-    <article class="project-card portfolio-launch-card reveal-card">
-      <div class="portfolio-launch-art" aria-hidden="true">
-        <span>Gallery</span>
-        <strong>${escapeHtml(String(items.length).padStart(2, '0'))}</strong>
-      </div>
+    <article class="project-card portfolio-launch-card portfolio-carousel-cell reveal-card">
+      <button class="portfolio-carousel-preview" type="button" data-open-gallery-category="${escapeHtml(active)}" aria-label="Open portfolio gallery">
+        <img src="${escapeHtml(itemThumb(previewItem))}" alt="${escapeHtml(previewItem.title)} preview" loading="lazy" />
+        <span class="portfolio-preview-overlay">
+          <span>${escapeHtml(previewItem.category)}</span>
+          <strong>${escapeHtml(previewItem.title)}</strong>
+        </span>
+      </button>
       <div class="project-body portfolio-body">
         <span class="badge">${escapeHtml(active === 'All' ? 'Creative Portfolio' : active)}</span>
-        <h3>${escapeHtml(active === 'All' ? 'Open Full Gallery' : `Open ${active}`)}</h3>
-        <p>View ${escapeHtml(countText)} in one full-screen swipe gallery. Images stay full-size, before/after edits have a toggle, and videos play in the viewer.</p>
+        <h3>${escapeHtml(active === 'All' ? 'Portfolio Gallery' : `${active} Gallery`)}</h3>
+        <p>One compact carousel cell for ${escapeHtml(countText)}. Use the arrows to preview, or open full-screen to swipe, sort by category, and view before/after or video pieces.</p>
+        <div class="portfolio-inline-controls" aria-label="Portfolio preview controls">
+          <button class="track-button" type="button" data-preview-move="-1">‹ Preview</button>
+          <span>${activePortfolioPreview + 1} / ${items.length}</span>
+          <button class="track-button" type="button" data-preview-move="1">Next ›</button>
+        </div>
         <button class="button button-dark portfolio-gallery-cta" type="button" data-open-gallery-category="${escapeHtml(active)}">Open Gallery</button>
       </div>
     </article>
   `;
-  showcaseGrid.querySelector('[data-open-gallery-category]')?.addEventListener('click', () => openGalleryCategory(active));
+  showcaseGrid.querySelectorAll('[data-open-gallery-category]').forEach((button) => {
+    button.addEventListener('click', () => openGalleryCategory(active));
+  });
+  showcaseGrid.querySelectorAll('[data-preview-move]').forEach((button) => {
+    button.addEventListener('click', () => {
+      activePortfolioPreview += Number(button.dataset.previewMove);
+      renderPortfolioCards(active);
+    });
+  });
   bindRevealCards();
 }
 
 function renderProjects(active = 'All') {
   if (!showcaseGrid) return;
   activeGalleryCategory = active;
+  activePortfolioPreview = 0;
   if (galleryItems().length) renderPortfolioCards(active);
   else renderProjectPlaceholders(active);
 }
