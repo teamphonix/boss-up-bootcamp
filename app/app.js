@@ -265,7 +265,7 @@ function renderGalleryMedia(item) {
   const currentMediaType = itemCurrentMediaType(item);
   const posterLink = currentMediaType === 'video' && isBeforeAfter ? item.beforeLink : currentLink;
   const mediaMarkup = currentMediaType === 'video'
-    ? `<video class="gallery-full-media gallery-video" poster="${escapeHtml(drivePreview(posterLink, 1600))}" autoplay muted playsinline webkit-playsinline controls loop preload="auto"><source src="${escapeHtml(driveDirect(currentLink))}" type="video/mp4" /></video>`
+    ? `<video class="gallery-full-media gallery-video" poster="${escapeHtml(drivePreview(posterLink, 1600))}" playsinline webkit-playsinline controls loop preload="metadata"><source src="${escapeHtml(driveDirect(currentLink))}" type="video/mp4" /></video><button class="gallery-video-play" type="button" aria-label="Play video"><span aria-hidden="true">▶</span><strong>Play Video</strong></button>`
     : `<img class="gallery-full-media" src="${escapeHtml(drivePreview(currentLink, 2200))}" alt="${escapeHtml(item.title)} ${escapeHtml(label)}" />`;
   return `
     <div class="gallery-media-frame">
@@ -357,14 +357,33 @@ function stopGalleryMedia() {
 function startGalleryVideo() {
   const video = document.querySelector('#portfolio-lightbox video');
   if (!video) return;
-  video.muted = true;
-  video.defaultMuted = true;
-  video.setAttribute('muted', '');
+  video.pause();
+  video.currentTime = 0;
+  video.muted = false;
+  video.defaultMuted = false;
   video.setAttribute('playsinline', '');
   video.setAttribute('webkit-playsinline', '');
   video.load();
+}
+
+function playGalleryVideo() {
+  const video = document.querySelector('#portfolio-lightbox video');
+  const playButton = document.querySelector('#portfolio-lightbox .gallery-video-play');
+  if (!video) return;
+  video.muted = false;
+  video.removeAttribute('muted');
   const attempt = video.play();
-  if (attempt?.catch) attempt.catch(() => {});
+  if (attempt?.catch) {
+    attempt
+      .then(() => playButton?.classList.add('is-hidden'))
+      .catch(() => {
+        video.muted = true;
+        video.setAttribute('muted', '');
+        video.play().then(() => playButton?.classList.add('is-hidden')).catch(() => {});
+      });
+    return;
+  }
+  playButton?.classList.add('is-hidden');
 }
 
 function moveGallery(direction) {
@@ -379,6 +398,16 @@ function bindGalleryControls() {
   lightbox.querySelector('.gallery-close')?.addEventListener('click', closeGallery);
   lightbox.querySelector('.gallery-prev')?.addEventListener('click', () => moveGallery(-1));
   lightbox.querySelector('.gallery-next')?.addEventListener('click', () => moveGallery(1));
+  lightbox.querySelector('.gallery-video-play')?.addEventListener('click', playGalleryVideo);
+  lightbox.querySelector('.gallery-video')?.addEventListener('play', () => {
+    lightbox.querySelector('.gallery-video-play')?.classList.add('is-hidden');
+  });
+  lightbox.querySelector('.gallery-video')?.addEventListener('pause', () => {
+    lightbox.querySelector('.gallery-video-play')?.classList.remove('is-hidden');
+  });
+  lightbox.querySelector('.gallery-video')?.addEventListener('ended', () => {
+    lightbox.querySelector('.gallery-video-play')?.classList.remove('is-hidden');
+  });
   lightbox.querySelectorAll('[data-compare-side]').forEach((button) => {
     button.addEventListener('click', () => {
       activeCompareSide = button.dataset.compareSide;
