@@ -153,7 +153,10 @@ function renderProjectPlaceholders(active = 'All') {
 }
 
 function itemThumb(item) {
-  return drivePreview(item.afterLink || item.link || item.beforeLink, 900);
+  const thumbnailLink = item.afterMediaType === 'video'
+    ? (item.beforeLink || item.link || item.afterLink)
+    : (item.afterLink || item.link || item.beforeLink);
+  return drivePreview(thumbnailLink, 900);
 }
 
 function renderPortfolioCards(active = 'All') {
@@ -162,8 +165,7 @@ function renderPortfolioCards(active = 'All') {
     showcaseGrid.innerHTML = '';
     return;
   }
-  const holdingItem = galleryItems()[0] || items[0];
-  const countText = `${items.length} portfolio ${items.length === 1 ? 'piece' : 'pieces'}`;
+  const holdingItem = active === 'All' ? (galleryItems()[0] || items[0]) : items[0];
   showcaseGrid.innerHTML = `
     <article class="project-card portfolio-launch-card portfolio-carousel-cell portfolio-holding-cell reveal-card">
       <button class="portfolio-carousel-preview" type="button" data-open-gallery-category="${escapeHtml(active)}" aria-label="Open portfolio gallery">
@@ -176,7 +178,7 @@ function renderPortfolioCards(active = 'All') {
       <div class="project-body portfolio-body">
         <span class="badge">${escapeHtml(active === 'All' ? 'Creative Portfolio' : active)}</span>
         <h3>${escapeHtml(active === 'All' ? 'Portfolio Gallery' : `${active} Gallery`)}</h3>
-        <p>The Hip Hop Academy logo now holds the space for the gallery. Tap the image or button to open the full-screen swipe gallery for ${escapeHtml(countText)}, including full-size vertical, landscape, video, and before/after pieces.</p>
+        <p>${escapeHtml(active === 'All' ? 'The Hip Hop Academy logo holds the main portfolio gallery. Tap the image or button to open the full-screen swipe gallery.' : `This cover updates to the first piece in ${active}. Tap the image or button to open that full-screen category gallery.`)} The gallery includes full-size vertical, landscape, video, and before/after pieces.</p>
         <button class="button button-dark portfolio-gallery-cta" type="button" data-open-gallery-category="${escapeHtml(active)}">Open Gallery</button>
       </div>
     </article>
