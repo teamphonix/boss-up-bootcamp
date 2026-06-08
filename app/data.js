@@ -165,15 +165,6 @@ window.BOSS_UP_DATA = {
       caption: "Before and after AI-generated image transformation."
     },
     {
-      title: "AI Generated Image 2",
-      category: "AI Generated Visuals",
-      mediaType: "beforeAfterImage",
-      beforeLink: "https://drive.google.com/file/d/1A6B0nXIRX2IpTKiiKDa6ttTknMiPNyiA/view?usp=drivesdk",
-      afterLink: "./assets/videos/ai-generated-image-2-after.mp4",
-      afterMediaType: "video",
-      caption: "Before and after AI-generated image transformation."
-    },
-    {
       title: "AI Generated Image 5",
       category: "AI Generated Visuals",
       mediaType: "beforeAfterImage",
