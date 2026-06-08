@@ -209,7 +209,7 @@ function portfolioCategoryDescription(active) {
     return 'Explore AI-enhanced photo restorations, quality upgrades, family portraits brought to life, and creative before-and-after transformations.';
   }
   if (active === 'All') {
-    return 'The Hip Hop Academy logo holds the main portfolio gallery. Tap the image or button to open the full-screen swipe gallery. The gallery includes full-size vertical, landscape, video, and before/after pieces.';
+    return 'Explore AI-enhanced photo restorations, quality upgrades, family portraits brought to life, and creative before-and-after transformations.';
   }
   return `This cover updates to the first piece in ${active}. Tap the image or button to open that full-screen category gallery. The gallery includes full-size vertical, landscape, video, and before/after pieces.`;
 }
