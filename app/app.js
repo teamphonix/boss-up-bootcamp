@@ -41,6 +41,15 @@ function itemCurrentMediaType(item) {
   return 'image';
 }
 
+function itemDefaultCompareSide(item) {
+  return item?.defaultCompareSide === 'before' ? 'before' : 'after';
+}
+
+function itemCompareLabel(item, side) {
+  if (side === 'before') return item.beforeLabel || 'Before';
+  return item.afterLabel || 'After';
+}
+
 function galleryItems() {
   return data.portfolioGallery || [];
 }
@@ -264,7 +273,7 @@ function renderMusicPlaylist() {
 function renderGalleryMedia(item) {
   const isBeforeAfter = item.mediaType === 'beforeAfterImage';
   const currentLink = isBeforeAfter && activeCompareSide === 'before' ? item.beforeLink : (item.afterLink || item.link);
-  const label = isBeforeAfter ? activeCompareSide.toUpperCase() : item.category;
+  const label = isBeforeAfter ? itemCompareLabel(item, activeCompareSide) : item.category;
   const currentMediaType = itemCurrentMediaType(item);
   const posterLink = currentMediaType === 'video' && isBeforeAfter ? item.beforeLink : currentLink;
   const mediaMarkup = currentMediaType === 'video'
@@ -309,8 +318,8 @@ function renderGallery() {
       <div class="gallery-caption-bar">
         ${isBeforeAfter ? `
           <div class="compare-toggle" role="group" aria-label="Before after toggle">
-            <button class="${activeCompareSide === 'before' ? 'active' : ''}" type="button" data-compare-side="before">Before</button>
-            <button class="${activeCompareSide === 'after' ? 'active' : ''}" type="button" data-compare-side="after">After</button>
+            <button class="${activeCompareSide === 'before' ? 'active' : ''}" type="button" data-compare-side="before">${escapeHtml(itemCompareLabel(item, 'before'))}</button>
+            <button class="${activeCompareSide === 'after' ? 'active' : ''}" type="button" data-compare-side="after">${escapeHtml(itemCompareLabel(item, 'after'))}</button>
           </div>
         ` : ''}
         <p>${escapeHtml(item.caption)}</p>
@@ -325,7 +334,7 @@ function renderGallery() {
 function openGallery(globalIndex) {
   const item = galleryItems()[globalIndex];
   activeGalleryCategory = item?.category || 'All';
-  activeCompareSide = item?.mediaType === 'beforeAfterImage' ? 'after' : 'after';
+  activeCompareSide = item?.mediaType === 'beforeAfterImage' ? itemDefaultCompareSide(item) : 'after';
   const items = filteredGalleryItems();
   activeGalleryIndex = Math.max(0, items.findIndex((entry) => entry === item));
   document.body.classList.add('gallery-open');
@@ -336,7 +345,8 @@ function openGallery(globalIndex) {
 function openGalleryCategory(category = 'All') {
   activeGalleryCategory = category;
   activeGalleryIndex = 0;
-  activeCompareSide = 'after';
+  const firstItem = filteredGalleryItems()[0];
+  activeCompareSide = firstItem?.mediaType === 'beforeAfterImage' ? itemDefaultCompareSide(firstItem) : 'after';
   document.body.classList.add('gallery-open');
   document.querySelector('#portfolio-lightbox')?.removeAttribute('hidden');
   renderGallery();
@@ -369,8 +379,10 @@ function startGalleryVideo() {
 
 function moveGallery(direction) {
   stopGalleryMedia();
-  activeCompareSide = 'after';
-  activeGalleryIndex += direction;
+  const items = filteredGalleryItems();
+  activeGalleryIndex = (activeGalleryIndex + direction + items.length) % items.length;
+  const nextItem = items[activeGalleryIndex];
+  activeCompareSide = nextItem?.mediaType === 'beforeAfterImage' ? itemDefaultCompareSide(nextItem) : 'after';
   renderGallery();
 }
 
@@ -407,7 +419,8 @@ function bindGalleryControls() {
     stopGalleryMedia();
     activeGalleryCategory = event.target.value;
     activeGalleryIndex = 0;
-    activeCompareSide = 'after';
+    const firstItem = filteredGalleryItems()[0];
+    activeCompareSide = firstItem?.mediaType === 'beforeAfterImage' ? itemDefaultCompareSide(firstItem) : 'after';
     renderGallery();
   });
   lightbox.querySelector('.gallery-stage')?.addEventListener('touchstart', (event) => {

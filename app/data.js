@@ -131,18 +131,15 @@ window.BOSS_UP_DATA = {
       caption: "Promotional flyer design."
     },
     {
-      title: "Flyer 5 Front",
+      title: "Flyer 5",
       category: "Promo Flyers",
-      mediaType: "image",
-      link: "https://drive.google.com/file/d/1M1BixTUm1kQGVa7WeoY0C1jS-g8eOJ58/view?usp=drivesdk",
-      caption: "Front side promotional flyer design."
-    },
-    {
-      title: "Flyer 5 Back",
-      category: "Promo Flyers",
-      mediaType: "image",
-      link: "https://drive.google.com/file/d/175PcFmj499iUh_h40u_6Buo9gCuIlQpi/view?usp=drivesdk",
-      caption: "Back side promotional flyer design."
+      mediaType: "beforeAfterImage",
+      beforeLink: "https://drive.google.com/file/d/1M1BixTUm1kQGVa7WeoY0C1jS-g8eOJ58/view?usp=drivesdk",
+      afterLink: "https://drive.google.com/file/d/175PcFmj499iUh_h40u_6Buo9gCuIlQpi/view?usp=drivesdk",
+      beforeLabel: "Front",
+      afterLabel: "Back",
+      defaultCompareSide: "before",
+      caption: "Front and back promotional flyer design."
     },
     {
       title: "Flyer 6",
