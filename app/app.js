@@ -488,7 +488,7 @@ function bindForm() {
     button.textContent = 'Saved Locally For Skeleton';
     button.disabled = true;
     setTimeout(() => {
-      button.textContent = 'Join The Waitlist';
+      button.textContent = 'Register';
       button.disabled = false;
     }, 2200);
   });
