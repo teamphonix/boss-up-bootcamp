@@ -12,6 +12,7 @@ let slideTimer;
 let activeAudio;
 let floatingSiteAudio;
 let floatingSiteAudioButton;
+let floatingAutoplayPending = false;
 let activeGalleryIndex = 0;
 let activeGalleryCategory = 'All';
 let activeCompareSide = 'after';
@@ -260,15 +261,46 @@ function pauseFloatingSiteAudio() {
   floatingSiteAudio.pause();
 }
 
-function updateFloatingSiteAudioButton(isPlaying = false) {
+function updateFloatingSiteAudioButton(isPlaying = false, isAutoplayPending = false) {
   if (!floatingSiteAudioButton) return;
   floatingSiteAudioButton.classList.toggle('is-playing', isPlaying);
+  floatingSiteAudioButton.classList.toggle('is-autoplay-pending', isAutoplayPending && !isPlaying);
   floatingSiteAudioButton.setAttribute('aria-label', isPlaying ? 'Pause site music' : 'Play site music from the beginning');
   floatingSiteAudioButton.setAttribute('aria-pressed', String(isPlaying));
   floatingSiteAudioButton.innerHTML = `
     <span class="floating-music-icon" aria-hidden="true">${isPlaying ? '❚❚' : '▶'}</span>
-    <span class="floating-music-label">${isPlaying ? 'Pause' : 'Play'}</span>
+    <span class="floating-music-label">${isPlaying ? 'Pause' : (isAutoplayPending ? 'Tap for Sound' : 'Play')}</span>
   `;
+}
+
+async function playFloatingSiteAudio({ restart = true, markPendingOnBlock = false } = {}) {
+  if (!floatingSiteAudio) return false;
+  if (activeAudio && activeAudio !== floatingSiteAudio) activeAudio.pause();
+  if (restart) floatingSiteAudio.currentTime = 0;
+  activeAudio = floatingSiteAudio;
+  try {
+    await floatingSiteAudio.play();
+    floatingAutoplayPending = false;
+    updateFloatingSiteAudioButton(true);
+    return true;
+  } catch (error) {
+    floatingAutoplayPending = Boolean(markPendingOnBlock);
+    updateFloatingSiteAudioButton(false, floatingAutoplayPending);
+    console.warn('Site music autoplay was blocked or failed.', error);
+    return false;
+  }
+}
+
+function bindFloatingAutoplayFallback() {
+  const startAfterFirstGesture = async (event) => {
+    if (!floatingAutoplayPending || !floatingSiteAudio?.paused) return;
+    if (event.target?.closest?.('.floating-music-button')) return;
+    await playFloatingSiteAudio({ restart: true, markPendingOnBlock: false });
+    if (!floatingAutoplayPending) {
+      ['pointerdown', 'touchstart', 'keydown'].forEach((type) => document.removeEventListener(type, startAfterFirstGesture, true));
+    }
+  };
+  ['pointerdown', 'touchstart', 'keydown'].forEach((type) => document.addEventListener(type, startAfterFirstGesture, true));
 }
 
 function initFloatingSiteAudio() {
@@ -281,27 +313,22 @@ function initFloatingSiteAudio() {
   floatingSiteAudioButton.className = 'floating-music-button';
   floatingSiteAudioButton.type = 'button';
   document.body.appendChild(floatingSiteAudioButton);
-  updateFloatingSiteAudioButton(false);
+  updateFloatingSiteAudioButton(false, true);
 
   floatingSiteAudioButton.addEventListener('click', async () => {
     if (!floatingSiteAudio.paused) {
+      floatingAutoplayPending = false;
       floatingSiteAudio.pause();
       return;
     }
-    if (activeAudio && activeAudio !== floatingSiteAudio) activeAudio.pause();
-    floatingSiteAudio.currentTime = 0;
-    activeAudio = floatingSiteAudio;
-    try {
-      await floatingSiteAudio.play();
-    } catch (error) {
-      updateFloatingSiteAudioButton(false);
-      console.warn('Site music playback was blocked or failed.', error);
-    }
+    await playFloatingSiteAudio({ restart: true, markPendingOnBlock: false });
   });
 
   floatingSiteAudio.addEventListener('play', () => updateFloatingSiteAudioButton(true));
-  floatingSiteAudio.addEventListener('pause', () => updateFloatingSiteAudioButton(false));
-  floatingSiteAudio.addEventListener('ended', () => updateFloatingSiteAudioButton(false));
+  floatingSiteAudio.addEventListener('pause', () => updateFloatingSiteAudioButton(false, floatingAutoplayPending));
+  floatingSiteAudio.addEventListener('ended', () => updateFloatingSiteAudioButton(false, floatingAutoplayPending));
+  bindFloatingAutoplayFallback();
+  window.setTimeout(() => playFloatingSiteAudio({ restart: true, markPendingOnBlock: true }), 350);
 }
 
 function renderMusicPlaylist() {

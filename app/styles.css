@@ -1008,6 +1008,17 @@ body.gallery-open { overflow: hidden; }
   border-color: rgba(255,215,0,.7);
   color: var(--academy-gold);
 }
+.floating-music-button.is-autoplay-pending {
+  border-color: rgba(255,215,0,.7);
+  animation: floating-music-pulse 1.4s ease-in-out infinite;
+}
+.floating-music-button.is-autoplay-pending .floating-music-icon {
+  box-shadow: 0 0 0 6px rgba(255,215,0,.12);
+}
+@keyframes floating-music-pulse {
+  0%, 100% { transform: translateY(0); box-shadow: 0 16px 42px rgba(0,0,0,.5), 0 0 22px rgba(0,255,255,.14); }
+  50% { transform: translateY(-2px); box-shadow: 0 20px 52px rgba(0,0,0,.58), 0 0 30px rgba(255,215,0,.22); }
+}
 .floating-music-icon {
   display: grid;
   place-items: center;
