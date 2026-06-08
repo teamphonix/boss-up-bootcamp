@@ -42,6 +42,21 @@ h3 { font-size: 1.35rem; font-weight: 900; letter-spacing: -0.025em; line-height
 
 .page-panel { display: none; min-height: calc(100vh - 86px); }
 .page-panel.active-page { display: block; }
+.page-panel::after {
+  content: "This Website is a Boss Up Bootcamp Production";
+  display: block;
+  width: min(1120px, calc(100% - 32px));
+  margin: 18px auto max(28px, env(safe-area-inset-bottom));
+  padding: 18px 0 6px;
+  border-top: 1px solid rgba(0,255,255,.18);
+  color: var(--academy-gold);
+  font-size: .78rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+  line-height: 1.35;
+  text-align: center;
+  text-transform: uppercase;
+}
 .page-hero { padding-block: 82px 24px; }
 .page-hero.split { display: grid; grid-template-columns: 1fr minmax(260px, .72fr); gap: 30px; align-items: end; }
 
@@ -181,7 +196,7 @@ h3 { font-size: 1.35rem; font-weight: 900; letter-spacing: -0.025em; line-height
 .hero h1 { text-shadow: 0 0 38px rgba(0,255,255,.12); }
 .hero-subtitle { max-width: 710px; margin-top: 22px; font-size: clamp(1.12rem, 2vw, 1.5rem); color: #d6dce5; line-height: 1.42; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; align-items: stretch; }
-.reserve-button { display: inline-grid; gap: 2px; min-height: 58px; padding-block: 8px; line-height: 1.05; }
+.reserve-button { display: inline-grid; gap: 2px; min-height: 58px; padding-block: 8px; line-height: 1.05; justify-items: center; text-align: center; }
 .reserve-button span { display: block; }
 .reserve-button small { display: block; color: #111; font-size: .68rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; opacity: .78; }
 .primary-action { display: grid; gap: 8px; justify-items: center; }
