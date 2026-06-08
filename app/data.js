@@ -149,11 +149,11 @@ window.BOSS_UP_DATA = {
       caption: "Promotional flyer design."
     },
     {
-      title: "Flyer 7",
+      title: "H.I.P.H.O.P. Academy Flyer",
       category: "Promo Flyers",
       mediaType: "image",
-      link: "https://drive.google.com/file/d/1FMYJIt6-jwafo_DSI2wpzKIwKZrYfO96/view?usp=drivesdk",
-      caption: "Promotional flyer design."
+      link: "./assets/flyers/hiphop-academy-program-flyer.jpg",
+      caption: "The H.I.P.H.O.P. Academy program flyer."
     },
     {
       title: "AI Generated Image 1",
