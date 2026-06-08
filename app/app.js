@@ -10,6 +10,8 @@ const websiteShowcaseTrack = document.querySelector('#website-showcase-track');
 let activeSlide = 0;
 let slideTimer;
 let activeAudio;
+let floatingSiteAudio;
+let floatingSiteAudioButton;
 let activeGalleryIndex = 0;
 let activeGalleryCategory = 'All';
 let activeCompareSide = 'after';
@@ -253,6 +255,55 @@ function formatTrackStatus(track, index) {
   return track.status || `Track ${String(index + 1).padStart(2, '0')}`;
 }
 
+function pauseFloatingSiteAudio() {
+  if (!floatingSiteAudio) return;
+  floatingSiteAudio.pause();
+}
+
+function updateFloatingSiteAudioButton(isPlaying = false) {
+  if (!floatingSiteAudioButton) return;
+  floatingSiteAudioButton.classList.toggle('is-playing', isPlaying);
+  floatingSiteAudioButton.setAttribute('aria-label', isPlaying ? 'Pause site music' : 'Play site music from the beginning');
+  floatingSiteAudioButton.setAttribute('aria-pressed', String(isPlaying));
+  floatingSiteAudioButton.innerHTML = `
+    <span class="floating-music-icon" aria-hidden="true">${isPlaying ? '❚❚' : '▶'}</span>
+    <span class="floating-music-label">${isPlaying ? 'Pause' : 'Play'}</span>
+  `;
+}
+
+function initFloatingSiteAudio() {
+  if (floatingSiteAudio || floatingSiteAudioButton) return;
+  floatingSiteAudio = new Audio('./assets/audio/floating-site-theme.mp3');
+  floatingSiteAudio.loop = true;
+  floatingSiteAudio.preload = 'auto';
+
+  floatingSiteAudioButton = document.createElement('button');
+  floatingSiteAudioButton.className = 'floating-music-button';
+  floatingSiteAudioButton.type = 'button';
+  document.body.appendChild(floatingSiteAudioButton);
+  updateFloatingSiteAudioButton(false);
+
+  floatingSiteAudioButton.addEventListener('click', async () => {
+    if (!floatingSiteAudio.paused) {
+      floatingSiteAudio.pause();
+      return;
+    }
+    if (activeAudio && activeAudio !== floatingSiteAudio) activeAudio.pause();
+    floatingSiteAudio.currentTime = 0;
+    activeAudio = floatingSiteAudio;
+    try {
+      await floatingSiteAudio.play();
+    } catch (error) {
+      updateFloatingSiteAudioButton(false);
+      console.warn('Site music playback was blocked or failed.', error);
+    }
+  });
+
+  floatingSiteAudio.addEventListener('play', () => updateFloatingSiteAudioButton(true));
+  floatingSiteAudio.addEventListener('pause', () => updateFloatingSiteAudioButton(false));
+  floatingSiteAudio.addEventListener('ended', () => updateFloatingSiteAudioButton(false));
+}
+
 function renderMusicPlaylist() {
   if (!musicPlaylist) return;
   const tracks = data.musicTracks || [];
@@ -285,12 +336,14 @@ function renderMusicPlaylist() {
         return;
       }
       if (activeAudio && activeAudio !== audio) activeAudio.pause();
+      pauseFloatingSiteAudio();
       activeAudio = audio;
       audio.play();
     });
 
     restart.addEventListener('click', () => {
       if (activeAudio && activeAudio !== audio) activeAudio.pause();
+      pauseFloatingSiteAudio();
       audio.currentTime = 0;
       activeAudio = audio;
       audio.play();
@@ -513,6 +566,7 @@ function bindRevealCards() {
 }
 
 ensureLightbox();
+initFloatingSiteAudio();
 bindCarousel();
 bindDropdowns();
 bindNavigation();
