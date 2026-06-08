@@ -106,11 +106,13 @@ window.BOSS_UP_DATA = {
       caption: "Business logo design."
     },
     {
-      title: "Promo Flyer",
+      title: "Flyer 3",
       category: "Promo Flyers",
-      mediaType: "image",
-      link: "https://drive.google.com/file/d/1XGPONFCZJFcLwFnSnrEK0Hv9P6EN4Pz8/view?usp=drivesdk",
-      caption: "Promotional flyer design."
+      mediaType: "beforeAfterImage",
+      beforeLink: "https://drive.google.com/file/d/15hOghrMFELmUtt-kYLNT6y2Zn0ienUI_/view?usp=drivesdk",
+      afterLink: "./assets/videos/flyer-3-after.mp4",
+      afterMediaType: "video",
+      caption: "Before and after promotional flyer motion edit."
     },
     {
       title: "Flyer 2",
@@ -118,15 +120,6 @@ window.BOSS_UP_DATA = {
       mediaType: "beforeAfterImage",
       beforeLink: "https://drive.google.com/file/d/1jnqPZj3Y3eLIKg4JpqgxmOgNSehMwwj5/view?usp=drivesdk",
       afterLink: "./assets/videos/flyer-2-after.mp4",
-      afterMediaType: "video",
-      caption: "Before and after promotional flyer motion edit."
-    },
-    {
-      title: "Flyer 3",
-      category: "Promo Flyers",
-      mediaType: "beforeAfterImage",
-      beforeLink: "https://drive.google.com/file/d/15hOghrMFELmUtt-kYLNT6y2Zn0ienUI_/view?usp=drivesdk",
-      afterLink: "./assets/videos/flyer-3-after.mp4",
       afterMediaType: "video",
       caption: "Before and after promotional flyer motion edit."
     },
