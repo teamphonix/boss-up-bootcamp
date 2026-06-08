@@ -50,7 +50,14 @@ window.BOSS_UP_DATA = {
       title: "Business Logo 2",
       category: "Business Logos",
       mediaType: "image",
-      link: "https://drive.google.com/file/d/14jqdpKdtIfI6ijHom5pjWs3PSXRDDDn4/view?usp=drivesdk",
+      link: "https://drive.google.com/file/d/1b7DkK6zGiYKfxbCTbm8-c0-N0njVVvOn/view?usp=drivesdk",
+      caption: "Business logo design."
+    },
+    {
+      title: "Business Logo 3",
+      category: "Business Logos",
+      mediaType: "image",
+      link: "https://drive.google.com/file/d/19ovn-vkZP3wsfet8QzGY-xww3Y8suMLZ/view?usp=drivesdk",
       caption: "Business logo design."
     },
     {
@@ -61,11 +68,125 @@ window.BOSS_UP_DATA = {
       caption: "Promotional flyer design."
     },
     {
+      title: "Flyer 2",
+      category: "Promo Flyers",
+      mediaType: "beforeAfterImage",
+      beforeLink: "https://drive.google.com/file/d/1jnqPZj3Y3eLIKg4JpqgxmOgNSehMwwj5/view?usp=drivesdk",
+      afterLink: "./assets/videos/flyer-2-after.mp4",
+      afterMediaType: "video",
+      caption: "Before and after promotional flyer motion edit."
+    },
+    {
+      title: "Flyer 3",
+      category: "Promo Flyers",
+      mediaType: "beforeAfterImage",
+      beforeLink: "https://drive.google.com/file/d/15hOghrMFELmUtt-kYLNT6y2Zn0ienUI_/view?usp=drivesdk",
+      afterLink: "./assets/videos/flyer-3-after.mp4",
+      afterMediaType: "video",
+      caption: "Before and after promotional flyer motion edit."
+    },
+    {
+      title: "Flyer 4",
+      category: "Promo Flyers",
+      mediaType: "image",
+      link: "https://drive.google.com/file/d/17sA3jGpYOegx3BIEl9l27aZgd6BvzOHB/view?usp=drivesdk",
+      caption: "Promotional flyer design."
+    },
+    {
+      title: "Flyer 5 Front",
+      category: "Promo Flyers",
+      mediaType: "image",
+      link: "https://drive.google.com/file/d/1M1BixTUm1kQGVa7WeoY0C1jS-g8eOJ58/view?usp=drivesdk",
+      caption: "Front side promotional flyer design."
+    },
+    {
+      title: "Flyer 5 Back",
+      category: "Promo Flyers",
+      mediaType: "image",
+      link: "https://drive.google.com/file/d/175PcFmj499iUh_h40u_6Buo9gCuIlQpi/view?usp=drivesdk",
+      caption: "Back side promotional flyer design."
+    },
+    {
+      title: "Flyer 6",
+      category: "Promo Flyers",
+      mediaType: "image",
+      link: "https://drive.google.com/file/d/1S7PrjexgiNRuiADGt9i5RHmzbEOx8QMm/view?usp=drivesdk",
+      caption: "Promotional flyer design."
+    },
+    {
+      title: "Flyer 7",
+      category: "Promo Flyers",
+      mediaType: "image",
+      link: "https://drive.google.com/file/d/1FMYJIt6-jwafo_DSI2wpzKIwKZrYfO96/view?usp=drivesdk",
+      caption: "Promotional flyer design."
+    },
+    {
       title: "AI Generated Image 1",
       category: "AI Generated Visuals",
       mediaType: "beforeAfterImage",
       beforeLink: "https://drive.google.com/file/d/1zCT69fk381qi093AGJyvWm6YVsrUh9ik/view?usp=drivesdk",
       afterLink: "./assets/videos/ai-generated-image-1-after.mp4",
+      afterMediaType: "video",
+      caption: "Before and after AI-generated image transformation."
+    },
+    {
+      title: "AI Generated Image 2",
+      category: "AI Generated Visuals",
+      mediaType: "beforeAfterImage",
+      beforeLink: "https://drive.google.com/file/d/1A6B0nXIRX2IpTKiiKDa6ttTknMiPNyiA/view?usp=drivesdk",
+      afterLink: "./assets/videos/ai-generated-image-2-after.mp4",
+      afterMediaType: "video",
+      caption: "Before and after AI-generated image transformation."
+    },
+    {
+      title: "AI Generated Image 5",
+      category: "AI Generated Visuals",
+      mediaType: "beforeAfterImage",
+      beforeLink: "https://drive.google.com/file/d/1zu8ztRuiKxBUuUrqZWQAWCG7_KXDthMO/view?usp=drivesdk",
+      afterLink: "./assets/videos/ai-generated-image-5-after.mp4",
+      afterMediaType: "video",
+      caption: "Before and after AI-generated image transformation."
+    },
+    {
+      title: "AI Generated Image 6",
+      category: "AI Generated Visuals",
+      mediaType: "image",
+      link: "https://drive.google.com/file/d/1njxUsI0GK_S5dkN4ne_odW5ym8N5t-Eu/view?usp=drivesdk",
+      caption: "AI-generated visual artwork."
+    },
+    {
+      title: "AI Generated Image 7",
+      category: "AI Generated Visuals",
+      mediaType: "beforeAfterImage",
+      beforeLink: "https://drive.google.com/file/d/1ME20l_iaRr3qd6gq2cczxSEFHW4t0PZ-/view?usp=drivesdk",
+      afterLink: "./assets/videos/ai-generated-image-7-after.mp4",
+      afterMediaType: "video",
+      caption: "Before and after AI-generated image transformation."
+    },
+    {
+      title: "AI Generated Image 8",
+      category: "AI Generated Visuals",
+      mediaType: "beforeAfterImage",
+      beforeLink: "https://drive.google.com/file/d/1NXPlA27BN6u0ZN9QA_E1sFhjzBfi8AYG/view?usp=drivesdk",
+      afterLink: "./assets/videos/ai-generated-image-8-after.mp4",
+      afterMediaType: "video",
+      caption: "Before and after AI-generated image transformation."
+    },
+    {
+      title: "AI Generated Image 9",
+      category: "AI Generated Visuals",
+      mediaType: "beforeAfterImage",
+      beforeLink: "https://drive.google.com/file/d/1GGGR9PGF0P9lJbF1TX508nj-We79i2z-/view?usp=drivesdk",
+      afterLink: "./assets/videos/ai-generated-image-9-after.mp4",
+      afterMediaType: "video",
+      caption: "Before and after AI-generated image transformation."
+    },
+    {
+      title: "AI Generated Image 10",
+      category: "AI Generated Visuals",
+      mediaType: "beforeAfterImage",
+      beforeLink: "https://drive.google.com/file/d/1tYB1k2t4iDMuOuHminBHLaZIn9c6Rf-3/view?usp=drivesdk",
+      afterLink: "./assets/videos/ai-generated-image-10-after.mp4",
       afterMediaType: "video",
       caption: "Before and after AI-generated image transformation."
     },
@@ -94,13 +215,48 @@ window.BOSS_UP_DATA = {
       caption: "Before and after photo edit."
     },
     {
-      title: "AI Generated Image 2",
-      category: "AI Generated Visuals",
+      title: "Photo Edit 4",
+      category: "Photo Edits",
       mediaType: "beforeAfterImage",
-      beforeLink: "https://drive.google.com/file/d/1A6B0nXIRX2IpTKiiKDa6ttTknMiPNyiA/view?usp=drivesdk",
-      afterLink: "./assets/videos/ai-generated-image-2-after.mp4",
+      beforeLink: "https://drive.google.com/file/d/1tGOKSQgzbDTSIuVuXf-UKOM737QM4mEP/view?usp=drivesdk",
+      afterLink: "https://drive.google.com/file/d/1A-65JbKW7CutV6QjHSTT3XmWBCWaB422/view?usp=drivesdk",
+      caption: "Before and after photo edit."
+    },
+    {
+      title: "Photo Edit 5",
+      category: "Photo Edits",
+      mediaType: "beforeAfterImage",
+      beforeLink: "https://drive.google.com/file/d/1SGnFZX82HMCiwCmLjeE1KHiRaCmT710I/view?usp=drivesdk",
+      afterLink: "./assets/videos/photo-5-after.mp4",
       afterMediaType: "video",
-      caption: "Before and after AI-generated image transformation."
+      caption: "Before and after photo edit."
+    },
+    {
+      title: "Photo Edit 6",
+      category: "Photo Edits",
+      mediaType: "beforeAfterImage",
+      beforeLink: "https://drive.google.com/file/d/1SQLHPwhfEtBLO8iba1rxC3Ko247Przne/view?usp=drivesdk",
+      afterLink: "./assets/videos/photo-6-after.mp4",
+      afterMediaType: "video",
+      caption: "Before and after photo edit."
+    },
+    {
+      title: "Photo Edit 7",
+      category: "Photo Edits",
+      mediaType: "beforeAfterImage",
+      beforeLink: "https://drive.google.com/file/d/1eoy7Zf4j7875wwHu-S58ufIiD-oh7Kip/view?usp=drivesdk",
+      afterLink: "./assets/videos/photo-7-after.mp4",
+      afterMediaType: "video",
+      caption: "Before and after photo edit."
+    },
+    {
+      title: "Photo Edit 8",
+      category: "Photo Edits",
+      mediaType: "beforeAfterImage",
+      beforeLink: "https://drive.google.com/file/d/1xahl8ZcIzIe8_BkwF3JZ_gNGsffIrb08/view?usp=drivesdk",
+      afterLink: "./assets/videos/photo-8-after.mp4",
+      afterMediaType: "video",
+      caption: "Before and after photo edit."
     },
     {
       title: "AI Generated Wallpaper 1",
@@ -110,28 +266,25 @@ window.BOSS_UP_DATA = {
       caption: "AI-generated wallpaper design."
     },
     {
-      title: "Photo Edit 4",
-      category: "Photo Edits",
-      mediaType: "beforeAfterImage",
-      beforeLink: "https://drive.google.com/file/d/1tGOKSQgzbDTSIuVuXf-UKOM737QM4mEP/view?usp=drivesdk",
-      afterLink: "https://drive.google.com/file/d/1A-65JbKW7CutV6QjHSTT3XmWBCWaB422/view?usp=drivesdk",
-      caption: "Before and after photo edit."
-    },
-    {
-      title: "AI Generated Image 3",
-      category: "AI Generated Visuals",
+      title: "AI Generated Wallpaper 2",
+      category: "AI Wallpaper",
       mediaType: "image",
-      link: "https://drive.google.com/file/d/1njxUsI0GK_S5dkN4ne_odW5ym8N5t-Eu/view?usp=drivesdk",
-      caption: "AI-generated visual artwork."
+      link: "https://drive.google.com/file/d/1jGN76BtLmRI8H1lg88TOSggA46PFs5T6/view?usp=drivesdk",
+      caption: "AI-generated wallpaper design."
     },
     {
-      title: "AI Generated Image 4",
-      category: "AI Generated Visuals",
-      mediaType: "beforeAfterImage",
-      beforeLink: "https://drive.google.com/file/d/1zu8ztRuiKxBUuUrqZWQAWCG7_KXDthMO/view?usp=drivesdk",
-      afterLink: "./assets/videos/ai-generated-image-4-after.mp4",
-      afterMediaType: "video",
-      caption: "Before and after AI-generated image transformation."
+      title: "AI Generated Wallpaper 3",
+      category: "AI Wallpaper",
+      mediaType: "image",
+      link: "https://drive.google.com/file/d/1KOkk4coZxsqWsgMgican47yUDijUyaFm/view?usp=drivesdk",
+      caption: "AI-generated wallpaper design."
+    },
+    {
+      title: "AI Generated Wallpaper 4",
+      category: "AI Wallpaper",
+      mediaType: "image",
+      link: "https://drive.google.com/file/d/1tWF5-dvoQeuzKISlebVvsd7OfPoSBfFN/view?usp=drivesdk",
+      caption: "AI-generated wallpaper design."
     }
   ],
   musicTracks: [
