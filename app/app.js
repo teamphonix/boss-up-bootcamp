@@ -110,14 +110,46 @@ function bindCarousel() {
   restartSlideTimer();
 }
 
-function bindDropdowns() {
-  document.querySelectorAll('.has-menu > button').forEach((button) => {
-    const item = button.closest('.has-menu');
-    item.addEventListener('mouseenter', () => button.setAttribute('aria-expanded', 'true'));
-    item.addEventListener('mouseleave', () => button.setAttribute('aria-expanded', 'false'));
-    button.addEventListener('focus', () => button.setAttribute('aria-expanded', 'true'));
-  });
+function pageFromHash() {
+  const page = (window.location.hash || '#home').replace('#', '') || 'home';
+  return document.querySelector(`[data-page="${CSS.escape(page)}"]`) ? page : 'home';
 }
+
+function closeMobileMenu() {
+  const menu = document.querySelector('#mobile-menu');
+  const toggle = document.querySelector('#menu-toggle');
+  if (!menu || !toggle) return;
+  menu.hidden = true;
+  toggle.setAttribute('aria-expanded', 'false');
+}
+
+function renderRoute() {
+  const page = pageFromHash();
+  document.querySelectorAll('[data-page]').forEach((panel) => {
+    panel.classList.toggle('active-page', panel.dataset.page === page);
+  });
+  document.querySelectorAll('[data-route-link]').forEach((link) => {
+    link.classList.toggle('active-route', link.getAttribute('href') === `#${page}`);
+  });
+  closeMobileMenu();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  bindRevealCards();
+}
+
+function bindNavigation() {
+  const toggle = document.querySelector('#menu-toggle');
+  const menu = document.querySelector('#mobile-menu');
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    if (menu) menu.hidden = open;
+  });
+  document.querySelectorAll('[data-route-link]').forEach((link) => link.addEventListener('click', closeMobileMenu));
+  window.addEventListener('hashchange', renderRoute);
+  renderRoute();
+}
+
+function bindDropdowns() {}
 
 function renderLearn() {
   if (!learnGrid) return;
@@ -483,6 +515,7 @@ function bindRevealCards() {
 ensureLightbox();
 bindCarousel();
 bindDropdowns();
+bindNavigation();
 renderLearn();
 renderTabs();
 renderProjects();

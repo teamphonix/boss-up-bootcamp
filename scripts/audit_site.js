@@ -5,7 +5,7 @@ const html = fs.readFileSync(path.join(root, 'app', 'index.html'), 'utf8');
 const dataJs = fs.readFileSync(path.join(root, 'app', 'data.js'), 'utf8');
 const appJs = fs.readFileSync(path.join(root, 'app', 'app.js'), 'utf8');
 const css = fs.readFileSync(path.join(root, 'app', 'styles.css'), 'utf8');
-const requiredHtml = ['Boss Up Bootcamp', 'Reserve a Spot', '20 seats', 'showcase-grid', 'waitlist-form', 'The H.I.P.H.O.P. Academy'];
+const requiredHtml = ['Boss Up Bootcamp', 'Reserve a Spot', '20 Seats Available - $25 Each', 'showcase-grid', 'waitlist-form', 'The H.I.P.H.O.P. Academy'];
 const requiredData = ['DJ Just Pray', 'Voices of the Sun', 'Event + Promo Design', 'AI Generated Commercials', 'The H.I.P.H.O.P. Academy', 'Student Project Pipeline'];
 const errors = [];
 for (const marker of requiredHtml) if (!html.includes(marker)) errors.push(`Missing HTML marker: ${marker}`);

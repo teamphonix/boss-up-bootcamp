@@ -12,90 +12,122 @@
 </head>
 <body>
   <header class="site-header" aria-label="Primary navigation">
-    <a class="brand" href="#top" aria-label="Boss Up Bootcamp home">
+    <a class="brand" href="#home" data-route-link aria-label="Boss Up Bootcamp home">
       <span class="brand-mark brand-logo"><img src="./assets/generated/bu-logo-placeholder.jpg" alt="BU logo placeholder" /></span>
       <span><strong>Boss Up Bootcamp</strong><small>The H.I.P.H.O.P. Academy</small></span>
     </a>
 
     <nav class="nav-links" aria-label="Main menu">
-      <div class="nav-item has-menu">
-        <button type="button" aria-expanded="false">Program</button>
-        <div class="dropdown-menu">
-          <a href="https://my-site-owb9qh17-thehiphopacademynj.wix-vibe.com/"><strong>Academy Home</strong><span>Return to The H.I.P.H.O.P. Academy mock site.</span></a>
-          <a href="#process"><strong>How It Works</strong><span>Four clear phases from idea to launch direction.</span></a>
-          <a href="#outcomes"><strong>Outcomes</strong><span>What participants should leave with.</span></a>
-        </div>
-      </div>
-      <div class="nav-item has-menu">
-        <button type="button" aria-expanded="false">Showcase</button>
-        <div class="dropdown-menu">
-          <a href="#music-producer"><strong>DJ Just Pray Music</strong><span>Scrollable AI-made playlist and producer portfolio.</span></a>
-          <a href="#websites"><strong>Website Showcase</strong><span>Live projects with screenshots and direct links.</span></a>
-          <a href="#work"><strong>Portfolio Gallery</strong><span>Music, graphics, video, websites, apps.</span></a>
-        </div>
-      </div>
-      <a href="#founder">Founder</a>
-      <a href="#register">Waitlist</a>
+      <a href="#how-it-works" data-route-link>How It Works</a>
+      <a href="#portfolio" data-route-link>Portfolio</a>
+      <a href="#music" data-route-link>Music</a>
+      <a href="#graphics" data-route-link>Graphics</a>
+      <a href="#websites" data-route-link>Websites</a>
+      <a href="#about" data-route-link>About</a>
+      <a href="#register" data-route-link>Register</a>
     </nav>
 
-    <a class="button button-dark header-cta" href="#register">Join Waitlist</a>
+    <div class="header-actions">
+      <a class="button button-dark header-cta" href="#register" data-route-link>Reserve</a>
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <nav class="mobile-menu" id="mobile-menu" hidden aria-label="Mobile menu">
+      <a href="#how-it-works" data-route-link><strong>How It Works</strong><span>See the four-phase path from idea to launch.</span></a>
+      <a href="#portfolio" data-route-link><strong>Portfolio</strong><span>Choose Music, Graphics, or Websites.</span></a>
+      <a href="#music" data-route-link><strong>Music</strong><span>DJ Just Pray AI-assisted playlist.</span></a>
+      <a href="#graphics" data-route-link><strong>Graphics</strong><span>Flyers, logos, AI visuals, and edits.</span></a>
+      <a href="#websites" data-route-link><strong>Websites</strong><span>Live builds with screenshots and links.</span></a>
+      <a href="#register" data-route-link><strong>Register</strong><span>Reserve a spot for the first session.</span></a>
+      <a href="#about" data-route-link><strong>About</strong><span>Learn about the camp and the founder.</span></a>
+    </nav>
   </header>
 
   <main id="top">
-    <section class="hero section">
-      <div class="hero-copy">
-        <p class="kicker">The H.I.P.H.O.P. Academy presents</p>
-        <h1>Boss Up Bootcamp</h1>
-        <p class="hero-subtitle">A polished extension of The H.I.P.H.O.P. Academy — teaching practical AI workflows for brands, music, graphics, websites, apps, video, marketing, and business planning.</p>
-        <div class="hero-actions">
-          <div class="primary-action"><a class="button button-dark" href="#register">Reserve a Spot</a><span>20 Seats Available · $25 each</span></div>
-          <a class="button button-light" href="#process">How It Works</a>
+    <section id="home" class="page-panel active-page" data-page="home">
+      <div class="hero section">
+        <div class="hero-copy">
+          <p class="kicker">The H.I.P.H.O.P. Academy presents</p>
+          <h1>Boss Up Bootcamp</h1>
+          <p class="hero-subtitle">A polished extension of The H.I.P.H.O.P. Academy — teaching practical AI workflows for brands, music, graphics, websites, apps, video, marketing, and business planning.</p>
+          <div class="hero-actions">
+            <a class="button button-dark reserve-button" href="#register" data-route-link><span>Reserve a Spot</span><small>20 Seats Available - $25 Each</small></a>
+            <a class="button button-light" href="#how-it-works" data-route-link>How It Works</a>
+            <a class="button button-light" href="#portfolio" data-route-link>Portfolio</a>
+          </div>
         </div>
+
+        <aside class="carousel" aria-label="Boss Up Bootcamp presentation slideshow">
+          <div class="slides" id="slides"></div>
+          <div class="carousel-controls">
+            <button class="carousel-btn" id="prev-slide" type="button" aria-label="Previous slide">‹</button>
+            <div class="carousel-dots" id="carousel-dots" aria-label="Slide navigation"></div>
+            <button class="carousel-btn" id="next-slide" type="button" aria-label="Next slide">›</button>
+          </div>
+        </aside>
       </div>
 
-      <aside class="carousel" aria-label="Boss Up Bootcamp presentation slideshow">
-        <div class="slides" id="slides"></div>
-        <div class="carousel-controls">
-          <button class="carousel-btn" id="prev-slide" type="button" aria-label="Previous slide">‹</button>
-          <div class="carousel-dots" id="carousel-dots" aria-label="Slide navigation"></div>
-          <button class="carousel-btn" id="next-slide" type="button" aria-label="Next slide">›</button>
-        </div>
-      </aside>
+      <section class="section snapshot snapshot-gallery" aria-label="Program snapshot">
+        <article class="snapshot-image-card reveal-card"><img src="./assets/generated/snapshot-ai-entrepreneurship.jpg" alt="Focus: AI plus entrepreneurship" loading="lazy" /></article>
+        <article class="snapshot-image-card reveal-card"><img src="./assets/generated/snapshot-guided-sessions.jpg" alt="Format: guided build sessions" loading="lazy" /></article>
+        <article class="snapshot-image-card reveal-card"><img src="./assets/generated/snapshot-launch-ready.jpg" alt="Outcome: launch-ready direction" loading="lazy" /></article>
+      </section>
     </section>
 
-    <section class="section snapshot snapshot-gallery" aria-label="Program snapshot">
-      <article class="snapshot-image-card reveal-card"><img src="./assets/generated/snapshot-ai-entrepreneurship.jpg" alt="Focus: AI plus entrepreneurship" loading="lazy" /></article>
-      <article class="snapshot-image-card reveal-card"><img src="./assets/generated/snapshot-guided-sessions.jpg" alt="Format: guided build sessions" loading="lazy" /></article>
-      <article class="snapshot-image-card reveal-card"><img src="./assets/generated/snapshot-launch-ready.jpg" alt="Outcome: launch-ready direction" loading="lazy" /></article>
-    </section>
-
-    <section id="process" class="section process-section">
-      <div class="section-intro split">
+    <section id="how-it-works" class="page-panel" data-page="how-it-works">
+      <div class="section page-hero split">
         <div>
           <p class="kicker">How it works</p>
           <h2>A focused path from idea to launch.</h2>
         </div>
-        <p>Participants bring an idea, goal, or creative project. Each session walks them through strategy, brand development, AI-assisted creation, and a simple launch plan so they leave with clear next steps instead of just notes.</p>
+        <p>Participants bring an idea, goal, or creative project. Each phase walks through strategy, brand development, AI-assisted creation, and a simple launch plan so they leave with clear next steps instead of just notes.</p>
       </div>
-      <div class="timeline" id="timeline"></div>
+      <section class="section process-section">
+        <div class="timeline" id="timeline"></div>
+      </section>
+      <section class="section outcomes-section">
+        <figure class="outcomes-image-card reveal-card">
+          <img src="./assets/generated/what-you-leave-with-card.jpg" alt="Important course outcomes: What You Leave With — Brand Development and Audience Clarity; Creative Assets or Portfolio Direction; Website/App Concept or Landing-Page Plan; Marketing Content and Launch Checklist" loading="lazy" />
+        </figure>
+      </section>
     </section>
 
-    <section id="outcomes" class="section outcomes-section">
-      <figure class="outcomes-image-card reveal-card">
-        <img src="./assets/generated/what-you-leave-with-card.jpg" alt="Important course outcomes: What You Leave With — Brand Development and Audience Clarity; Creative Assets or Portfolio Direction; Website/App Concept or Landing-Page Plan; Marketing Content and Launch Checklist" loading="lazy" />
-      </figure>
-    </section>
-
-    <section id="work" class="section showcase-section">
-      <div class="section-intro split">
+    <section id="portfolio" class="page-panel" data-page="portfolio">
+      <div class="section page-hero split">
         <div>
-          <p class="kicker">Showcase</p>
-          <h2>Creative portfolio gallery.</h2>
+          <p class="kicker">Portfolio</p>
+          <h2>Choose a showcase lane.</h2>
         </div>
-        <p>Tap any graphic to open a full-screen mobile gallery with swipe navigation, categories, captions, and before/after views.</p>
+        <p>The portfolio now opens into focused pages instead of one long scroll. Swipe the cards below and choose Music, Graphics, or Websites to see featured work with descriptions built around that category.</p>
       </div>
+      <section class="section portfolio-hub-section">
+        <div class="portfolio-hub-carousel" aria-label="Portfolio sections carousel">
+          <article class="portfolio-hub-card reveal-card">
+            <span class="badge">Music</span>
+            <h3>DJ Just Pray · Made with AI</h3>
+            <p>AI-assisted songs, creative direction, production ideas, and examples that show how music can move from concept to playable demo.</p>
+            <a class="button button-dark" href="#music" data-route-link>Open Music</a>
+          </article>
+          <article class="portfolio-hub-card reveal-card">
+            <span class="badge">Graphics</span>
+            <h3>Flyers, logos, visuals, edits</h3>
+            <p>A full-screen swipe gallery for promo flyers, AI-generated visuals, business logos, wallpapers, photo edits, and before/after pieces.</p>
+            <a class="button button-dark" href="#graphics" data-route-link>Open Graphics</a>
+          </article>
+          <article class="portfolio-hub-card reveal-card">
+            <span class="badge">Websites</span>
+            <h3>Live builds that prove the workflow</h3>
+            <p>Real deployed websites with screenshots and direct links, showing how ideas become polished digital products.</p>
+            <a class="button button-dark" href="#websites" data-route-link>Open Websites</a>
+          </article>
+        </div>
+      </section>
+    </section>
 
-      <article id="music-producer" class="music-portfolio reveal-card" aria-labelledby="music-portfolio-title">
+    <section id="music" class="page-panel" data-page="music">
+      <section class="section music-portfolio reveal-card" aria-labelledby="music-portfolio-title">
         <div class="music-portfolio-header">
           <div>
             <p class="kicker">DJ Just Pray · Music Producer</p>
@@ -104,46 +136,68 @@
           <p>DJ Just Pray demonstrates how AI can be used as a creative tool for music production. These songs showcase original concepts, lyrics, and sound design created through modern AI workflows.</p>
         </div>
         <div class="music-playlist" id="music-playlist" aria-label="DJ Just Pray Made with AI playlist"></div>
-      </article>
+      </section>
+    </section>
 
-      <article id="websites" class="website-showcase reveal-card" aria-labelledby="website-showcase-title">
+    <section id="graphics" class="page-panel" data-page="graphics">
+      <div class="section page-hero split">
+        <div>
+          <p class="kicker">Graphics · Logos · Video Edits</p>
+          <h2>Creative gallery.</h2>
+        </div>
+        <p>Tap a cover to open the phone-first full-screen gallery. Vertical flyers, landscape graphics, videos, and before/after edits display in their full natural size without forced cropping.</p>
+      </div>
+      <section class="section showcase-section">
+        <div class="showcase-tabs" role="list" aria-label="Portfolio categories" id="showcase-tabs"></div>
+        <div class="showcase-grid" id="showcase-grid"></div>
+      </section>
+    </section>
+
+    <section id="websites" class="page-panel" data-page="websites">
+      <section class="section website-showcase reveal-card" aria-labelledby="website-showcase-title">
         <div class="website-showcase-header">
           <div>
             <p class="kicker">Live Website Builds</p>
             <h2 id="website-showcase-title">Websites that prove the work.</h2>
           </div>
-          <p>These aren't mockups or templates, they're real websites built by our team. Each project was designed, developed, and deployed from concept to launch, showcasing the same AI-powered workflows, creative strategies, and practical skills taught inside Boss Up Bootcamp.</p>
+          <p>These are real websites built and deployed from concept to launch, showcasing the same AI-powered workflows, creative strategies, and practical skills taught inside Boss Up Bootcamp.</p>
         </div>
         <div class="website-carousel" id="website-showcase-track" aria-label="Live website showcase carousel"></div>
-      </article>
-
-      <div class="creative-gallery-heading">
-        <p class="kicker">Graphics · Logos · Video Edits</p>
-        <h3>Creative gallery</h3>
-      </div>
-      <div class="showcase-tabs" role="list" aria-label="Portfolio categories" id="showcase-tabs"></div>
-      <div class="showcase-grid" id="showcase-grid"></div>
+      </section>
     </section>
 
-    <section class="section founder-register">
-      <article class="founder-card" id="founder">
-        <p class="kicker">Founder</p>
-        <h2>Jonti DeQuan</h2>
-        <p>Founder of The H.I.P.H.O.P. Academy, entrepreneur, creator, AI builder, music producer, and business developer.</p>
-        <p>Boss Up Bootcamp is built to help people turn ideas and creativity into practical brands, projects, and opportunities.</p>
-      </article>
-      <article class="registration-card" id="register">
-        <p class="kicker">Reserve your spot</p>
-        <h2>Join the waitlist.</h2>
-        <p>Only 20 seats will be available for the first session. Add your info to receive updates and launch announcements.</p>
-        <form class="waitlist-form" name="boss-up-waitlist" data-form-placeholder="true">
-          <label>Name <input name="name" placeholder="Your name" required /></label>
-          <label>Email <input type="email" name="email" placeholder="you@example.com" required /></label>
-          <label>Interest<select name="interest" required><option value="">Choose one</option><option>Music Creation</option><option>Website Building</option><option>Graphic Design</option><option>Business Development</option><option>App Development</option><option>Video Creation</option></select></label>
-          <button class="button button-dark" type="submit">Join The Waitlist</button>
-          <p class="form-note">Placeholder form: connect to Google Forms, Airtable, Supabase, or CRM next.</p>
-        </form>
-      </article>
+    <section id="about" class="page-panel" data-page="about">
+      <section class="section about-grid">
+        <article class="founder-card reveal-card">
+          <p class="kicker">About the camp</p>
+          <h2>Practical AI for people ready to build.</h2>
+          <p>Boss Up Bootcamp helps participants turn ideas into practical brands, creative assets, websites, music concepts, app directions, and launch plans.</p>
+          <p>The focus is not just learning tools. The focus is using AI with purpose: clarify the offer, create the assets, organize the workflow, and leave with something that can move forward.</p>
+        </article>
+        <article class="founder-card reveal-card">
+          <p class="kicker">Founder</p>
+          <h2>Jonti DeQuan</h2>
+          <p>Founder of The H.I.P.H.O.P. Academy, entrepreneur, creator, AI builder, music producer, and business developer.</p>
+          <p>Jonti built Boss Up Bootcamp to help people turn creativity, lived experience, and ambition into real digital skills, portfolio pieces, and next-step opportunities.</p>
+        </article>
+      </section>
+    </section>
+
+    <section id="register" class="page-panel" data-page="register">
+      <section class="section register-page-grid">
+        <article class="registration-card reveal-card">
+          <p class="kicker">Reserve your spot</p>
+          <h2>Join the waitlist.</h2>
+          <p>Only 20 seats will be available for the first session. Each seat is $25. Add your info to receive updates and launch announcements.</p>
+          <form class="waitlist-form" name="boss-up-waitlist" data-form-placeholder="true">
+            <label>Name <input name="name" placeholder="Your name" required /></label>
+            <label>Email <input type="email" name="email" placeholder="you@example.com" required /></label>
+            <label>Interest<select name="interest" required><option value="">Choose one</option><option>Music Creation</option><option>Website Building</option><option>Graphic Design</option><option>Business Development</option><option>App Development</option><option>Video Creation</option></select></label>
+            <button class="button button-dark" type="submit">Join The Waitlist</button>
+            <p class="form-note">Placeholder form: connect to Google Forms, Airtable, Supabase, or CRM next.</p>
+          </form>
+        </article>
+      </section>
     </section>
   </main>
 
