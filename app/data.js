@@ -61,6 +61,21 @@ window.BOSS_UP_DATA = {
       caption: "Business logo design."
     },
     {
+      title: "Logo 4",
+      category: "Business Logos",
+      mediaType: "beforeAfterImage",
+      beforeLink: "https://drive.google.com/file/d/1neaSbHmrZK8tUwZQ1QUg-lcrrwNZINnc/view?usp=drivesdk",
+      afterLink: "https://drive.google.com/file/d/1yuV0KilZkC4tw_GsYze5wi61pm1lJ_L4/view?usp=drivesdk",
+      caption: "Before and after logo design refinement."
+    },
+    {
+      title: "Logo 5",
+      category: "Business Logos",
+      mediaType: "image",
+      link: "https://drive.google.com/file/d/1M15z1ZQdn_54Cr2FcSpRRB6EYaxljJlz/view?usp=drivesdk",
+      caption: "Business logo design."
+    },
+    {
       title: "Promo Flyer",
       category: "Promo Flyers",
       mediaType: "image",
@@ -191,6 +206,22 @@ window.BOSS_UP_DATA = {
       caption: "Before and after AI-generated image transformation."
     },
     {
+      title: "AI Generated Image 11",
+      category: "AI Generated Visuals",
+      mediaType: "image",
+      link: "https://drive.google.com/file/d/1uZvNskm-N2zOKOAzxfSfqDJALJ_a7Zgv/view?usp=drivesdk",
+      caption: "AI-generated visual artwork."
+    },
+    {
+      title: "AI Generated Image 12",
+      category: "AI Generated Visuals",
+      mediaType: "beforeAfterImage",
+      beforeLink: "https://drive.google.com/file/d/1YDJTmglcdQ-pRgydwzRfDfYHydFGKnbe/view?usp=drivesdk",
+      afterLink: "./assets/videos/ai-generated-image-12-after.mp4",
+      afterMediaType: "video",
+      caption: "Before and after AI-generated image transformation."
+    },
+    {
       title: "Photo Edit 1",
       category: "Photo Edits",
       mediaType: "beforeAfterImage",
@@ -284,6 +315,13 @@ window.BOSS_UP_DATA = {
       category: "AI Wallpaper",
       mediaType: "image",
       link: "https://drive.google.com/file/d/1tWF5-dvoQeuzKISlebVvsd7OfPoSBfFN/view?usp=drivesdk",
+      caption: "AI-generated wallpaper design."
+    },
+    {
+      title: "AI Generated Wallpaper 5",
+      category: "AI Wallpaper",
+      mediaType: "image",
+      link: "https://drive.google.com/file/d/12sQXBIcy-alrWyEIrc3oNx_JuwyJZCxV/view?usp=drivesdk",
       caption: "AI-generated wallpaper design."
     }
   ],
