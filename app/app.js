@@ -204,6 +204,16 @@ function itemThumb(item) {
   return drivePreview(thumbnailLink, 900);
 }
 
+function portfolioCategoryDescription(active) {
+  if (active === 'Photo Edits') {
+    return 'Explore AI-enhanced photo restorations, quality upgrades, family portraits brought to life, and creative before-and-after transformations.';
+  }
+  if (active === 'All') {
+    return 'The Hip Hop Academy logo holds the main portfolio gallery. Tap the image or button to open the full-screen swipe gallery. The gallery includes full-size vertical, landscape, video, and before/after pieces.';
+  }
+  return `This cover updates to the first piece in ${active}. Tap the image or button to open that full-screen category gallery. The gallery includes full-size vertical, landscape, video, and before/after pieces.`;
+}
+
 function renderPortfolioCards(active = 'All') {
   const items = active === 'All' ? galleryItems() : galleryItems().filter((item) => item.category === active);
   if (!items.length) {
@@ -223,7 +233,7 @@ function renderPortfolioCards(active = 'All') {
       <div class="project-body portfolio-body">
         <span class="badge">${escapeHtml(active === 'All' ? 'Creative Portfolio' : active)}</span>
         <h3>${escapeHtml(active === 'All' ? 'Portfolio Gallery' : `${active} Gallery`)}</h3>
-        <p>${escapeHtml(active === 'All' ? 'The Hip Hop Academy logo holds the main portfolio gallery. Tap the image or button to open the full-screen swipe gallery.' : `This cover updates to the first piece in ${active}. Tap the image or button to open that full-screen category gallery.`)} The gallery includes full-size vertical, landscape, video, and before/after pieces.</p>
+        <p>${escapeHtml(portfolioCategoryDescription(active))}</p>
         <button class="button button-dark portfolio-gallery-cta" type="button" data-open-gallery-category="${escapeHtml(active)}">Open Gallery</button>
       </div>
     </article>
