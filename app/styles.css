@@ -550,6 +550,38 @@ h3 { font-size: 1.35rem; font-weight: 900; letter-spacing: -0.025em; line-height
 }
 .portfolio-hub-card:nth-child(2) { border-color: rgba(255,215,0,.28); }
 .portfolio-hub-card .button { width: 100%; margin-top: 8px; }
+.portfolio-image-card {
+  align-content: stretch;
+  gap: 12px;
+  min-height: 0;
+  padding: 10px;
+  border-color: rgba(0,255,255,.34);
+  background: linear-gradient(180deg, rgba(0,255,255,.08), rgba(255,215,0,.05)), #030507;
+  box-shadow: 0 20px 60px rgba(0,0,0,.48), 0 0 0 1px rgba(255,255,255,.04) inset;
+}
+.portfolio-image-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 853 / 1280;
+  object-fit: cover;
+  border-radius: 23px;
+  border: 1px solid rgba(0,255,255,.22);
+  background: #000;
+  box-shadow: 0 14px 34px rgba(0,0,0,.42);
+}
+.portfolio-card-button {
+  min-height: 52px;
+  margin-top: 0 !important;
+  border-color: rgba(0,255,255,.28);
+  background: linear-gradient(135deg, var(--academy-gold), #fff1a8 54%, var(--academy-gold));
+  color: #050505;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.portfolio-card-button:hover,
+.portfolio-card-button:focus-visible {
+  box-shadow: 0 14px 34px rgba(255,215,0,.28), 0 0 24px rgba(0,255,255,.12);
+}
 .about-grid, .register-page-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; padding-block: 86px; }
 .register-page-grid { grid-template-columns: minmax(0, 720px); justify-content: center; }
 .waitlist-form { display: grid; gap: 14px; margin-top: 24px; }
