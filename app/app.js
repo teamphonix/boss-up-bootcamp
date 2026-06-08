@@ -6,6 +6,7 @@ const timeline = document.querySelector('#timeline');
 const slidesEl = document.querySelector('#slides');
 const dotsEl = document.querySelector('#carousel-dots');
 const musicPlaylist = document.querySelector('#music-playlist');
+const websiteShowcaseTrack = document.querySelector('#website-showcase-track');
 let activeSlide = 0;
 let slideTimer;
 let activeAudio;
@@ -373,6 +374,24 @@ function moveGallery(direction) {
   renderGallery();
 }
 
+function renderWebsiteShowcase() {
+  if (!websiteShowcaseTrack) return;
+  const sites = data.websiteShowcase || [];
+  websiteShowcaseTrack.innerHTML = sites.map((site, index) => `
+    <article class="website-card" aria-label="${escapeHtml(site.title)} website preview">
+      <a class="website-shot" href="${escapeHtml(site.url)}" target="_blank" rel="noopener noreferrer" aria-label="Open ${escapeHtml(site.title)} live website">
+        <img src="${escapeHtml(site.image)}" alt="Mobile screenshot of ${escapeHtml(site.title)}" loading="${index === 0 ? 'eager' : 'lazy'}" />
+      </a>
+      <div class="website-card-body">
+        <span class="badge">${escapeHtml(site.tag || 'Live Website')}</span>
+        <h3>${escapeHtml(site.title)}</h3>
+        <p>${escapeHtml(site.description)}</p>
+        <a class="button button-dark website-link" href="${escapeHtml(site.url)}" target="_blank" rel="noopener noreferrer">View Live Site</a>
+      </div>
+    </article>
+  `).join('');
+}
+
 function bindGalleryControls() {
   const lightbox = document.querySelector('#portfolio-lightbox');
   lightbox.querySelector('.gallery-close')?.addEventListener('click', closeGallery);
@@ -456,5 +475,6 @@ renderTabs();
 renderProjects();
 renderTimeline();
 renderMusicPlaylist();
+renderWebsiteShowcase();
 bindForm();
 bindRevealCards();

@@ -38,6 +38,36 @@ window.BOSS_UP_DATA = {
     { category: "Websites", title: "The H.I.P.H.O.P. Academy", status: "In Development", initials: "HA", accent: "rgba(255,255,255,.2)", description: "The parent academy site and mission hub for How I Put Harmony On Pain." },
     { category: "Apps", title: "Student Project Pipeline", status: "Coming Soon", initials: "20", accent: "rgba(95,127,104,.34)", description: "A section reserved for work created by the first Boss Up Bootcamp cohort." }
   ],
+  websiteShowcase: [
+    {
+      title: "Phonix Lab",
+      url: "https://phonixlab.vercel.app/",
+      image: "./assets/websites/phonix-lab.jpg",
+      tag: "Creative App",
+      description: "A mobile writing lab for sparking lyrics, rhymes, notes, keyboard ideas, and creative workflow."
+    },
+    {
+      title: "Blue Liv Training Lab",
+      url: "https://blue-liv.vercel.app/",
+      image: "./assets/websites/blue-liv.jpg",
+      tag: "Hospitality Training OS",
+      description: "A private luxury-service training platform for menu knowledge, wine confidence, and floor performance."
+    },
+    {
+      title: "Resources For Living",
+      url: "https://resources-for-living.vercel.app/",
+      image: "./assets/websites/resources-for-living.jpg",
+      tag: "Housing Resource Platform",
+      description: "A bilingual rental-support site helping people browse rentals, organize documents, and move with confidence."
+    },
+    {
+      title: "Lakesha Jones Author Site",
+      url: "https://lakesha-jones-author-site.vercel.app/",
+      image: "./assets/websites/lakesha-jones.jpg",
+      tag: "Author Platform",
+      description: "A bold author and speaker site for books, testimony, catalog browsing, and booking inquiries."
+    }
+  ],
   portfolioGallery: [
     {
       title: "Hip Hop Academy Logo",
