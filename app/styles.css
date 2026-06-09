@@ -591,6 +591,9 @@ h3 { font-size: 1.35rem; font-weight: 900; letter-spacing: -0.025em; line-height
 .about-grid, .register-page-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; padding-block: 86px; }
 .register-page-grid { grid-template-columns: minmax(0, 720px); justify-content: center; }
 .waitlist-form { display: grid; gap: 14px; margin-top: 24px; }
+.stripe-reserve-panel { display: grid; justify-items: start; gap: 14px; margin-top: 26px; }
+.stripe-reserve-panel .reserve-button { min-width: min(100%, 320px); }
+.stripe-reserve-panel .form-note { max-width: 520px; }
 label { display: grid; gap: 8px; color: #f2f5f8; font-size: .86rem; font-weight: 900; }
 input, select { width: 100%; min-height: 50px; padding: 0 14px; border: 1px solid rgba(0,255,255,.2); border-radius: 14px; background: rgba(0,0,0,.26); color: var(--ink); font: inherit; }
 input::placeholder { color: rgba(255,255,255,.42); }
@@ -615,7 +618,7 @@ input:focus, select:focus { outline: 3px solid rgba(0,255,255,.18); border-color
   h1 { font-size: 3.15rem; }
   h2 { font-size: 2.2rem; }
   .hero { gap: 28px; padding-block: 42px 32px; }
-  .hero-actions .button, .primary-action { width: 100%; }
+  .hero-actions .button, .primary-action, .stripe-reserve-panel .reserve-button { width: 100%; }
   .carousel, .slides { min-height: 350px; }
   .slide { padding: 36px 24px 62px; }
   .slide::before { inset: 18px; border-radius: 22px; }

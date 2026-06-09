@@ -28,7 +28,7 @@
     </nav>
 
     <div class="header-actions">
-      <a class="button button-dark header-cta" href="#register" data-route-link>Reserve</a>
+      <a class="button button-dark header-cta" href="https://buy.stripe.com/test_00w9ATa4K5vU9lrbUi3sI00" target="_blank" rel="noopener">Reserve</a>
       <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
@@ -54,7 +54,7 @@
           <h1>Boss Up Bootcamp</h1>
           <p class="hero-subtitle">Stop wondering where to start. Master the AI tools &amp; workflows that transform ideas into brands, websites, music, graphics, videos, and marketing content. Boss Up today with our Bootcamp.</p>
           <div class="hero-actions">
-            <a class="button button-dark reserve-button" href="#register" data-route-link><span>Reserve a Spot</span><small>20 Seats Available - $25 Each</small></a>
+            <a class="button button-dark reserve-button" href="https://buy.stripe.com/test_00w9ATa4K5vU9lrbUi3sI00" target="_blank" rel="noopener"><span>Reserve a Spot</span><small>20 Seats Available - $25 Each</small></a>
             <a class="button button-light" href="#how-it-works" data-route-link>How It Works</a>
             <a class="button button-light" href="#portfolio" data-route-link>Portfolio</a>
           </div>
@@ -182,15 +182,12 @@
       <section class="section register-page-grid">
         <article class="registration-card reveal-card">
           <p class="kicker">Reserve your spot</p>
-          <h2>Join the waitlist.</h2>
-          <p>Only 20 seats will be available for the first session. Each seat is $25. Add your info to receive updates and launch announcements.</p>
-          <form class="waitlist-form" name="boss-up-waitlist" data-form-placeholder="true">
-            <label>Name <input name="name" placeholder="Your name" required /></label>
-            <label>Email <input type="email" name="email" placeholder="you@example.com" required /></label>
-            <label>Interest<select name="interest" required><option value="">Choose one</option><option>Music Creation</option><option>Website Building</option><option>Graphic Design</option><option>Business Development</option><option>App Development</option><option>Video Creation</option><option>All Of The Above</option></select></label>
-            <button class="button button-dark" type="submit">Register</button>
-            <p class="form-note">Placeholder form: connect to Google Forms, Airtable, Supabase, or CRM next.</p>
-          </form>
+          <h2>Secure your seat.</h2>
+          <p>Only 20 seats will be available for the first session. Each seat is $25. Tap below to complete your reservation through secure Stripe checkout.</p>
+          <div class="stripe-reserve-panel">
+            <a class="button button-dark reserve-button" href="https://buy.stripe.com/test_00w9ATa4K5vU9lrbUi3sI00" target="_blank" rel="noopener"><span>Pay with Stripe</span><small>20 Seats Available - $25 Each</small></a>
+            <p class="form-note">Stripe checkout collects your payment details securely. You will receive confirmation from Stripe after checkout.</p>
+          </div>
         </article>
       </section>
     </section>
