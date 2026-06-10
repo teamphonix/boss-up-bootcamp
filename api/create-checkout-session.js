@@ -38,9 +38,82 @@ function assertLiveStripeKey() {
   }
 }
 
+const DEFAULT_TUESDAY_EVENTS = [
+  { date: '2026-06-23', afternoon: '2026-06-23T12:00:00-04:00', evening: '2026-06-23T21:00:00-04:00' },
+  { date: '2026-06-30', afternoon: '2026-06-30T12:00:00-04:00', evening: '2026-06-30T21:00:00-04:00' },
+  { date: '2026-07-07', afternoon: '2026-07-07T12:00:00-04:00', evening: '2026-07-07T21:00:00-04:00' },
+  { date: '2026-07-14', afternoon: '2026-07-14T12:00:00-04:00', evening: '2026-07-14T21:00:00-04:00' },
+  { date: '2026-07-21', afternoon: '2026-07-21T12:00:00-04:00', evening: '2026-07-21T21:00:00-04:00' },
+  { date: '2026-07-28', afternoon: '2026-07-28T12:00:00-04:00', evening: '2026-07-28T21:00:00-04:00' },
+  { date: '2026-08-04', afternoon: '2026-08-04T12:00:00-04:00', evening: '2026-08-04T21:00:00-04:00' },
+  { date: '2026-08-11', afternoon: '2026-08-11T12:00:00-04:00', evening: '2026-08-11T21:00:00-04:00' },
+];
+
+function defaultTuesdayRows() {
+  const rows = [];
+  DEFAULT_TUESDAY_EVENTS.forEach((event) => {
+    rows.push({
+      title: 'Boss Up Bootcamp — Afternoon Class',
+      description: 'Tuesday afternoon Boss Up Bootcamp class.',
+      starts_at: event.afternoon,
+      ends_at: `${event.date}T13:00:00-04:00`,
+      timezone: 'America/New_York',
+      location: 'Location TBA',
+      seat_limit: Number(process.env.BOOTCAMP_SEAT_LIMIT || 20),
+      price_cents: Number(process.env.BOOTCAMP_PRICE_CENTS || 2500),
+      currency: 'usd',
+      is_published: true,
+      is_archived: false,
+      notes: 'Auto-seeded Tuesday schedule: 12:00–1:00 PM ET.',
+    });
+    rows.push({
+      title: 'Boss Up Bootcamp — Evening Class',
+      description: 'Tuesday evening Boss Up Bootcamp class.',
+      starts_at: event.evening,
+      ends_at: `${event.date}T22:00:00-04:00`,
+      timezone: 'America/New_York',
+      location: 'Location TBA',
+      seat_limit: Number(process.env.BOOTCAMP_SEAT_LIMIT || 20),
+      price_cents: Number(process.env.BOOTCAMP_PRICE_CENTS || 2500),
+      currency: 'usd',
+      is_published: true,
+      is_archived: false,
+      notes: 'Auto-seeded Tuesday schedule: 9:00–10:00 PM ET.',
+    });
+  });
+  return rows;
+}
+
+async function ensureDefaultTuesdayEvents(supabase, nowIso) {
+  const { count, error } = await supabase
+    .from('bootcamp_events')
+    .select('id', { count: 'exact', head: true })
+    .eq('is_published', true)
+    .eq('is_archived', false)
+    .gte('starts_at', nowIso);
+
+  if (error) throw error;
+  if (Number(count || 0) > 0) return;
+
+  const { count: seededCount, error: seededError } = await supabase
+    .from('bootcamp_events')
+    .select('id', { count: 'exact', head: true })
+    .like('notes', 'Auto-seeded Tuesday schedule:%');
+
+  if (seededError) throw seededError;
+  if (Number(seededCount || 0) > 0) return;
+
+  const { error: insertError } = await supabase
+    .from('bootcamp_events')
+    .insert(defaultTuesdayRows());
+
+  if (insertError) throw insertError;
+}
+
 async function loadAvailableEvents() {
   const supabase = supabaseAdmin();
   const nowIso = new Date().toISOString();
+  await ensureDefaultTuesdayEvents(supabase, nowIso);
   const { data, error } = await supabase
     .from('registration_event_summary')
     .select('event_id,title,starts_at,location,seat_limit,price_cents,currency,is_published,paid_count,seats_remaining')
