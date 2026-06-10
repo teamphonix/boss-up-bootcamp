@@ -14,12 +14,17 @@ async function syncRecentPaidCheckoutSessions(limit = 25) {
   const supabase = supabaseAdmin();
   const sessions = await stripe.checkout.sessions.list({
     limit,
-    payment_status: 'paid',
     expand: ['data.customer'],
   });
 
+  const paidSessions = (sessions.data || []).filter((session) => session.payment_status === 'paid');
+  console.log('Stripe sync sessions fetched', {
+    fetched: sessions.data?.length || 0,
+    paid: paidSessions.length,
+  });
+
   const synced = [];
-  for (const session of sessions.data || []) {
+  for (const session of paidSessions) {
     const registration = await upsertRegistrationFromCheckoutSession(supabase, session);
     synced.push({
       id: registration.id,

@@ -159,7 +159,7 @@ syncStripeButton?.addEventListener('click', async () => {
   syncStripeButton.textContent = 'Syncing...';
   try {
     const result = await api('/api/admin-stripe-sync', { method: 'POST', body: JSON.stringify({}) });
-    setLoginMessage(`Stripe sync complete: ${result.count || 0} paid checkout session(s) checked.`);
+    setLoginMessage(`Stripe sync complete: ${result.count || 0} paid checkout session(s) saved. Refreshing dashboard...`);
     await loadAdminData();
   } catch (error) {
     setLoginMessage(error.message || 'Stripe sync failed', true);
