@@ -622,24 +622,37 @@ function renderAvailableDates(events = []) {
   form.hidden = false;
   notifyForm.hidden = true;
   eventIdInput.value = availableEvents[0].id;
+  const selectedEvent = availableEvents[0];
   panel.innerHTML = `
-    <h3>Choose your session date</h3>
-    <div class="date-picker-list">
+    <h3>Choose your session</h3>
+    <label class="date-select-label" for="selected-event-select">Date & time</label>
+    <select class="date-select" id="selected-event-select" name="selected_event" aria-label="Choose your Boss Up Bootcamp session">
       ${availableEvents.map((event, index) => `
-        <label class="date-option">
-          <input type="radio" name="selected_event" value="${escapeHtml(event.id)}" ${index === 0 ? 'checked' : ''} />
-          <span>
-            <strong>${escapeHtml(event.title || 'Boss Up Bootcamp')}</strong>
-            <span>${escapeHtml(formatEventDate(event.starts_at))}</span>
-            <span>${escapeHtml(event.location || 'Location TBA')} · ${escapeHtml(formatEventPrice(event.price_cents, event.currency))}</span>
-            <small>${escapeHtml(event.seats_remaining)} seat${Number(event.seats_remaining) === 1 ? '' : 's'} left</small>
-          </span>
-        </label>
+        <option value="${escapeHtml(event.id)}" ${index === 0 ? 'selected' : ''}>
+          ${escapeHtml(`${formatEventDate(event.starts_at)} — ${(event.title || 'Boss Up Bootcamp').replace('Boss Up Bootcamp — ', '')}`)}
+        </option>
       `).join('')}
-    </div>
+    </select>
+    <p class="selected-date-summary" id="selected-date-summary">
+      <strong>${escapeHtml(selectedEvent.title || 'Boss Up Bootcamp')}</strong>
+      <span>${escapeHtml(formatEventDate(selectedEvent.starts_at))}</span>
+      <span>${escapeHtml(selectedEvent.location || 'Location TBA')} · ${escapeHtml(formatEventPrice(selectedEvent.price_cents, selectedEvent.currency))}</span>
+      <small>${escapeHtml(selectedEvent.seats_remaining)} seat${Number(selectedEvent.seats_remaining) === 1 ? '' : 's'} left</small>
+    </p>
   `;
-  panel.querySelectorAll('input[name="selected_event"]').forEach((input) => {
-    input.addEventListener('change', () => { eventIdInput.value = input.value; });
+  const select = panel.querySelector('#selected-event-select');
+  const summary = panel.querySelector('#selected-date-summary');
+  select?.addEventListener('change', () => {
+    eventIdInput.value = select.value;
+    const nextEvent = availableEvents.find((event) => event.id === select.value) || availableEvents[0];
+    if (summary && nextEvent) {
+      summary.innerHTML = `
+        <strong>${escapeHtml(nextEvent.title || 'Boss Up Bootcamp')}</strong>
+        <span>${escapeHtml(formatEventDate(nextEvent.starts_at))}</span>
+        <span>${escapeHtml(nextEvent.location || 'Location TBA')} · ${escapeHtml(formatEventPrice(nextEvent.price_cents, nextEvent.currency))}</span>
+        <small>${escapeHtml(nextEvent.seats_remaining)} seat${Number(nextEvent.seats_remaining) === 1 ? '' : 's'} left</small>
+      `;
+    }
   });
 }
 

@@ -1202,26 +1202,49 @@ body.gallery-open { overflow: hidden; }
   border-radius: 22px;
   background: rgba(0,0,0,.28);
 }
-.date-picker-list { display: grid; gap: 10px; margin-top: 12px; }
-.date-option {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 12px;
-  align-items: start;
+.date-select-label {
+  display: block;
+  margin-top: 14px;
+  color: var(--academy-cyan);
+  font-size: .78rem;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.date-select {
+  width: 100%;
+  min-height: 54px;
+  margin-top: 8px;
+  padding: 12px 44px 12px 14px;
+  border: 1px solid rgba(255,215,0,.46);
+  border-radius: 16px;
+  background:
+    linear-gradient(45deg, transparent 50%, var(--academy-gold) 50%) calc(100% - 22px) 50% / 7px 7px no-repeat,
+    linear-gradient(135deg, var(--academy-gold) 50%, transparent 50%) calc(100% - 16px) 50% / 7px 7px no-repeat,
+    rgba(0,0,0,.56);
+  color: #fff;
+  font: inherit;
+  font-weight: 800;
+  line-height: 1.35;
+  outline: none;
+  appearance: none;
+}
+.date-select:focus {
+  border-color: var(--academy-gold);
+  box-shadow: 0 0 0 3px rgba(255,215,0,.15);
+}
+.date-select option { color: #05070a; }
+.selected-date-summary {
+  display: block;
+  margin-top: 12px;
   padding: 14px;
   border: 1px solid rgba(255,255,255,.12);
   border-radius: 18px;
   background: rgba(255,255,255,.04);
-  cursor: pointer;
 }
-.date-option:has(input:checked) {
-  border-color: var(--academy-gold);
-  background: rgba(255,215,0,.1);
-}
-.date-option input { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--academy-gold); }
-.date-option strong { color: #fff; line-height: 1.25; }
-.date-option span { display: block; margin-top: 4px; color: var(--muted); font-size: .92rem; line-height: 1.35; }
-.date-option small { display: block; margin-top: 8px; color: var(--academy-gold); font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+.selected-date-summary strong { display: block; color: #fff; line-height: 1.25; }
+.selected-date-summary span { display: block; margin-top: 4px; color: var(--muted); font-size: .92rem; line-height: 1.35; }
+.selected-date-summary small { display: block; margin-top: 8px; color: var(--academy-gold); font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
 .admin-login-form .button { width: fit-content; }
 .admin-dashboard { display: grid; gap: 22px; }
 .admin-stats {
