@@ -615,7 +615,7 @@ function selectedEventSummaryMarkup(event) {
   return `
     <strong>${escapeHtml(event.title || 'Boss Up Bootcamp')}</strong>
     <span>${escapeHtml(formatEventDate(event.starts_at))}</span>
-    <span>${escapeHtml(event.location || 'Location TBA')} · ${escapeHtml(formatEventPrice(event.price_cents, event.currency))}</span>
+    <span>${escapeHtml(event.location || 'Newark Campus')} · ${escapeHtml(formatEventPrice(event.price_cents, event.currency))}</span>
     <div class="seat-tracker" aria-label="${escapeHtml(`${availableLabel} ${totalLabel}`)}">
       <span class="seat-tracker-head">
         <span>Real-time seat tracker</span>

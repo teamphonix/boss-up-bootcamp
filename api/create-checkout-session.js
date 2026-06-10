@@ -58,7 +58,7 @@ function defaultTuesdayRows() {
       starts_at: event.afternoon,
       ends_at: `${event.date}T13:00:00-04:00`,
       timezone: 'America/New_York',
-      location: 'Location TBA',
+      location: 'Newark Campus',
       seat_limit: Number(process.env.BOOTCAMP_SEAT_LIMIT || 20),
       price_cents: Number(process.env.BOOTCAMP_PRICE_CENTS || 2500),
       currency: 'usd',
@@ -72,7 +72,7 @@ function defaultTuesdayRows() {
       starts_at: event.evening,
       ends_at: `${event.date}T22:00:00-04:00`,
       timezone: 'America/New_York',
-      location: 'Location TBA',
+      location: 'Newark Campus',
       seat_limit: Number(process.env.BOOTCAMP_SEAT_LIMIT || 20),
       price_cents: Number(process.env.BOOTCAMP_PRICE_CENTS || 2500),
       currency: 'usd',
@@ -85,6 +85,14 @@ function defaultTuesdayRows() {
 }
 
 async function ensureDefaultTuesdayEvents(supabase, nowIso) {
+  const { error: locationUpdateError } = await supabase
+    .from('bootcamp_events')
+    .update({ location: 'Newark Campus' })
+    .eq('location', 'Location TBA')
+    .like('notes', 'Auto-seeded Tuesday schedule:%');
+
+  if (locationUpdateError) throw locationUpdateError;
+
   const { count, error } = await supabase
     .from('bootcamp_events')
     .select('id', { count: 'exact', head: true })
@@ -126,7 +134,7 @@ async function loadAvailableEvents() {
     id: event.event_id,
     title: event.title || 'Boss Up Bootcamp',
     starts_at: event.starts_at,
-    location: event.location || 'Location TBA',
+    location: event.location || 'Newark Campus',
     seat_limit: Number(event.seat_limit || 20),
     price_cents: Number(event.price_cents || 2500),
     currency: event.currency || 'usd',

@@ -627,6 +627,14 @@ input:focus, select:focus, textarea:focus { outline: 3px solid rgba(0,255,255,.1
 }
 .confirmation-card h1 { font-size: clamp(3rem, 8vw, 6rem); color: var(--academy-gold); }
 .confirmation-card h2 { font-size: clamp(1.7rem, 4vw, 2.5rem); }
+.confirmation-notice {
+  padding: 16px;
+  border: 1px solid rgba(255,215,0,.34);
+  border-radius: 18px;
+  background: rgba(255,215,0,.08);
+  color: #f2f6ff;
+}
+.confirmation-notice strong { color: var(--academy-gold); }
 .confirmation-next-steps {
   display: grid;
   gap: 12px;
