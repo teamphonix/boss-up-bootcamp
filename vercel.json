@@ -20,6 +20,14 @@
       "dest": "/app/admin.html"
     },
     {
+      "src": "/register-success/?",
+      "dest": "/app/register-success.html"
+    },
+    {
+      "src": "/register-cancel/?",
+      "dest": "/app/register-cancel.html"
+    },
+    {
       "src": "/assets/(.*)",
       "dest": "/app/assets/$1"
     },

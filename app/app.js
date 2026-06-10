@@ -569,18 +569,42 @@ function ensureLightbox() {
   });
 }
 
+function setCheckoutMessage(message, isError = false) {
+  const messageEl = document.querySelector('#checkout-message');
+  if (!messageEl) return;
+  messageEl.textContent = message;
+  messageEl.classList.toggle('is-error', isError);
+}
+
+function checkoutPayload(form) {
+  const formData = new FormData(form);
+  return Object.fromEntries(formData.entries());
+}
+
 function bindForm() {
-  const form = document.querySelector('.waitlist-form');
+  const form = document.querySelector('#checkout-form');
   if (!form) return;
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const button = form.querySelector('button');
-    button.textContent = 'Saved Locally For Skeleton';
+    const button = form.querySelector('button[type="submit"]');
+    const originalHtml = button.innerHTML;
     button.disabled = true;
-    setTimeout(() => {
-      button.textContent = 'Register';
+    button.innerHTML = '<span>Opening Stripe...</span><small>Secure checkout</small>';
+    setCheckoutMessage('Creating your secure checkout session...');
+    try {
+      const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(checkoutPayload(form)),
+      });
+      const body = await response.json().catch(() => ({}));
+      if (!response.ok || !body.url) throw new Error(body.error || 'Unable to start checkout');
+      window.location.href = body.url;
+    } catch (error) {
+      setCheckoutMessage(error.message || 'Unable to start checkout. Please try again.', true);
       button.disabled = false;
-    }, 2200);
+      button.innerHTML = originalHtml;
+    }
   });
 }
 

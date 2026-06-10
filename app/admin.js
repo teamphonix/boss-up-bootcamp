@@ -6,6 +6,7 @@ const dashboard = document.querySelector('#admin-dashboard');
 const logoutButton = document.querySelector('#admin-logout');
 const refreshButton = document.querySelector('#admin-refresh');
 const syncStripeButton = document.querySelector('#admin-sync-stripe');
+const cleanupTestsButton = document.querySelector('#admin-cleanup-tests');
 const statsEl = document.querySelector('#admin-stats');
 const eventDetailsEl = document.querySelector('#admin-event-details');
 const attendeeListEl = document.querySelector('#admin-attendee-list');
@@ -166,6 +167,23 @@ syncStripeButton?.addEventListener('click', async () => {
   } finally {
     syncStripeButton.disabled = false;
     syncStripeButton.textContent = originalText;
+  }
+});
+cleanupTestsButton?.addEventListener('click', async () => {
+  const confirmed = window.confirm('Remove Stripe test-mode registrations from the admin dashboard? Real live-mode payments will not be removed.');
+  if (!confirmed) return;
+  const originalText = cleanupTestsButton.textContent;
+  cleanupTestsButton.disabled = true;
+  cleanupTestsButton.textContent = 'Removing...';
+  try {
+    const result = await api('/api/admin-cleanup-test-registrations', { method: 'POST', body: JSON.stringify({}) });
+    setLoginMessage(`Removed ${result.count || 0} test registration(s).`);
+    await loadAdminData();
+  } catch (error) {
+    setLoginMessage(error.message || 'Cleanup failed', true);
+  } finally {
+    cleanupTestsButton.disabled = false;
+    cleanupTestsButton.textContent = originalText;
   }
 });
 searchInput?.addEventListener('input', renderAttendees);

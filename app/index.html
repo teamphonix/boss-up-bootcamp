@@ -28,7 +28,7 @@
     </nav>
 
     <div class="header-actions">
-      <a class="button button-dark header-cta" href="https://buy.stripe.com/test_00w9ATa4K5vU9lrbUi3sI00" target="_blank" rel="noopener">Reserve</a>
+      <a class="button button-dark header-cta" href="#register" data-route-link>Reserve</a>
       <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
@@ -54,7 +54,7 @@
           <h1>Boss Up Bootcamp</h1>
           <p class="hero-subtitle">Stop wondering where to start. Master the AI tools &amp; workflows that transform ideas into brands, websites, music, graphics, videos, and marketing content. Boss Up today with our Bootcamp.</p>
           <div class="hero-actions">
-            <a class="button button-dark reserve-button" href="https://buy.stripe.com/test_00w9ATa4K5vU9lrbUi3sI00" target="_blank" rel="noopener"><span>Reserve a Spot</span><small>20 Seats Available - $25 Each</small></a>
+            <a class="button button-dark reserve-button" href="#register" data-route-link><span>Reserve a Spot</span><small>20 Seats Available - $25 Each</small></a>
             <a class="button button-light" href="#how-it-works" data-route-link>How It Works</a>
             <a class="button button-light" href="#portfolio" data-route-link>Portfolio</a>
           </div>
@@ -183,11 +183,24 @@
         <article class="registration-card reveal-card">
           <p class="kicker">Reserve your spot</p>
           <h2>Secure your seat.</h2>
-          <p>Only 20 seats will be available for the first session. Each seat is $25. Tap below to complete your reservation through secure Stripe checkout.</p>
-          <div class="stripe-reserve-panel">
-            <a class="button button-dark reserve-button" href="https://buy.stripe.com/test_00w9ATa4K5vU9lrbUi3sI00" target="_blank" rel="noopener"><span>Pay with Stripe</span><small>20 Seats Available - $25 Each</small></a>
-            <p class="form-note">Stripe checkout collects your payment details securely. You will receive confirmation from Stripe after checkout.</p>
-          </div>
+          <p>Only 20 seats will be available for the first session. Each seat is $25. Complete the short intake below, then you will be sent to secure Stripe checkout to reserve your seat.</p>
+          <form class="checkout-form" id="checkout-form">
+            <label>Your name <input name="attendee_name" type="text" autocomplete="name" placeholder="Full name" required /></label>
+            <label>Email <input name="attendee_email" type="email" autocomplete="email" placeholder="you@example.com" required /></label>
+            <label>Phone <input name="attendee_phone" type="tel" autocomplete="tel" placeholder="Best contact number" /></label>
+            <label>Skill level
+              <select name="skill_level">
+                <option value="New to AI">New to AI</option>
+                <option value="Some experience">Some experience</option>
+                <option value="Already building">Already building</option>
+              </select>
+            </label>
+            <label>What do you want to build?
+              <textarea name="project_idea" placeholder="Business idea, brand, music, website, app, video, or creative project"></textarea>
+            </label>
+            <button class="button button-dark reserve-button" type="submit"><span>Continue to Stripe</span><small>20 Seats Available - $25 Each</small></button>
+            <p class="form-note checkout-message" id="checkout-message" role="status">Secure checkout opens after this form. Your intake details stay connected to your registration.</p>
+          </form>
         </article>
       </section>
     </section>

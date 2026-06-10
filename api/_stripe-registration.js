@@ -22,7 +22,7 @@ function extractRegistrationFromCheckoutSession(session, fallbackEventId = null)
     attendee_phone: customerDetails.phone || metadata.attendee_phone || null,
     interest: metadata.interest || metadata.focus || null,
     raw_stripe: session,
-    source: 'stripe_payment_link',
+    source: metadata.source || (session.payment_link ? 'stripe_payment_link' : 'stripe_checkout_form'),
   };
 }
 
