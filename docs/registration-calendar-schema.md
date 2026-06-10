@@ -106,3 +106,25 @@ PUBLIC_SITE_URL=https://boss-up-bootcamp.vercel.app
 ```
 
 For now, the live site is connected to the Stripe Sandbox Payment Link. The webhook/API phase comes next.
+
+## Stripe webhook endpoint
+
+Vercel route:
+
+```text
+https://boss-up-bootcamp.vercel.app/api/stripe-webhook
+```
+
+Stripe event to subscribe:
+
+```text
+checkout.session.completed
+```
+
+Webhook behavior:
+
+- Verifies the `stripe-signature` header with `STRIPE_WEBHOOK_SECRET`.
+- Handles only `checkout.session.completed` for v1.
+- Finds the first published `bootcamp_events` row when the Stripe session does not include `metadata.event_id`.
+- Upserts into `registrations` by `stripe_checkout_session_id` so Stripe retries do not create duplicate attendees.
+- Saves attendee name, email, phone, amount, currency, payment status, customer ID, payment intent ID, payment link ID, optional interest metadata, and raw Stripe session JSON.

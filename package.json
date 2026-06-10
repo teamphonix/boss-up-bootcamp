@@ -5,10 +5,12 @@
   "description": "Boss Up Bootcamp landing page skeleton for The H.I.P.H.O.P. Academy.",
   "scripts": {
     "serve": "python3 -m http.server 4175 --directory app",
-    "audit": "node scripts/audit_site.js"
+    "audit": "node scripts/audit_site.js",
+    "test": "node tests/stripe-registration.test.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.1",
-    "cookie": "^1.1.1"
+    "cookie": "^1.1.1",
+    "stripe": "^22.2.0"
   }
 }
