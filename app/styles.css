@@ -1243,8 +1243,48 @@ body.gallery-open { overflow: hidden; }
   background: rgba(255,255,255,.04);
 }
 .selected-date-summary strong { display: block; color: #fff; line-height: 1.25; }
-.selected-date-summary span { display: block; margin-top: 4px; color: var(--muted); font-size: .92rem; line-height: 1.35; }
-.selected-date-summary small { display: block; margin-top: 8px; color: var(--academy-gold); font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+.selected-date-summary > span { display: block; margin-top: 4px; color: var(--muted); font-size: .92rem; line-height: 1.35; }
+.seat-tracker {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0,255,255,.14);
+}
+.seat-tracker-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+  font-size: .78rem;
+  font-weight: 900;
+  letter-spacing: .06em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+.seat-tracker-head strong {
+  color: var(--academy-gold);
+  font-size: .82rem;
+  text-align: right;
+}
+.seat-meter {
+  display: block;
+  height: 11px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 999px;
+  background: rgba(0,255,255,.12);
+}
+.seat-meter span {
+  display: block;
+  min-width: 3px;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--academy-gold), #ff7a00);
+  transition: width .28s ease;
+}
+.seat-tracker small { color: var(--academy-cyan); font-size: .78rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
 .admin-login-form .button { width: fit-content; }
 .admin-dashboard { display: grid; gap: 22px; }
 .admin-stats {

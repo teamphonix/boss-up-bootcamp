@@ -600,6 +600,33 @@ function formatEventPrice(cents, currency = 'usd') {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: String(currency || 'usd').toUpperCase() }).format(Number(cents || 0) / 100);
 }
 
+function eventSeats(event) {
+  const total = Math.max(Number(event?.seat_limit || 0), 0);
+  const remaining = Math.max(Number(event?.seats_remaining || 0), 0);
+  const sold = Math.max(total - remaining, 0);
+  const percentSold = total ? Math.min(Math.round((sold / total) * 100), 100) : 0;
+  return { total, remaining, sold, percentSold };
+}
+
+function selectedEventSummaryMarkup(event) {
+  const seats = eventSeats(event);
+  const availableLabel = `${seats.remaining} seat${seats.remaining === 1 ? '' : 's'} available`;
+  const totalLabel = seats.total ? `of ${seats.total}` : 'live count';
+  return `
+    <strong>${escapeHtml(event.title || 'Boss Up Bootcamp')}</strong>
+    <span>${escapeHtml(formatEventDate(event.starts_at))}</span>
+    <span>${escapeHtml(event.location || 'Location TBA')} · ${escapeHtml(formatEventPrice(event.price_cents, event.currency))}</span>
+    <div class="seat-tracker" aria-label="${escapeHtml(`${availableLabel} ${totalLabel}`)}">
+      <span class="seat-tracker-head">
+        <span>Real-time seat tracker</span>
+        <strong>${escapeHtml(`${availableLabel} ${totalLabel}`)}</strong>
+      </span>
+      <span class="seat-meter" aria-hidden="true"><span style="width:${escapeHtml(seats.percentSold)}%"></span></span>
+      <small>${escapeHtml(seats.sold)} reserved · updates automatically</small>
+    </div>
+  `;
+}
+
 function renderAvailableDates(events = []) {
   const panel = document.querySelector('#date-picker-panel');
   const form = document.querySelector('#checkout-form');
@@ -607,6 +634,7 @@ function renderAvailableDates(events = []) {
   const eventIdInput = document.querySelector('#event-id');
   if (!panel || !form || !notifyForm || !eventIdInput) return;
 
+  const currentSelection = eventIdInput.value;
   const availableEvents = events.filter((event) => !event.is_sold_out && Number(event.seats_remaining || 0) > 0);
   if (!availableEvents.length) {
     panel.innerHTML = `
@@ -621,52 +649,48 @@ function renderAvailableDates(events = []) {
 
   form.hidden = false;
   notifyForm.hidden = true;
-  eventIdInput.value = availableEvents[0].id;
-  const selectedEvent = availableEvents[0];
+  const selectedEvent = availableEvents.find((event) => event.id === currentSelection) || availableEvents[0];
+  eventIdInput.value = selectedEvent.id;
   panel.innerHTML = `
     <h3>Choose your session</h3>
     <label class="date-select-label" for="selected-event-select">Date & time</label>
     <select class="date-select" id="selected-event-select" name="selected_event" aria-label="Choose your Boss Up Bootcamp session">
-      ${availableEvents.map((event, index) => `
-        <option value="${escapeHtml(event.id)}" ${index === 0 ? 'selected' : ''}>
-          ${escapeHtml(`${formatEventDate(event.starts_at)} — ${(event.title || 'Boss Up Bootcamp').replace('Boss Up Bootcamp — ', '')}`)}
+      ${availableEvents.map((event) => `
+        <option value="${escapeHtml(event.id)}" ${event.id === selectedEvent.id ? 'selected' : ''}>
+          ${escapeHtml(`${formatEventDate(event.starts_at)} — ${(event.title || 'Boss Up Bootcamp').replace('Boss Up Bootcamp — ', '')} · ${eventSeats(event).remaining} left`)}
         </option>
       `).join('')}
     </select>
-    <p class="selected-date-summary" id="selected-date-summary">
-      <strong>${escapeHtml(selectedEvent.title || 'Boss Up Bootcamp')}</strong>
-      <span>${escapeHtml(formatEventDate(selectedEvent.starts_at))}</span>
-      <span>${escapeHtml(selectedEvent.location || 'Location TBA')} · ${escapeHtml(formatEventPrice(selectedEvent.price_cents, selectedEvent.currency))}</span>
-      <small>${escapeHtml(selectedEvent.seats_remaining)} seat${Number(selectedEvent.seats_remaining) === 1 ? '' : 's'} left</small>
-    </p>
+    <div class="selected-date-summary" id="selected-date-summary">
+      ${selectedEventSummaryMarkup(selectedEvent)}
+    </div>
   `;
   const select = panel.querySelector('#selected-event-select');
   const summary = panel.querySelector('#selected-date-summary');
   select?.addEventListener('change', () => {
     eventIdInput.value = select.value;
     const nextEvent = availableEvents.find((event) => event.id === select.value) || availableEvents[0];
-    if (summary && nextEvent) {
-      summary.innerHTML = `
-        <strong>${escapeHtml(nextEvent.title || 'Boss Up Bootcamp')}</strong>
-        <span>${escapeHtml(formatEventDate(nextEvent.starts_at))}</span>
-        <span>${escapeHtml(nextEvent.location || 'Location TBA')} · ${escapeHtml(formatEventPrice(nextEvent.price_cents, nextEvent.currency))}</span>
-        <small>${escapeHtml(nextEvent.seats_remaining)} seat${Number(nextEvent.seats_remaining) === 1 ? '' : 's'} left</small>
-      `;
-    }
+    if (summary && nextEvent) summary.innerHTML = selectedEventSummaryMarkup(nextEvent);
   });
 }
 
-async function loadAvailableDates() {
+async function loadAvailableDates({ quiet = false } = {}) {
   const panel = document.querySelector('#date-picker-panel');
   if (!panel) return;
+  if (document.activeElement?.id === 'selected-event-select') return;
   try {
-    const response = await fetch('/api/create-checkout-session');
+    const response = await fetch(`/api/create-checkout-session?ts=${Date.now()}`, { cache: 'no-store' });
     const body = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(body.error || 'Unable to load available dates');
     renderAvailableDates(body.events || []);
   } catch (error) {
-    panel.innerHTML = '<p class="form-note is-error">Available dates could not load right now. Please try again shortly.</p>';
+    if (!quiet) panel.innerHTML = '<p class="form-note is-error">Available dates could not load right now. Please try again shortly.</p>';
   }
+}
+
+function startSeatAvailabilityRefresh() {
+  loadAvailableDates();
+  window.setInterval(() => loadAvailableDates({ quiet: true }), 30000);
 }
 
 function checkoutPayload(form) {
@@ -761,6 +785,6 @@ renderProjects();
 renderTimeline();
 renderMusicPlaylist();
 renderWebsiteShowcase();
-loadAvailableDates();
+startSeatAvailabilityRefresh();
 bindForm();
 bindRevealCards();
