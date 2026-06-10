@@ -2,7 +2,16 @@ const Stripe = require('stripe');
 const { supabaseAdmin } = require('./_supabase');
 const { upsertRegistrationFromCheckoutSession } = require('./_stripe-registration');
 
+module.exports.config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
 function readRawBody(req) {
+  if (Buffer.isBuffer(req.body)) return Promise.resolve(req.body);
+  if (typeof req.body === 'string') return Promise.resolve(Buffer.from(req.body, 'utf8'));
+
   return new Promise((resolve, reject) => {
     const chunks = [];
     req.on('data', (chunk) => chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk)));
@@ -49,13 +58,26 @@ module.exports = async function handler(req, res) {
     const signature = req.headers['stripe-signature'];
     event = stripeClient().webhooks.constructEvent(rawBody, signature, webhookSecret);
   } catch (error) {
+    console.error('Stripe webhook verification failed', {
+      message: error.message,
+      hasSignature: Boolean(req.headers['stripe-signature']),
+      rawBodyBytes: rawBody ? rawBody.length : 0,
+      hasWebhookSecret: Boolean(process.env.STRIPE_WEBHOOK_SECRET),
+      hasStripeSecretKey: Boolean(process.env.STRIPE_SECRET_KEY),
+    });
     return res.status(400).json({ error: `Webhook verification failed: ${error.message}` });
   }
 
   try {
     const result = await handleStripeEvent(event);
+    console.log('Stripe webhook processed', result);
     return res.status(200).json({ received: true, ...result });
   } catch (error) {
+    console.error('Stripe webhook processing failed', {
+      message: error.message,
+      eventType: event?.type,
+      eventId: event?.id,
+    });
     return res.status(500).json({ error: error.message || 'Webhook processing failed' });
   }
 };
