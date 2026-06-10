@@ -5,6 +5,7 @@ const loginMessage = document.querySelector('#admin-login-message');
 const dashboard = document.querySelector('#admin-dashboard');
 const logoutButton = document.querySelector('#admin-logout');
 const refreshButton = document.querySelector('#admin-refresh');
+const syncStripeButton = document.querySelector('#admin-sync-stripe');
 const statsEl = document.querySelector('#admin-stats');
 const eventDetailsEl = document.querySelector('#admin-event-details');
 const attendeeListEl = document.querySelector('#admin-attendee-list');
@@ -152,6 +153,21 @@ logoutButton?.addEventListener('click', async () => {
 });
 
 refreshButton?.addEventListener('click', () => loadAdminData().catch((error) => setLoginMessage(error.message, true)));
+syncStripeButton?.addEventListener('click', async () => {
+  const originalText = syncStripeButton.textContent;
+  syncStripeButton.disabled = true;
+  syncStripeButton.textContent = 'Syncing...';
+  try {
+    const result = await api('/api/admin-stripe-sync', { method: 'POST', body: JSON.stringify({}) });
+    setLoginMessage(`Stripe sync complete: ${result.count || 0} paid checkout session(s) checked.`);
+    await loadAdminData();
+  } catch (error) {
+    setLoginMessage(error.message || 'Stripe sync failed', true);
+  } finally {
+    syncStripeButton.disabled = false;
+    syncStripeButton.textContent = originalText;
+  }
+});
 searchInput?.addEventListener('input', renderAttendees);
 
 attendeeListEl?.addEventListener('click', async (event) => {
