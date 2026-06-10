@@ -40,14 +40,15 @@ function assertLiveStripeKey() {
 
 const DEFAULT_TUESDAY_EVENTS = [
   { date: '2026-06-23', afternoon: '2026-06-23T12:00:00-04:00', evening: '2026-06-23T21:00:00-04:00' },
-  { date: '2026-06-30', afternoon: '2026-06-30T12:00:00-04:00', evening: '2026-06-30T21:00:00-04:00' },
   { date: '2026-07-07', afternoon: '2026-07-07T12:00:00-04:00', evening: '2026-07-07T21:00:00-04:00' },
-  { date: '2026-07-14', afternoon: '2026-07-14T12:00:00-04:00', evening: '2026-07-14T21:00:00-04:00' },
-  { date: '2026-07-21', afternoon: '2026-07-21T12:00:00-04:00', evening: '2026-07-21T21:00:00-04:00' },
-  { date: '2026-07-28', afternoon: '2026-07-28T12:00:00-04:00', evening: '2026-07-28T21:00:00-04:00' },
-  { date: '2026-08-04', afternoon: '2026-08-04T12:00:00-04:00', evening: '2026-08-04T21:00:00-04:00' },
-  { date: '2026-08-11', afternoon: '2026-08-11T12:00:00-04:00', evening: '2026-08-11T21:00:00-04:00' },
 ];
+
+function defaultTuesdayStartTimes() {
+  return DEFAULT_TUESDAY_EVENTS.flatMap((event) => [
+    new Date(event.afternoon).toISOString(),
+    new Date(event.evening).toISOString(),
+  ]);
+}
 
 function defaultTuesdayRows() {
   const rows = [];
@@ -85,6 +86,7 @@ function defaultTuesdayRows() {
 }
 
 async function ensureDefaultTuesdayEvents(supabase, nowIso) {
+  const targetStartTimes = defaultTuesdayStartTimes();
   const { error: locationUpdateError } = await supabase
     .from('bootcamp_events')
     .update({ location: 'Newark Campus' })
@@ -92,6 +94,14 @@ async function ensureDefaultTuesdayEvents(supabase, nowIso) {
     .like('notes', 'Auto-seeded Tuesday schedule:%');
 
   if (locationUpdateError) throw locationUpdateError;
+
+  const { error: archiveExtraEventsError } = await supabase
+    .from('bootcamp_events')
+    .update({ is_published: false, is_archived: true })
+    .like('notes', 'Auto-seeded Tuesday schedule:%')
+    .not('starts_at', 'in', `(${targetStartTimes.map((time) => `"${time}"`).join(',')})`);
+
+  if (archiveExtraEventsError) throw archiveExtraEventsError;
 
   const { count, error } = await supabase
     .from('bootcamp_events')
