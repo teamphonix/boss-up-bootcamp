@@ -1159,7 +1159,69 @@ body.gallery-open { overflow: hidden; }
 }
 .admin-login-card h1,
 .admin-dashboard h1 { font-size: clamp(2.7rem, 7vw, 5.6rem); }
+.checkout-form,
+.notify-form,
 .admin-login-form { display: grid; gap: 14px; margin-top: 10px; }
+.checkout-form label,
+.notify-form label,
+.admin-login-form label {
+  display: grid;
+  gap: 7px;
+  color: #fff;
+  font-weight: 900;
+}
+.checkout-form input,
+.checkout-form select,
+.checkout-form textarea,
+.notify-form input,
+.admin-login-form input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid rgba(0,255,255,.22);
+  border-radius: 16px;
+  background: rgba(0,0,0,.34);
+  color: var(--ink);
+  font: inherit;
+  outline: none;
+}
+.checkout-form textarea { min-height: 110px; resize: vertical; }
+.checkout-form input:focus,
+.checkout-form select:focus,
+.checkout-form textarea:focus,
+.notify-form input:focus,
+.admin-login-form input:focus {
+  border-color: var(--academy-gold);
+  box-shadow: 0 0 0 3px rgba(255,215,0,.15);
+}
+.date-picker-panel,
+.notify-form {
+  margin: 18px 0;
+  padding: 18px;
+  border: 1px solid rgba(0,255,255,.22);
+  border-radius: 22px;
+  background: rgba(0,0,0,.28);
+}
+.date-picker-list { display: grid; gap: 10px; margin-top: 12px; }
+.date-option {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 14px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 18px;
+  background: rgba(255,255,255,.04);
+  cursor: pointer;
+}
+.date-option:has(input:checked) {
+  border-color: var(--academy-gold);
+  background: rgba(255,215,0,.1);
+}
+.date-option input { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--academy-gold); }
+.date-option strong { color: #fff; line-height: 1.25; }
+.date-option span { display: block; margin-top: 4px; color: var(--muted); font-size: .92rem; line-height: 1.35; }
+.date-option small { display: block; margin-top: 8px; color: var(--academy-gold); font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
 .admin-login-form .button { width: fit-content; }
 .admin-dashboard { display: grid; gap: 22px; }
 .admin-stats {

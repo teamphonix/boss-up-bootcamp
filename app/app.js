@@ -576,6 +576,86 @@ function setCheckoutMessage(message, isError = false) {
   messageEl.classList.toggle('is-error', isError);
 }
 
+function setNotifyMessage(message, isError = false) {
+  const messageEl = document.querySelector('#notify-message');
+  if (!messageEl) return;
+  messageEl.textContent = message;
+  messageEl.classList.toggle('is-error', isError);
+}
+
+function formatEventDate(value) {
+  if (!value) return 'Date/time TBA';
+  return new Intl.DateTimeFormat('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    timeZone: 'America/New_York',
+  }).format(new Date(value));
+}
+
+function formatEventPrice(cents, currency = 'usd') {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: String(currency || 'usd').toUpperCase() }).format(Number(cents || 0) / 100);
+}
+
+function renderAvailableDates(events = []) {
+  const panel = document.querySelector('#date-picker-panel');
+  const form = document.querySelector('#checkout-form');
+  const notifyForm = document.querySelector('#notify-form');
+  const eventIdInput = document.querySelector('#event-id');
+  if (!panel || !form || !notifyForm || !eventIdInput) return;
+
+  const availableEvents = events.filter((event) => !event.is_sold_out && Number(event.seats_remaining || 0) > 0);
+  if (!availableEvents.length) {
+    panel.innerHTML = `
+      <h3>No current date has been set yet.</h3>
+      <p>Please come back again, or select <strong>Notify Me</strong> and leave your email address to receive a notification once a date has been arranged.</p>
+    `;
+    form.hidden = true;
+    notifyForm.hidden = false;
+    eventIdInput.value = '';
+    return;
+  }
+
+  form.hidden = false;
+  notifyForm.hidden = true;
+  eventIdInput.value = availableEvents[0].id;
+  panel.innerHTML = `
+    <h3>Choose your session date</h3>
+    <div class="date-picker-list">
+      ${availableEvents.map((event, index) => `
+        <label class="date-option">
+          <input type="radio" name="selected_event" value="${escapeHtml(event.id)}" ${index === 0 ? 'checked' : ''} />
+          <span>
+            <strong>${escapeHtml(event.title || 'Boss Up Bootcamp')}</strong>
+            <span>${escapeHtml(formatEventDate(event.starts_at))}</span>
+            <span>${escapeHtml(event.location || 'Location TBA')} · ${escapeHtml(formatEventPrice(event.price_cents, event.currency))}</span>
+            <small>${escapeHtml(event.seats_remaining)} seat${Number(event.seats_remaining) === 1 ? '' : 's'} left</small>
+          </span>
+        </label>
+      `).join('')}
+    </div>
+  `;
+  panel.querySelectorAll('input[name="selected_event"]').forEach((input) => {
+    input.addEventListener('change', () => { eventIdInput.value = input.value; });
+  });
+}
+
+async function loadAvailableDates() {
+  const panel = document.querySelector('#date-picker-panel');
+  if (!panel) return;
+  try {
+    const response = await fetch('/api/create-checkout-session');
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(body.error || 'Unable to load available dates');
+    renderAvailableDates(body.events || []);
+  } catch (error) {
+    panel.innerHTML = '<p class="form-note is-error">Available dates could not load right now. Please try again shortly.</p>';
+  }
+}
+
 function checkoutPayload(form) {
   const formData = new FormData(form);
   return Object.fromEntries(formData.entries());
@@ -583,9 +663,40 @@ function checkoutPayload(form) {
 
 function bindForm() {
   const form = document.querySelector('#checkout-form');
+  const notifyForm = document.querySelector('#notify-form');
+  if (notifyForm) {
+    notifyForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const button = notifyForm.querySelector('button[type="submit"]');
+      const originalText = button.textContent;
+      button.disabled = true;
+      button.textContent = 'Saving...';
+      setNotifyMessage('Adding you to the notification list...');
+      try {
+        const response = await fetch('/api/create-checkout-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'notify-date', ...Object.fromEntries(new FormData(notifyForm).entries()) }),
+        });
+        const body = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(body.error || 'Unable to save notification request');
+        notifyForm.reset();
+        setNotifyMessage('You are on the list. We will notify you once a date is arranged.');
+      } catch (error) {
+        setNotifyMessage(error.message || 'Unable to save your email. Please try again.', true);
+      } finally {
+        button.disabled = false;
+        button.textContent = originalText;
+      }
+    });
+  }
   if (!form) return;
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
+    if (!form.event_id?.value) {
+      setCheckoutMessage('Please choose an available session date before checkout.', true);
+      return;
+    }
     const button = form.querySelector('button[type="submit"]');
     const originalHtml = button.innerHTML;
     button.disabled = true;
@@ -637,5 +748,6 @@ renderProjects();
 renderTimeline();
 renderMusicPlaylist();
 renderWebsiteShowcase();
+loadAvailableDates();
 bindForm();
 bindRevealCards();

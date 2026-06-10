@@ -183,8 +183,20 @@
         <article class="registration-card reveal-card">
           <p class="kicker">Reserve your spot</p>
           <h2>Secure your seat.</h2>
-          <p>Only 20 seats will be available for the first session. Each seat is $25. Complete the short intake below, then you will be sent to secure Stripe checkout to reserve your seat.</p>
+          <p>Only 20 seats will be available for each session. Complete the short intake below, choose an available date, then you will be sent to secure Stripe checkout to reserve your seat.</p>
+          <div class="date-picker-panel" id="date-picker-panel" aria-live="polite">
+            <p class="form-note">Loading available dates...</p>
+          </div>
+          <form class="notify-form" id="notify-form" hidden>
+            <h3>No current date has been set yet.</h3>
+            <p>Please come back again, or select <strong>Notify Me</strong> and leave your email address to receive a notification once a date has been arranged.</p>
+            <label>Your name <input name="name" type="text" autocomplete="name" placeholder="Full name" /></label>
+            <label>Email <input name="email" type="email" autocomplete="email" placeholder="you@example.com" required /></label>
+            <button class="button button-dark" type="submit">Notify Me</button>
+            <p class="form-note notify-message" id="notify-message" role="status"></p>
+          </form>
           <form class="checkout-form" id="checkout-form">
+            <input type="hidden" name="event_id" id="event-id" required />
             <label>Your name <input name="attendee_name" type="text" autocomplete="name" placeholder="Full name" required /></label>
             <label>Email <input name="attendee_email" type="email" autocomplete="email" placeholder="you@example.com" required /></label>
             <label>Phone <input name="attendee_phone" type="tel" autocomplete="tel" placeholder="Best contact number" /></label>
