@@ -1169,10 +1169,12 @@ body.gallery-open { overflow: hidden; }
 .admin-dashboard h1 { font-size: clamp(2.7rem, 7vw, 5.6rem); }
 .checkout-form,
 .notify-form,
-.admin-login-form { display: grid; gap: 14px; margin-top: 10px; }
+.admin-login-form,
+.admin-event-form { display: grid; gap: 14px; margin-top: 10px; }
 .checkout-form label,
 .notify-form label,
-.admin-login-form label {
+.admin-login-form label,
+.admin-event-form label {
   display: grid;
   gap: 7px;
   color: #fff;
@@ -1182,7 +1184,9 @@ body.gallery-open { overflow: hidden; }
 .checkout-form select,
 .checkout-form textarea,
 .notify-form input,
-.admin-login-form input {
+.admin-login-form input,
+.admin-event-form input,
+.admin-event-form textarea {
   width: 100%;
   min-height: 48px;
   padding: 12px 14px;
@@ -1193,12 +1197,15 @@ body.gallery-open { overflow: hidden; }
   font: inherit;
   outline: none;
 }
-.checkout-form textarea { min-height: 110px; resize: vertical; }
+.checkout-form textarea,
+.admin-event-form textarea { min-height: 110px; resize: vertical; }
 .checkout-form input:focus,
 .checkout-form select:focus,
 .checkout-form textarea:focus,
 .notify-form input:focus,
-.admin-login-form input:focus {
+.admin-login-form input:focus,
+.admin-event-form input:focus,
+.admin-event-form textarea:focus {
   border-color: var(--academy-gold);
   box-shadow: 0 0 0 3px rgba(255,215,0,.15);
 }
@@ -1286,6 +1293,28 @@ body.gallery-open { overflow: hidden; }
   background: rgba(0,0,0,.26);
 }
 .admin-detail-grid strong { color: #fff; font-size: 1.04rem; line-height: 1.25; }
+.admin-event-form {
+  margin: 18px 0 22px;
+  padding: 18px;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 22px;
+  background: rgba(0,0,0,.22);
+}
+.admin-checkbox { display: flex !important; grid-template-columns: auto 1fr; align-items: center; }
+.admin-checkbox input { width: auto; min-height: auto; }
+.admin-form-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.admin-session-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 20px;
+  background: rgba(0,0,0,.24);
+}
+.admin-session-card + .admin-session-card { margin-top: 12px; }
+.admin-session-card h3 { margin-top: 6px; color: #fff; }
+.admin-session-card p { margin-top: 6px; color: var(--muted); }
 .admin-search {
   max-width: 320px;
   background: rgba(0,0,0,.42);
@@ -1323,7 +1352,8 @@ body.gallery-open { overflow: hidden; }
 @media (max-width: 900px) {
   .admin-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .admin-detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .admin-attendee-card { grid-template-columns: 1fr; }
+  .admin-attendee-card,
+  .admin-session-card { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
   .admin-shell { width: min(100% - 24px, 1120px); padding-top: 18px; }

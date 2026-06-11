@@ -1,6 +1,7 @@
 const Stripe = require('stripe');
 const { supabaseAdmin } = require('./_supabase');
 const { upsertRegistrationFromCheckoutSession } = require('./_stripe-registration');
+const { sendConfirmationSms, twilioConfigured } = require('./_sms');
 
 module.exports.config = {
   api: {
@@ -32,8 +33,19 @@ async function handleStripeEvent(event) {
   }
 
   const session = event.data.object;
-  const registration = await upsertRegistrationFromCheckoutSession(supabaseAdmin(), session);
-  return { handled: true, type: event.type, registrationId: registration.id };
+  const supabase = supabaseAdmin();
+  const registration = await upsertRegistrationFromCheckoutSession(supabase, session);
+  let sms = { attempted: false };
+  if (twilioConfigured() && registration.attendee_phone) {
+    try {
+      const smsResult = await sendConfirmationSms({ supabase, registration });
+      sms = { attempted: true, sent: true, sid: smsResult.result.sid || null };
+    } catch (error) {
+      console.error('Confirmation SMS failed', { registrationId: registration.id, message: error.message });
+      sms = { attempted: true, sent: false, error: error.message };
+    }
+  }
+  return { handled: true, type: event.type, registrationId: registration.id, sms };
 }
 
 module.exports = async function handler(req, res) {

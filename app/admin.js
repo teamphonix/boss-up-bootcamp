@@ -11,6 +11,18 @@ const statsEl = document.querySelector('#admin-stats');
 const eventDetailsEl = document.querySelector('#admin-event-details');
 const attendeeListEl = document.querySelector('#admin-attendee-list');
 const searchInput = document.querySelector('#admin-search');
+const eventFilter = document.querySelector('#admin-event-filter');
+const eventForm = document.querySelector('#admin-event-form');
+const eventIdInput = document.querySelector('#admin-event-id');
+const eventTitleInput = document.querySelector('#admin-event-title');
+const eventStartInput = document.querySelector('#admin-event-start');
+const eventEndInput = document.querySelector('#admin-event-end');
+const eventLocationInput = document.querySelector('#admin-event-location');
+const eventPriceInput = document.querySelector('#admin-event-price');
+const eventSeatLimitInput = document.querySelector('#admin-event-seat-limit');
+const eventPublishedInput = document.querySelector('#admin-event-published');
+const eventNotesInput = document.querySelector('#admin-event-notes');
+const eventClearButton = document.querySelector('#admin-event-clear');
 
 let adminData = { events: [], registrations: [], summary: {} };
 
@@ -76,22 +88,60 @@ function renderStats() {
   `).join('');
 }
 
+function datetimeLocalValue(value) {
+  if (!value) return '';
+  const date = new Date(value);
+  const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+  return local.toISOString().slice(0, 16);
+}
+
+function isoFromLocalInput(value) {
+  return value ? new Date(value).toISOString() : null;
+}
+
+function fillEventForm(event = {}) {
+  eventIdInput.value = event.id || event.event_id || '';
+  eventTitleInput.value = event.title || 'Boss Up Bootcamp';
+  eventStartInput.value = datetimeLocalValue(event.starts_at);
+  eventEndInput.value = datetimeLocalValue(event.ends_at);
+  eventLocationInput.value = event.location || 'Newark Campus';
+  eventPriceInput.value = Number(event.price_cents || 2500) / 100;
+  eventSeatLimitInput.value = event.seat_limit || 20;
+  eventPublishedInput.checked = event.is_published !== false;
+  eventNotesInput.value = event.notes || '';
+}
+
+function renderEventFilter() {
+  if (!eventFilter) return;
+  const current = eventFilter.value || 'all';
+  eventFilter.innerHTML = '<option value="all">All sessions</option>' + (adminData.events || []).map((event) => `
+    <option value="${escapeHtml(event.id || event.event_id)}">${escapeHtml(formatDate(event.starts_at))}</option>
+  `).join('');
+  eventFilter.value = [...eventFilter.options].some((option) => option.value === current) ? current : 'all';
+}
+
 function renderEvent() {
-  const event = (adminData.events || []).find((item) => item.is_published) || (adminData.events || [])[0];
-  if (!event) {
-    eventDetailsEl.innerHTML = '<p>No bootcamp event found yet. The database is ready, but an event row needs to be published.</p>';
+  const events = adminData.events || [];
+  if (!events.length) {
+    eventDetailsEl.innerHTML = '<p>No bootcamp sessions found yet. Add one above, then publish it when ready.</p>';
     return;
   }
-  eventDetailsEl.innerHTML = `
-    <div class="admin-detail-grid">
-      <p><span>Title</span><strong>${escapeHtml(event.title || 'Boss Up Bootcamp')}</strong></p>
-      <p><span>Status</span><strong>${event.is_published ? 'Published' : 'Draft'}</strong></p>
-      <p><span>Date</span><strong>${escapeHtml(formatDate(event.starts_at))}</strong></p>
-      <p><span>Location</span><strong>${escapeHtml(event.location || 'New Jersey')}</strong></p>
-      <p><span>Seat limit</span><strong>${escapeHtml(event.seat_limit || 20)}</strong></p>
-      <p><span>Price</span><strong>${money(event.price_cents || 2500)}</strong></p>
-    </div>
-  `;
+  eventDetailsEl.innerHTML = events.map((event) => `
+    <article class="admin-session-card" data-event-id="${escapeHtml(event.id || event.event_id)}">
+      <div>
+        <span class="badge">${escapeHtml(event.is_archived ? 'Archived' : event.is_published ? 'Published' : 'Draft')}</span>
+        <h3>${escapeHtml(event.title || 'Boss Up Bootcamp')}</h3>
+        <p>${escapeHtml(formatDate(event.starts_at))}</p>
+        <p>${escapeHtml(event.location || 'Newark Campus')} · ${money(event.price_cents || 2500)}</p>
+        <p>${escapeHtml(event.paid_count || 0)} paid · ${escapeHtml(event.seat_limit || 20)} internal max</p>
+      </div>
+      <div class="admin-attendee-actions">
+        <button class="button button-light" type="button" data-edit-event="${escapeHtml(event.id || event.event_id)}">Edit</button>
+        <button class="button button-light" type="button" data-archive-event="${escapeHtml(event.id || event.event_id)}">Archive</button>
+      </div>
+    </article>
+  `).join('');
+  renderEventFilter();
 }
 
 function attendeeMatches(row, term) {
@@ -102,7 +152,10 @@ function attendeeMatches(row, term) {
 
 function renderAttendees() {
   const term = searchInput.value.trim();
-  const rows = (adminData.registrations || []).filter((row) => attendeeMatches(row, term));
+  const selectedEventId = eventFilter?.value || 'all';
+  const rows = (adminData.registrations || [])
+    .filter((row) => selectedEventId === 'all' || row.event_id === selectedEventId)
+    .filter((row) => attendeeMatches(row, term));
   if (!rows.length) {
     attendeeListEl.innerHTML = '<p class="admin-empty">No registrations found yet. After Stripe webhook is connected, paid attendees will appear here automatically.</p>';
     return;
@@ -114,8 +167,10 @@ function renderAttendees() {
         <h3>${escapeHtml(row.attendee_name || 'Unnamed attendee')}</h3>
         <p>${escapeHtml(row.attendee_email || 'No email yet')}</p>
         <p>${escapeHtml(row.attendee_phone || 'No phone yet')}</p>
+        <p>${escapeHtml(formatDate((adminData.events || []).find((event) => (event.id || event.event_id) === row.event_id)?.starts_at))}</p>
       </div>
       <div class="admin-attendee-actions">
+        <button class="button button-light" type="button" data-send-sms="${escapeHtml(row.id)}">Send Confirmation Text</button>
         <button class="button ${row.checked_in ? 'button-dark' : 'button-light'}" type="button" data-checkin="${escapeHtml(row.id)}">${row.checked_in ? 'Checked In' : 'Check In'}</button>
         <textarea data-notes="${escapeHtml(row.id)}" placeholder="Admin notes">${escapeHtml(row.admin_notes || '')}</textarea>
         <button class="button button-light" type="button" data-save-notes="${escapeHtml(row.id)}">Save Notes</button>
@@ -187,12 +242,63 @@ cleanupTestsButton?.addEventListener('click', async () => {
   }
 });
 searchInput?.addEventListener('input', renderAttendees);
+eventFilter?.addEventListener('change', renderAttendees);
+eventClearButton?.addEventListener('click', () => fillEventForm({}));
+eventForm?.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const payload = {
+    id: eventIdInput.value || undefined,
+    title: eventTitleInput.value,
+    starts_at: isoFromLocalInput(eventStartInput.value),
+    ends_at: isoFromLocalInput(eventEndInput.value),
+    location: eventLocationInput.value,
+    price_dollars: eventPriceInput.value,
+    seat_limit: eventSeatLimitInput.value,
+    is_published: eventPublishedInput.checked,
+    is_archived: false,
+    notes: eventNotesInput.value,
+  };
+  setLoginMessage('Saving session...');
+  await api('/api/admin-event-update', { method: payload.id ? 'PATCH' : 'POST', body: JSON.stringify(payload) });
+  setLoginMessage('Session saved.');
+  await loadAdminData();
+});
+
+eventDetailsEl?.addEventListener('click', async (event) => {
+  const editButton = event.target.closest('[data-edit-event]');
+  const archiveButton = event.target.closest('[data-archive-event]');
+  const id = editButton?.dataset.editEvent || archiveButton?.dataset.archiveEvent;
+  if (!id) return;
+  const item = (adminData.events || []).find((row) => (row.id || row.event_id) === id);
+  if (editButton && item) {
+    fillEventForm(item);
+    eventForm?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  if (archiveButton) {
+    if (!window.confirm('Archive this session and remove it from public registration?')) return;
+    await api('/api/admin-event-update', { method: 'PATCH', body: JSON.stringify({ action: 'archive', id }) });
+    await loadAdminData();
+  }
+});
 
 attendeeListEl?.addEventListener('click', async (event) => {
+  const smsButton = event.target.closest('[data-send-sms]');
   const checkinButton = event.target.closest('[data-checkin]');
   const saveNotesButton = event.target.closest('[data-save-notes]');
-  const id = checkinButton?.dataset.checkin || saveNotesButton?.dataset.saveNotes;
+  const id = smsButton?.dataset.sendSms || checkinButton?.dataset.checkin || saveNotesButton?.dataset.saveNotes;
   if (!id) return;
+  if (smsButton) {
+    smsButton.disabled = true;
+    smsButton.textContent = 'Sending...';
+    try {
+      await api('/api/admin-send-confirmation', { method: 'POST', body: JSON.stringify({ id }) });
+      setLoginMessage('Confirmation text sent.');
+    } catch (error) {
+      setLoginMessage(error.message || 'Text failed', true);
+    }
+    await loadAdminData();
+    return;
+  }
   const current = (adminData.registrations || []).find((row) => row.id === id);
   const notes = attendeeListEl.querySelector(`[data-notes="${CSS.escape(id)}"]`)?.value || '';
   const payload = { id, admin_notes: notes };

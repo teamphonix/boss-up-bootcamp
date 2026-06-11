@@ -17,6 +17,8 @@ if (!appJs.includes('renderProjects')) errors.push('Missing project renderer.');
 if (!css.includes('@media')) errors.push('Missing responsive CSS media queries.');
 if (!adminHtml.includes('Boss Up Control Room')) errors.push('Missing admin control room page.');
 if (!adminJs.includes('/api/admin-data')) errors.push('Missing admin data API binding.');
+if (!adminHtml.includes('admin-event-form') || !adminJs.includes('/api/admin-event-update')) errors.push('Missing admin session editor.');
+if (!adminJs.includes('/api/admin-send-confirmation')) errors.push('Missing admin SMS confirmation action.');
 if (!vercelConfig.includes('api/**/*.js') || !vercelConfig.includes('/admin/?')) errors.push('Missing Vercel API/admin routing.');
 if (errors.length) {
   console.error(errors.join('\n'));

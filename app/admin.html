@@ -48,9 +48,24 @@
         <div class="admin-panel-heading">
           <div>
             <p class="kicker">Calendar control</p>
-            <h2>Current event</h2>
+            <h2>Sessions</h2>
           </div>
         </div>
+        <form class="admin-event-form" id="admin-event-form">
+          <input type="hidden" id="admin-event-id" />
+          <label>Session title <input id="admin-event-title" type="text" placeholder="Boss Up Bootcamp — Evening Class" /></label>
+          <label>Start date/time <input id="admin-event-start" type="datetime-local" required /></label>
+          <label>End date/time <input id="admin-event-end" type="datetime-local" /></label>
+          <label>Public location <input id="admin-event-location" type="text" placeholder="Newark Campus" /></label>
+          <label>Price <input id="admin-event-price" type="number" min="0" step="0.01" value="25" /></label>
+          <label>Internal seat limit <input id="admin-event-seat-limit" type="number" min="1" step="1" value="20" /></label>
+          <label class="admin-checkbox"><input id="admin-event-published" type="checkbox" checked /> Published on registration page</label>
+          <label>Confirmation text location / instructions <textarea id="admin-event-notes" placeholder="Exact address and arrival notes sent after payment by text."></textarea></label>
+          <div class="admin-form-actions">
+            <button class="button button-dark" type="submit">Save Session</button>
+            <button class="button button-light" id="admin-event-clear" type="button">New Blank Session</button>
+          </div>
+        </form>
         <div id="admin-event-details" class="admin-event-details"></div>
       </article>
 
@@ -60,6 +75,7 @@
             <p class="kicker">Registrations</p>
             <h2>Attendees</h2>
           </div>
+          <select class="admin-search" id="admin-event-filter" aria-label="Filter attendees by session"><option value="all">All sessions</option></select>
           <input class="admin-search" id="admin-search" type="search" placeholder="Search name, email, phone" />
         </div>
         <div class="admin-attendee-list" id="admin-attendee-list"></div>
