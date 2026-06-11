@@ -247,6 +247,7 @@ eventClearButton?.addEventListener('click', () => fillEventForm({}));
 eventForm?.addEventListener('submit', async (event) => {
   event.preventDefault();
   const payload = {
+    action: 'save-event',
     id: eventIdInput.value || undefined,
     title: eventTitleInput.value,
     starts_at: isoFromLocalInput(eventStartInput.value),
@@ -259,7 +260,7 @@ eventForm?.addEventListener('submit', async (event) => {
     notes: eventNotesInput.value,
   };
   setLoginMessage('Saving session...');
-  await api('/api/admin-event-update', { method: payload.id ? 'PATCH' : 'POST', body: JSON.stringify(payload) });
+  await api('/api/admin-registration-update', { method: payload.id ? 'PATCH' : 'POST', body: JSON.stringify(payload) });
   setLoginMessage('Session saved.');
   await loadAdminData();
 });
@@ -276,7 +277,7 @@ eventDetailsEl?.addEventListener('click', async (event) => {
   }
   if (archiveButton) {
     if (!window.confirm('Archive this session and remove it from public registration?')) return;
-    await api('/api/admin-event-update', { method: 'PATCH', body: JSON.stringify({ action: 'archive', id }) });
+    await api('/api/admin-registration-update', { method: 'PATCH', body: JSON.stringify({ action: 'archive', id }) });
     await loadAdminData();
   }
 });
@@ -291,7 +292,7 @@ attendeeListEl?.addEventListener('click', async (event) => {
     smsButton.disabled = true;
     smsButton.textContent = 'Sending...';
     try {
-      await api('/api/admin-send-confirmation', { method: 'POST', body: JSON.stringify({ id }) });
+      await api('/api/admin-registration-update', { method: 'POST', body: JSON.stringify({ action: 'send-confirmation-sms', id }) });
       setLoginMessage('Confirmation text sent.');
     } catch (error) {
       setLoginMessage(error.message || 'Text failed', true);

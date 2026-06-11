@@ -1,7 +1,7 @@
 const Stripe = require('stripe');
 const { supabaseAdmin } = require('./_supabase');
 const { upsertRegistrationFromCheckoutSession } = require('./_stripe-registration');
-const { sendConfirmationSms, twilioConfigured } = require('./_sms');
+const { sendConfirmationSms, twilioConfigured } = require('../lib/sms');
 
 module.exports.config = {
   api: {
