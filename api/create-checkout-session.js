@@ -39,8 +39,8 @@ function assertLiveStripeKey() {
 }
 
 const DEFAULT_TUESDAY_EVENTS = [
-  { date: '2026-06-23', afternoon: '2026-06-23T12:00:00-04:00', evening: '2026-06-23T21:00:00-04:00' },
-  { date: '2026-07-07', afternoon: '2026-07-07T12:00:00-04:00', evening: '2026-07-07T21:00:00-04:00' },
+  { date: '2026-06-23', afternoon: '2026-06-23T12:00:00-04:00', evening: '2026-06-23T18:00:00-04:00' },
+  { date: '2026-07-07', afternoon: '2026-07-07T12:00:00-04:00', evening: '2026-07-07T18:00:00-04:00' },
 ];
 
 function defaultTuesdayStartTimes() {
@@ -71,7 +71,7 @@ function defaultTuesdayRows() {
       title: 'Boss Up Bootcamp — Evening Class',
       description: 'Tuesday evening Boss Up Bootcamp class.',
       starts_at: event.evening,
-      ends_at: `${event.date}T22:00:00-04:00`,
+      ends_at: `${event.date}T19:00:00-04:00`,
       timezone: 'America/New_York',
       location: 'Newark Campus',
       seat_limit: Number(process.env.BOOTCAMP_SEAT_LIMIT || 20),
@@ -79,7 +79,7 @@ function defaultTuesdayRows() {
       currency: 'usd',
       is_published: true,
       is_archived: false,
-      notes: 'Auto-seeded Tuesday schedule: 9:00–10:00 PM ET.',
+      notes: 'Auto-seeded Tuesday schedule: 6:00–7:00 PM ET.',
     });
   });
   return rows;
@@ -87,6 +87,7 @@ function defaultTuesdayRows() {
 
 async function ensureDefaultTuesdayEvents(supabase, nowIso) {
   const targetStartTimes = defaultTuesdayStartTimes();
+  const targetStartTimeSet = new Set(targetStartTimes);
   const { error: locationUpdateError } = await supabase
     .from('bootcamp_events')
     .update({ location: 'Newark Campus' })
@@ -103,6 +104,28 @@ async function ensureDefaultTuesdayEvents(supabase, nowIso) {
 
   if (archiveExtraEventsError) throw archiveExtraEventsError;
 
+  const { data: seededRows, error: seededError } = await supabase
+    .from('bootcamp_events')
+    .select('starts_at')
+    .like('notes', 'Auto-seeded Tuesday schedule:%')
+    .eq('is_archived', false);
+
+  if (seededError) throw seededError;
+
+  const existingTargetTimes = new Set((seededRows || [])
+    .map((row) => new Date(row.starts_at).toISOString())
+    .filter((startsAt) => targetStartTimeSet.has(startsAt)));
+  const missingRows = defaultTuesdayRows()
+    .filter((row) => !existingTargetTimes.has(new Date(row.starts_at).toISOString()));
+
+  if (missingRows.length) {
+    const { error: insertError } = await supabase
+      .from('bootcamp_events')
+      .insert(missingRows);
+
+    if (insertError) throw insertError;
+  }
+
   const { count, error } = await supabase
     .from('bootcamp_events')
     .select('id', { count: 'exact', head: true })
@@ -113,19 +136,11 @@ async function ensureDefaultTuesdayEvents(supabase, nowIso) {
   if (error) throw error;
   if (Number(count || 0) > 0) return;
 
-  const { count: seededCount, error: seededError } = await supabase
-    .from('bootcamp_events')
-    .select('id', { count: 'exact', head: true })
-    .like('notes', 'Auto-seeded Tuesday schedule:%');
-
-  if (seededError) throw seededError;
-  if (Number(seededCount || 0) > 0) return;
-
-  const { error: insertError } = await supabase
+  const { error: fallbackInsertError } = await supabase
     .from('bootcamp_events')
     .insert(defaultTuesdayRows());
 
-  if (insertError) throw insertError;
+  if (fallbackInsertError) throw fallbackInsertError;
 }
 
 async function loadAvailableEvents() {
