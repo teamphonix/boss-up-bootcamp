@@ -600,30 +600,11 @@ function formatEventPrice(cents, currency = 'usd') {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: String(currency || 'usd').toUpperCase() }).format(Number(cents || 0) / 100);
 }
 
-function eventSeats(event) {
-  const total = Math.max(Number(event?.seat_limit || 0), 0);
-  const remaining = Math.max(Number(event?.seats_remaining || 0), 0);
-  const sold = Math.max(total - remaining, 0);
-  const percentSold = total ? Math.min(Math.round((sold / total) * 100), 100) : 0;
-  return { total, remaining, sold, percentSold };
-}
-
 function selectedEventSummaryMarkup(event) {
-  const seats = eventSeats(event);
-  const availableLabel = `${seats.remaining} seat${seats.remaining === 1 ? '' : 's'} available`;
-  const totalLabel = seats.total ? `of ${seats.total}` : 'live count';
   return `
     <strong>${escapeHtml(event.title || 'Boss Up Bootcamp')}</strong>
     <span>${escapeHtml(formatEventDate(event.starts_at))}</span>
     <span>${escapeHtml(event.location || 'Newark Campus')} · ${escapeHtml(formatEventPrice(event.price_cents, event.currency))}</span>
-    <div class="seat-tracker" aria-label="${escapeHtml(`${availableLabel} ${totalLabel}`)}">
-      <span class="seat-tracker-head">
-        <span>Real-time seat tracker</span>
-        <strong>${escapeHtml(`${availableLabel} ${totalLabel}`)}</strong>
-      </span>
-      <span class="seat-meter" aria-hidden="true"><span style="width:${escapeHtml(seats.percentSold)}%"></span></span>
-      <small>${escapeHtml(seats.sold)} reserved · updates automatically</small>
-    </div>
   `;
 }
 
@@ -657,7 +638,7 @@ function renderAvailableDates(events = []) {
     <select class="date-select" id="selected-event-select" name="selected_event" aria-label="Choose your Boss Up Bootcamp session">
       ${availableEvents.map((event) => `
         <option value="${escapeHtml(event.id)}" ${event.id === selectedEvent.id ? 'selected' : ''}>
-          ${escapeHtml(`${formatEventDate(event.starts_at)} — ${(event.title || 'Boss Up Bootcamp').replace('Boss Up Bootcamp — ', '')} · ${eventSeats(event).remaining} left`)}
+          ${escapeHtml(`${formatEventDate(event.starts_at)} — ${(event.title || 'Boss Up Bootcamp').replace('Boss Up Bootcamp — ', '')}`)}
         </option>
       `).join('')}
     </select>

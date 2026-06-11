@@ -8,7 +8,7 @@ const css = fs.readFileSync(path.join(root, 'app', 'styles.css'), 'utf8');
 const adminHtml = fs.readFileSync(path.join(root, 'app', 'admin.html'), 'utf8');
 const adminJs = fs.readFileSync(path.join(root, 'app', 'admin.js'), 'utf8');
 const vercelConfig = fs.readFileSync(path.join(root, 'vercel.json'), 'utf8');
-const requiredHtml = ['Boss Up Bootcamp', 'Reserve a Spot', '20 Seats Available - $25 Each', 'showcase-grid', 'checkout-form', 'Continue to Stripe', 'The H.I.P.H.O.P. Academy'];
+const requiredHtml = ['Boss Up Bootcamp', 'Reserve a Spot', '$25 Registration', 'showcase-grid', 'checkout-form', 'Continue to Stripe', 'The H.I.P.H.O.P. Academy'];
 const requiredData = ['DJ Just Pray', 'Voices of the Sun', 'Event + Promo Design', 'AI Generated Commercials', 'The H.I.P.H.O.P. Academy', 'Student Project Pipeline'];
 const errors = [];
 for (const marker of requiredHtml) if (!html.includes(marker)) errors.push(`Missing HTML marker: ${marker}`);
