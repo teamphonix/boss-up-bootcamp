@@ -204,14 +204,18 @@ function itemThumb(item) {
   return drivePreview(thumbnailLink, 900);
 }
 
+const portfolioCategoryDescriptions = {
+  All: 'Swipe through the full creative portfolio: logos, promo flyers, AI visuals, wallpapers, photo edits, and motion before-and-after pieces shown uncropped in a full-screen gallery.',
+  'Business Logos': 'Browse brand marks and logo concepts that turn business ideas into clean, recognizable visual identities.',
+  'Promo Flyers': 'See event flyers, promo graphics, and motion flyer edits built for attention, clarity, and shareable marketing.',
+  'AI Generated Visuals': 'Explore AI-generated artwork and video transformations that show how prompts, direction, and editing become polished visuals.',
+  'Photo Edits': 'Explore AI-enhanced photo restorations, quality upgrades, family portraits brought to life, and creative before-and-after transformations.',
+  'AI Wallpaper': 'View AI-generated wallpaper designs built for bold mobile visuals, mood, color, and personal brand style.'
+};
+
 function portfolioCategoryDescription(active) {
-  if (active === 'Photo Edits') {
-    return 'Explore AI-enhanced photo restorations, quality upgrades, family portraits brought to life, and creative before-and-after transformations.';
-  }
-  if (active === 'All') {
-    return 'Explore AI-enhanced photo restorations, quality upgrades, family portraits brought to life, and creative before-and-after transformations.';
-  }
-  return `This cover updates to the first piece in ${active}. Tap the image or button to open that full-screen category gallery. The gallery includes full-size vertical, landscape, video, and before/after pieces.`;
+  return portfolioCategoryDescriptions[active]
+    || 'Open the full-screen gallery to view each piece in its original vertical, square, landscape, or video format without cropping.';
 }
 
 function renderPortfolioCards(active = 'All') {
