@@ -271,6 +271,10 @@ function formatTrackStatus(track, index) {
 }
 
 function pauseFloatingSiteAudio() {
+  if (window.BossUpFloatingSiteAudio) {
+    window.BossUpFloatingSiteAudio.pause();
+    return;
+  }
   if (!floatingSiteAudio) return;
   floatingSiteAudio.pause();
 }
@@ -760,7 +764,6 @@ function bindRevealCards() {
 }
 
 ensureLightbox();
-initFloatingSiteAudio();
 bindCarousel();
 bindDropdowns();
 bindNavigation();
