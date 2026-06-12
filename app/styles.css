@@ -527,8 +527,10 @@ h3 { font-size: 1.35rem; font-weight: 900; letter-spacing: -0.025em; line-height
 .founder-register { display: grid; grid-template-columns: .9fr 1.1fr; gap: 18px; padding-bottom: 90px; }
 .founder-card, .registration-card { padding: 32px; scroll-margin-top: 110px; }
 .founder-card { background: linear-gradient(135deg, rgba(0,255,255,.08), rgba(255,215,0,.05)), #05070a; color: var(--ink); }
+.about-grid .founder-card { text-align: center; }
 .founder-card p { color: var(--muted); margin-top: 16px; }
-.founder-card .button { margin-top: 22px; }
+.about-mission-cta { grid-column: 1 / -1; display: flex; justify-content: center; }
+.about-mission-cta .button { width: min(100%, 520px); text-align: center; }
 .registration-card p { margin-top: 12px; }
 .portfolio-hub-carousel {
   display: grid;
