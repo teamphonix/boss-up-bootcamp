@@ -532,6 +532,50 @@ h3 { font-size: 1.35rem; font-weight: 900; letter-spacing: -0.025em; line-height
 .about-mission-cta { grid-column: 1 / -1; display: flex; justify-content: center; }
 .about-mission-cta .button { width: min(100%, 520px); text-align: center; }
 .registration-card p { margin-top: 12px; }
+.registration-contact-card {
+  display: grid;
+  gap: 14px;
+  padding: 28px;
+  border: 1px solid rgba(255,215,0,.28);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(255,215,0,.13), transparent 28rem),
+    radial-gradient(circle at 92% 12%, rgba(0,255,255,.1), transparent 24rem),
+    linear-gradient(135deg, rgba(0,255,255,.06), rgba(255,215,0,.05)),
+    #05070a;
+  box-shadow: 0 24px 70px rgba(0,0,0,.42), 0 0 26px rgba(255,215,0,.08);
+}
+.registration-contact-card h3 { color: #fff; font-size: clamp(1.6rem, 3vw, 2.45rem); }
+.registration-contact-card p { max-width: 620px; }
+.registration-contact-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 6px;
+}
+.registration-contact-list a {
+  display: grid;
+  gap: 6px;
+  min-height: 92px;
+  padding: 16px;
+  border: 1px solid rgba(0,255,255,.22);
+  border-radius: 20px;
+  background: rgba(0,0,0,.3);
+}
+.registration-contact-list a:hover,
+.registration-contact-list a:focus-visible {
+  border-color: var(--academy-gold);
+  box-shadow: 0 0 0 3px rgba(255,215,0,.12);
+  outline: none;
+}
+.registration-contact-list span {
+  color: var(--academy-cyan);
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.registration-contact-list strong { color: var(--academy-gold); font-size: 1.02rem; line-height: 1.25; overflow-wrap: anywhere; }
 .portfolio-hub-carousel {
   display: grid;
   grid-auto-flow: column;
@@ -681,7 +725,8 @@ input:focus, select:focus, textarea:focus { outline: 3px solid rgba(0,255,255,.1
   .track-card { grid-template-columns: 1fr; }
   .track-actions { justify-content: flex-start; }
   .track-button { flex: 1 1 132px; }
-  .learn-card, .project-card, .timeline-step, .founder-card, .registration-card { border-radius: 22px; }
+  .learn-card, .project-card, .timeline-step, .founder-card, .registration-card, .registration-contact-card { border-radius: 22px; }
+  .registration-contact-list { grid-template-columns: 1fr; }
   .outcomes-image-card { border-radius: 24px; }
 }
 
