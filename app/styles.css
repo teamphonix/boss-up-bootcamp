@@ -528,6 +528,7 @@ h3 { font-size: 1.35rem; font-weight: 900; letter-spacing: -0.025em; line-height
 .founder-card, .registration-card { padding: 32px; scroll-margin-top: 110px; }
 .founder-card { background: linear-gradient(135deg, rgba(0,255,255,.08), rgba(255,215,0,.05)), #05070a; color: var(--ink); }
 .founder-card p { color: var(--muted); margin-top: 16px; }
+.founder-card .button { margin-top: 22px; }
 .registration-card p { margin-top: 12px; }
 .portfolio-hub-carousel {
   display: grid;
